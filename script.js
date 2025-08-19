@@ -133,7 +133,10 @@ function initTestimonialsSlider() {
                     </div>
                 </div>
                 <div class="testimonial-image">
-                    <img src="${testimonial.image}" alt="${testimonial.name}" onerror="this.src='https://via.placeholder.com/120x120/046bd2/ffffff?text=${testimonial.name.charAt(0)}'">
+                    <picture>
+                        <source srcset="${testimonial.image.replace('.jpg', '.webp')}" type="image/webp">
+                        <img src="${testimonial.image}" alt="${testimonial.name}" loading="lazy" width="120" height="120" onerror="this.src='https://via.placeholder.com/120x120/046bd2/ffffff?text=${testimonial.name.charAt(0)}'">
+                    </picture>
                 </div>
             </div>
         `;
@@ -258,10 +261,30 @@ function initFormValidation() {
             return;
         }
 
-        // Simulate form submission
-        showAlert('Cảm ơn bạn đã liên hệ! Chúng tôi sẽ phản hồi sớm nhất có thể.', 'success');
+        // Submit form to endpoint if configured
+        const endpoint = form.getAttribute('data-form-endpoint');
+        if (endpoint && endpoint.trim()) {
+            submitForm(endpoint.trim(), { name, email, phone, note });
+        } else {
+            showAlert('Cảm ơn bạn đã liên hệ! (Chưa cấu hình endpoint gửi form)', 'success');
+        }
         form.reset();
     });
+}
+
+async function submitForm(endpoint, payload) {
+    try {
+        const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Submit failed');
+        showAlert('Gửi form thành công! Chúng tôi sẽ liên hệ sớm.', 'success');
+    } catch (e) {
+        console.error(e);
+        showAlert('Không thể gửi form lúc này. Vui lòng thử lại sau.', 'error');
+    }
 }
 
 // Helper functions
