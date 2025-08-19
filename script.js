@@ -439,9 +439,11 @@ function renderCards(containerSelector, items, type) {
 
     const html = items.map(item => {
         const dateFormatted = formatDate(item.date);
-        const media = item.image ? `
-                <div class="card-media">
-                    <img src="${item.image}" alt="${item.title}" loading="lazy" />
+        const src = item.localImage || item.image;
+        const onerrorAttr = item.localImage && item.image ? `onerror=\"this.onerror=null; this.src='${item.image}'\"` : '';
+        const media = src ? `
+                <div class=\"card-media\">
+                    <img src=\"${src}\" alt=\"${item.title}\" loading=\"lazy\" ${onerrorAttr} />
                 </div>` : '';
         return `
             <article class="${type === 'blog' ? 'blog-card' : type === 'competitions' ? 'competition-card' : type === 'achievements' ? 'achievement-card' : 'news-card'}">
