@@ -29,6 +29,35 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* HOT Ticker */
+.hot-ticker {
+    background: #0f314c;
+    color: #fff;
+    font-size: 14px;
+}
+.hot-ticker .container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    overflow: hidden;
+}
+.hot-ticker .label {
+    font-weight: 700;
+    color: #CC3366;
+}
+.hot-ticker .ticker-track {
+    display: flex;
+    gap: 20px;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.hot-ticker .ticker-track a {
+    color: #fff;
+    text-decoration: none;
+}
+.hot-ticker .ticker-track a:hover { text-decoration: underline; }
+
 .header-top {
     background: #f8fafc;
     padding: 8px 0;
