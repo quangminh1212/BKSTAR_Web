@@ -546,6 +546,24 @@ body {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
+/* Card media (thumbnail) */
+.card-media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background: #f1f5f9;
+}
+
+.card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
 .card-content h3 {
     font-size: 20px;
     font-weight: 600;
@@ -810,50 +828,50 @@ body {
     .container {
         padding: 0 15px;
     }
-    
+
     .header-top {
         display: none;
     }
-    
+
     .hero {
         height: 300px;
         margin-top: 80px;
     }
-    
+
     .about-content {
         grid-template-columns: 1fr;
         gap: 40px;
     }
-    
+
     .about-text h2 {
         font-size: 28px;
     }
-    
+
     .competitions-grid,
     .blog-grid,
     .achievements-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .services-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .form-row {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .footer-info {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .testimonial-slide {
         flex-direction: column;
         text-align: center;
     }
-    
+
     .stats-grid {
         grid-template-columns: 1fr;
         gap: 20px;

@@ -439,8 +439,13 @@ function renderCards(containerSelector, items, type) {
 
     const html = items.map(item => {
         const dateFormatted = formatDate(item.date);
+        const media = item.image ? `
+                <div class="card-media">
+                    <img src="${item.image}" alt="${item.title}" loading="lazy" />
+                </div>` : '';
         return `
             <article class="${type === 'blog' ? 'blog-card' : type === 'competitions' ? 'competition-card' : type === 'achievements' ? 'achievement-card' : 'news-card'}">
+                ${media}
                 <div class="card-content">
                     <h3><a href="${item.url}">${item.title}</a></h3>
                     <time>${dateFormatted}</time>
