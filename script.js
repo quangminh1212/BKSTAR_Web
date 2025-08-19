@@ -333,10 +333,10 @@ function showAlert(message, type) {
     });
 }
 
-// Smooth Scrolling for anchor links
+// Smooth Scrolling for anchor links + Scroll Spy
 function initSmoothScrolling() {
     const links = document.querySelectorAll('a[href^="#"]');
-    
+
     links.forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -344,7 +344,7 @@ function initSmoothScrolling() {
                 e.preventDefault();
                 return;
             }
-            
+
             const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
@@ -355,6 +355,21 @@ function initSmoothScrolling() {
             }
         });
     });
+
+    // Scroll Spy: highlight nav item for visible section
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const spy = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${id}`));
+            }
+        });
+    }, { threshold: 0.6 });
+
+    sections.forEach(sec => spy.observe(sec));
 }
 
 // Add loading animation for images
