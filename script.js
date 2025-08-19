@@ -422,7 +422,9 @@ async function loadDynamicData() {
         if (!res.ok) throw new Error('Failed to load data.json');
         const data = await res.json();
 
-        renderCards('#news-grid', data.news, 'news');
+        const newsRendered = renderCards('#news-grid', data.news, 'news');
+        const newsEmpty = document.querySelector('#news-empty');
+        if (newsEmpty) newsEmpty.style.display = newsRendered ? 'none' : 'block';
         renderCards('#competitions-grid', data.competitions, 'competitions');
         renderCards('#blog-grid', data.blog, 'blog');
         renderCards('#achievements-grid', data.achievements, 'achievements');
@@ -433,7 +435,7 @@ async function loadDynamicData() {
 
 function renderCards(containerSelector, items, type) {
     const container = document.querySelector(containerSelector);
-    if (!container || !Array.isArray(items)) return;
+    if (!container || !Array.isArray(items)) return false;
 
     const html = items.map(item => {
         const dateFormatted = formatDate(item.date);
@@ -450,6 +452,7 @@ function renderCards(containerSelector, items, type) {
     }).join('');
 
     container.innerHTML = html;
+    return items.length > 0;
 }
 
 function formatDate(isoDate) {
