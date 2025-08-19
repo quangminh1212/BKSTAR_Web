@@ -443,7 +443,7 @@ function renderCards(containerSelector, items, type) {
         const onerrorAttr = item.localImage && item.image ? `onerror=\"this.onerror=null; this.src='${item.image}'\"` : '';
         const media = src ? `
                 <div class=\"card-media\">
-                    <img src=\"${src}\" alt=\"${item.title}\" loading=\"lazy\" ${onerrorAttr} />
+                    <img src=\"${src}\" alt=\"${item.title}\" loading=\"lazy\" decoding=\"async\" ${onerrorAttr} />
                 </div>` : '';
         return `
             <article class="${type === 'blog' ? 'blog-card' : type === 'competitions' ? 'competition-card' : type === 'achievements' ? 'achievement-card' : 'news-card'}">

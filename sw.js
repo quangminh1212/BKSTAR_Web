@@ -1,11 +1,11 @@
-const CACHE_NAME = 'bkstar-cache-v1';
+const CACHE_NAME = 'bkstar-cache-v2';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/data.json',
-  '/images/logo.png'
+  './',
+  './index.html',
+  './styles.css',
+  './script.js',
+  './data.json',
+  './images/logo.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -24,6 +24,22 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
 
+  // Cache-first for images (good for performance)
+  if (request.destination === 'image') {
+    event.respondWith(
+      caches.match(request).then(cached => {
+        const networkFetch = fetch(request).then(response => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
+          return response;
+        }).catch(() => cached);
+        return cached || networkFetch;
+      })
+    );
+    return;
+  }
+
+  // Stale-while-revalidate for other GET requests
   event.respondWith(
     caches.match(request).then(cached => {
       const fetchPromise = fetch(request).then(response => {
@@ -31,7 +47,6 @@ self.addEventListener('fetch', (event) => {
         caches.open(CACHE_NAME).then(cache => cache.put(request, clone));
         return response;
       }).catch(() => cached);
-
       return cached || fetchPromise;
     })
   );
