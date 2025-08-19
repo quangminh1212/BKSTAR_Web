@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollToTop();
     initFormValidation();
     initSmoothScrolling();
+    loadDynamicData();
 });
 
 // Hero Slider
@@ -163,21 +164,39 @@ function initTestimonialsSlider() {
     setInterval(nextTestimonial, 4000);
 }
 
-// Mobile Menu
+// Mobile Menu & Accessibility
 function initMobileMenu() {
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
 
     if (!navToggle || !navMenu) return;
 
+    navToggle.setAttribute('role', 'button');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-controls', 'primary-menu');
+
+    navMenu.id = 'primary-menu';
+    navMenu.setAttribute('role', 'menu');
+
     navToggle.addEventListener('click', function() {
-        navMenu.style.display = navMenu.style.display === 'block' ? 'none' : 'block';
+        const isOpen = navMenu.style.display === 'block';
+        navMenu.style.display = isOpen ? 'none' : 'block';
+        navToggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    // Keyboard support
+    navToggle.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            navToggle.click();
+        }
     });
 
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
         if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
             navMenu.style.display = 'none';
+            navToggle.setAttribute('aria-expanded', 'false');
         }
     });
 }
@@ -341,22 +360,68 @@ function initSmoothScrolling() {
 // Add loading animation for images
 document.addEventListener('DOMContentLoaded', function() {
     const images = document.querySelectorAll('img');
-    
+
     images.forEach(img => {
         img.addEventListener('load', function() {
             this.style.opacity = '1';
         });
-        
+
         // Set initial opacity
         img.style.opacity = '0';
         img.style.transition = 'opacity 0.3s ease';
-        
+
         // If image is already loaded
         if (img.complete) {
             img.style.opacity = '1';
         }
     });
 });
+
+// Dynamic data loader
+async function loadDynamicData() {
+    try {
+        const res = await fetch('data.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('Failed to load data.json');
+        const data = await res.json();
+
+        renderCards('#news-grid', data.news, 'news');
+        renderCards('#competitions-grid', data.competitions, 'competitions');
+        renderCards('#blog-grid', data.blog, 'blog');
+        renderCards('#achievements-grid', data.achievements, 'achievements');
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+function renderCards(containerSelector, items, type) {
+    const container = document.querySelector(containerSelector);
+    if (!container || !Array.isArray(items)) return;
+
+    const html = items.map(item => {
+        const dateFormatted = formatDate(item.date);
+        return `
+            <article class="${type === 'blog' ? 'blog-card' : type === 'competitions' ? 'competition-card' : type === 'achievements' ? 'achievement-card' : 'news-card'}">
+                <div class="card-content">
+                    <h3><a href="${item.url}">${item.title}</a></h3>
+                    <time>${dateFormatted}</time>
+                    <p>${item.excerpt}</p>
+                    <a href="${item.url}" class="read-more">Xem chi tiết</a>
+                </div>
+            </article>
+        `;
+    }).join('');
+
+    container.innerHTML = html;
+}
+
+function formatDate(isoDate) {
+    try {
+        const d = new Date(isoDate);
+        return d.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
+    } catch {
+        return isoDate;
+    }
+}
 
 // Parallax effect for hero section
 window.addEventListener('scroll', function() {

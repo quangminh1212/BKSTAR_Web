@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BKSTAR - Tư vấn du học</title>
+    <meta name="description" content="BKSTAR - Đồng hành cùng học sinh Việt Nam chinh phục học bổng và du học tại các trường danh tiếng trên thế giới.">
+    <meta name="theme-color" content="#046bd2">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="BKSTAR - Tư vấn du học">
+    <meta property="og:description" content="Đồng hành cùng học sinh Việt Nam chinh phục học bổng và du học.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/">
+    <meta property="og:image" content="images/logo.png">
+
+    <!-- Icons & Manifest -->
+    <link rel="icon" href="images/logo.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -161,7 +175,7 @@
         <div class="container">
             <h2>Báo Chí</h2>
             <p class="section-subtitle">Các tin tức mới nhất về BKStar</p>
-            <p class="no-posts">No posts found!</p>
+            <div id="news-grid" class="news-grid"></div>
             <a href="#" class="btn-secondary">Xem thêm</a>
         </div>
     </section>
@@ -171,7 +185,7 @@
         <div class="container">
             <h2>Cuộc thi quốc tế</h2>
             <p class="section-subtitle">Hãy tham gia các cuộc thi quốc tế để tăng chất lượng hồ sơ cá nhân của bạn!</p>
-            <div class="competitions-grid">
+            <div id="competitions-grid" class="competitions-grid">
                 <article class="competition-card">
                     <div class="card-content">
                         <h3><a href="#">1 IDEAL 1 WORLD COMPETITION 2025</a></h3>
@@ -206,7 +220,7 @@
         <div class="container">
             <h2>Blog</h2>
             <p class="section-subtitle">Đón đọc blog du học – Bí quyết, kinh nghiệm, sẵn sàng chinh phục hành trình học tập thế giới!</p>
-            <div class="blog-grid">
+            <div id="blog-grid" class="blog-grid">
                 <article class="blog-card">
                     <div class="card-content">
                         <h3><a href="#">Viết bài luận Ivy League ấn tượng: Hướng dẫn & ví dụ thực tế – Phần III</a></h3>
@@ -243,7 +257,7 @@
                 <h2>Thành tích học viên</h2>
                 <p>Tự hào đã đồng hành cùng hàng ngàn học viên đạt được những thành tích ấn tượng trong các kỳ thi quốc tế, mở ra cánh cửa du học tại các trường danh tiếng trên toàn thế giới.</p>
             </div>
-            <div class="achievements-grid">
+            <div id="achievements-grid" class="achievements-grid">
                 <article class="achievement-card">
                     <div class="card-content">
                         <h3><a href="#">Chúc mừng Nguyễn Hữu Sơn Trúc – học sinh BKSTAR trúng tuyển VinUniversity với học bổng danh giá gần 2,5 tỷ đồng</a></h3>
@@ -388,6 +402,13 @@
         </div>
     </div>
 
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js').catch(console.error);
+            });
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
