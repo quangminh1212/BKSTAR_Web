@@ -192,7 +192,7 @@ const ROUTE_MASKS = {
 const ROUTE_THRESHOLDS = {
   '/': 50000,
   '/ve-bkstar/': 350000,
-  '/dich-vu/': 400000,
+  '/dich-vu/': 600000,
   '/tai-nguyen/': 700000,
   '/thanh-tich-va-su-kien/': 50000,
   '/bao-chi/': 400000,
