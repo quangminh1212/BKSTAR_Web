@@ -36,6 +36,21 @@ const ROUTE_MASKS = {
     '.elementor-widget-counter',
     '.elementor-widget-marquee',
     '.marquee-container',
+    '.elementor-background-slideshow',
+    '.elementor-motion-effects-container',
+    '.elementor-motion-effects-layer',
+    '.elementor-widget-video',
+    '.elementor-video',
+    '.nf-form-cont',
+    '.nf-form-wrap',
+    '.nf-form-layout',
+    '.nf-form-content',
+    '.nf-response-msg',
+    '.nf-error-msg',
+    '.nf-form-errors',
+    '.nf-debug-msg',
+    '.nf-loading-spinner',
+    '.nf-form-hp',
   ],
   '/bao-chi/': [
     '.elementor-widget-posts',
@@ -283,6 +298,36 @@ function sanitize(p) {
   return p.replace(/\//g, '_').replace(/^_+|_+$/g, '') || 'home';
 }
 
+async function captureSections(page, route, liveUrl, localUrl, name, sections, summary) {
+  for (const s of sections) {
+    const lOut = path.join(OUT_DIR, 'live', `${name}-${s.key}.png`);
+    const lcOut = path.join(OUT_DIR, 'local', `${name}-${s.key}.png`);
+    const dOut = path.join(OUT_DIR, 'diff', `${name}-${s.key}.png`);
+    try {
+      const sectionMasks = Array.isArray(s.mask) ? s.mask : [];
+      const clipH = typeof s.clipHeight === 'number' ? s.clipHeight : 600;
+      await screenshotPage(page, liveUrl, lOut, {
+        selector: s.sel,
+        clampSelectors: [s.sel],
+        maskSelectors: sectionMasks,
+        clipHeight: clipH,
+      });
+      await screenshotPage(page, localUrl, lcOut, {
+        selector: s.sel,
+        clampSelectors: [s.sel],
+        maskSelectors: sectionMasks,
+        clipHeight: clipH,
+      });
+      const mm = compareImages(lOut, lcOut, dOut);
+      console.log(`So sánh ${name}/${s.key}: pixel khác = ${mm}`);
+      summary.push({ route: `${route}#${s.key}`, mismatch: mm });
+    } catch (e) {
+      console.warn(`Bỏ qua section ${s.key}:`, e.message);
+      summary.push({ route: `${route}#${s.key}`, error: e.message });
+    }
+  }
+}
+
 async function main() {
   ensureDir(OUT_DIR);
   ensureDir(path.join(OUT_DIR, 'live'));
@@ -359,43 +404,100 @@ async function main() {
       const sections = [
         { key: 'header-contest', sel: '.header-contest' },
         { key: 'ticker', sel: '.elementor-widget-elementor-news-ticker, .marquee-container' },
-        { key: 'post-grid', sel: '.elementor-widget-posts, .eael-post-grid' },
-        { key: 'footer', sel: 'footer' },
+        {
+          key: 'post-grid',
+          sel: '.elementor-widget-posts, .eael-post-grid',
+          mask: [
+            '.elementor-post__thumbnail',
+            '.elementor-post__title',
+            '.elementor-post__excerpt',
+            '.elementor-post__meta-data',
+            '.elementor-post__read-more',
+          ],
+          clipHeight: 600,
+        },
+        { key: 'footer', sel: 'footer', clipHeight: 400 },
       ];
-      for (const s of sections) {
-        const lOut = path.join(OUT_DIR, 'live', `${name}-${s.key}.png`);
-        const lcOut = path.join(OUT_DIR, 'local', `${name}-${s.key}.png`);
-        const dOut = path.join(OUT_DIR, 'diff', `${name}-${s.key}.png`);
-        try {
-          const sectionMasks =
-            s.key === 'post-grid'
-              ? [
-                  '.elementor-post__thumbnail',
-                  '.elementor-post__title',
-                  '.elementor-post__excerpt',
-                  '.elementor-post__meta-data',
-                  '.elementor-post__read-more',
-                ]
-              : [];
-          await screenshotPage(page, liveUrl, lOut, {
-            selector: s.sel,
-            clampSelectors: [s.sel],
-            maskSelectors: sectionMasks,
+      await captureSections(page, route, liveUrl, localUrl, name, sections, summary);
+    }
+
+    // Section compare cho các trang khác để khoanh vùng hero/khối động
+    if (
+      route === '/' ||
+      route === '/ve-bkstar/' ||
+      route === '/dich-vu/' ||
+      route === '/tuyen-dung/' ||
+      route === '/thanh-tich-va-su-kien/'
+    ) {
+      const sec = [];
+      if (route === '/') {
+        sec.push(
+          { key: 'hero', sel: 'header, .elementor-location-header', clipHeight: 600 },
+          { key: 'top-ticker', sel: '.news-ticker-wrap, .marquee-container', clipHeight: 300 },
+          {
+            key: 'grid-1',
+            sel: '.eael-post-grid, .elementor-widget-posts',
             clipHeight: 600,
-          });
-          await screenshotPage(page, localUrl, lcOut, {
-            selector: s.sel,
-            clampSelectors: [s.sel],
-            maskSelectors: sectionMasks,
+            mask: [
+              '.elementor-post__thumbnail',
+              '.elementor-post__title',
+              '.elementor-post__excerpt',
+              '.elementor-post__meta-data',
+              '.elementor-post__read-more',
+            ],
+          }
+        );
+      }
+      if (route === '/ve-bkstar/') {
+        sec.push(
+          {
+            key: 'hero',
+            sel: '.elementor-background-slideshow, .elementor-motion-effects-container, .elementor-animated-headline',
             clipHeight: 600,
-          });
-          const mm = compareImages(lOut, lcOut, dOut);
-          console.log(`So sánh ${name}/${s.key}: pixel khác = ${mm}`);
-          summary.push({ route: `${route}#${s.key}`, mismatch: mm });
-        } catch (e) {
-          console.warn(`Bỏ qua section ${s.key}:`, e.message);
-          summary.push({ route: `${route}#${s.key}`, error: e.message });
-        }
+          },
+          {
+            key: 'grid',
+            sel: '.elementor-widget-posts, .eael-post-grid',
+            clipHeight: 600,
+            mask: ['.elementor-post__thumbnail', '.elementor-post__title'],
+          }
+        );
+      }
+      if (route === '/dich-vu/') {
+        sec.push(
+          { key: 'hero', sel: 'header, .elementor-location-header', clipHeight: 600 },
+          {
+            key: 'form',
+            sel: '.nf-form-cont',
+            clipHeight: 600,
+            mask: ['.nf-response-msg', '.nf-error-msg', '.nf-form-errors', '.nf-loading-spinner'],
+          }
+        );
+      }
+      if (route === '/tuyen-dung/') {
+        sec.push(
+          { key: 'hero', sel: 'header, .elementor-location-header', clipHeight: 600 },
+          {
+            key: 'grid',
+            sel: '.elementor-widget-posts, .eael-post-grid',
+            clipHeight: 600,
+            mask: ['.elementor-post__thumbnail', '.elementor-post__title'],
+          }
+        );
+      }
+      if (route === '/thanh-tich-va-su-kien/') {
+        sec.push(
+          { key: 'hero', sel: 'header, .elementor-location-header', clipHeight: 600 },
+          {
+            key: 'grid',
+            sel: '.elementor-widget-posts, .eael-post-grid',
+            clipHeight: 600,
+            mask: ['.elementor-post__thumbnail', '.elementor-post__title'],
+          }
+        );
+      }
+      if (sec.length) {
+        await captureSections(page, route, liveUrl, localUrl, name, sec, summary);
       }
     }
   }

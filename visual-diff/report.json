@@ -1,17 +1,45 @@
 {
-  "timestamp": "2025-08-20T13:28:54.919Z",
+  "timestamp": "2025-08-20T13:49:58.707Z",
   "summary": [
     {
       "route": "/",
-      "mismatch": 33985
+      "mismatch": 25856
+    },
+    {
+      "route": "/#hero",
+      "mismatch": 4863
+    },
+    {
+      "route": "/#top-ticker",
+      "mismatch": 4631
+    },
+    {
+      "route": "/#grid-1",
+      "mismatch": 4810
     },
     {
       "route": "/ve-bkstar/",
-      "mismatch": 193838
+      "mismatch": 199596
+    },
+    {
+      "route": "/ve-bkstar/#hero",
+      "mismatch": 4641
+    },
+    {
+      "route": "/ve-bkstar/#grid",
+      "mismatch": 4567
     },
     {
       "route": "/dich-vu/",
-      "mismatch": 776564
+      "mismatch": 464276
+    },
+    {
+      "route": "/dich-vu/#hero",
+      "mismatch": 4992
+    },
+    {
+      "route": "/dich-vu/#form",
+      "mismatch": 0
     },
     {
       "route": "/tai-nguyen/",
@@ -19,11 +47,11 @@
     },
     {
       "route": "/tai-nguyen/#header-contest",
-      "mismatch": 90506
+      "mismatch": 81558
     },
     {
       "route": "/tai-nguyen/#ticker",
-      "mismatch": 54103
+      "mismatch": 47183
     },
     {
       "route": "/tai-nguyen/#post-grid",
@@ -31,23 +59,39 @@
     },
     {
       "route": "/tai-nguyen/#footer",
-      "mismatch": 0
+      "mismatch": 2305
     },
     {
       "route": "/thanh-tich-va-su-kien/",
-      "mismatch": 27280
+      "mismatch": 30523
+    },
+    {
+      "route": "/thanh-tich-va-su-kien/#hero",
+      "mismatch": 4735
+    },
+    {
+      "route": "/thanh-tich-va-su-kien/#grid",
+      "mismatch": 0
     },
     {
       "route": "/bao-chi/",
-      "mismatch": 187783
+      "mismatch": 0
     },
     {
       "route": "/tuyen-dung/",
-      "mismatch": 117222
+      "mismatch": 0
+    },
+    {
+      "route": "/tuyen-dung/#hero",
+      "mismatch": 4761
+    },
+    {
+      "route": "/tuyen-dung/#grid",
+      "mismatch": 0
     },
     {
       "route": "/faq/",
-      "mismatch": 0
+      "mismatch": 111716
     }
   ]
 }
