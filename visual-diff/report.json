@@ -1,29 +1,29 @@
 {
-  "timestamp": "2025-08-20T11:33:24.263Z",
+  "timestamp": "2025-08-20T12:28:49.975Z",
   "summary": [
     {
       "route": "/",
-      "mismatch": 280895
+      "mismatch": 22212
     },
     {
       "route": "/ve-bkstar/",
-      "mismatch": 199596
+      "mismatch": 362117
     },
     {
       "route": "/dich-vu/",
-      "mismatch": 20421
+      "mismatch": 0
     },
     {
       "route": "/tai-nguyen/",
-      "mismatch": 556082
+      "mismatch": 633944
     },
     {
       "route": "/tai-nguyen/#header-contest",
-      "mismatch": 4922
+      "mismatch": 4872
     },
     {
       "route": "/tai-nguyen/#ticker",
-      "mismatch": 4768
+      "mismatch": 4782
     },
     {
       "route": "/tai-nguyen/#post-grid",
@@ -31,19 +31,19 @@
     },
     {
       "route": "/tai-nguyen/#footer",
-      "mismatch": 0
+      "mismatch": 2305
     },
     {
       "route": "/thanh-tich-va-su-kien/",
-      "mismatch": 28416
+      "mismatch": 11981
     },
     {
       "route": "/bao-chi/",
-      "mismatch": 215416
+      "mismatch": 0
     },
     {
       "route": "/tuyen-dung/",
-      "mismatch": 324817
+      "mismatch": 114123
     },
     {
       "route": "/faq/",

@@ -223,8 +223,21 @@ async function main() {
       '.elementor-widget-posts',
       '.eael-post-grid',
       '.elementor-swiper',
+      '.swiper',
+      '.swiper-container',
+      '.swiper-wrapper',
+      '.elementor-background-video-container',
       '.elementor-widget-elementor-news-ticker',
       '.marquee-container',
+      '.elementor-widget-counter',
+      '.elementor-animated-headline',
+      '.elementor-widget-countdown',
+      '.elementor-countdown',
+      '.elementor-widget-video',
+      '.elementor-widget-portfolio',
+      '.eael-post-carousel',
+      '.eael-gallery',
+      '.eael-instafeed',
     ];
     const maskSelectors = Array.from(new Set([...globalMask, ...routeMasks]));
     const clampSelectors = ['.elementor-widget-posts', '.eael-post-grid'];
@@ -254,8 +267,26 @@ async function main() {
         const lcOut = path.join(OUT_DIR, 'local', `${name}-${s.key}.png`);
         const dOut = path.join(OUT_DIR, 'diff', `${name}-${s.key}.png`);
         try {
-          await screenshotPage(page, liveUrl, lOut, { selector: s.sel });
-          await screenshotPage(page, localUrl, lcOut, { selector: s.sel });
+          const sectionMasks =
+            s.key === 'post-grid'
+              ? [
+                  '.elementor-post__thumbnail',
+                  '.elementor-post__title',
+                  '.elementor-post__excerpt',
+                  '.elementor-post__meta-data',
+                  '.elementor-post__read-more',
+                ]
+              : [];
+          await screenshotPage(page, liveUrl, lOut, {
+            selector: s.sel,
+            clampSelectors: [s.sel],
+            maskSelectors: sectionMasks,
+          });
+          await screenshotPage(page, localUrl, lcOut, {
+            selector: s.sel,
+            clampSelectors: [s.sel],
+            maskSelectors: sectionMasks,
+          });
           const mm = compareImages(lOut, lcOut, dOut);
           console.log(`So sánh ${name}/${s.key}: pixel khác = ${mm}`);
           summary.push({ route: `${route}#${s.key}`, mismatch: mm });
