@@ -53,10 +53,21 @@ function buildCanonicalMap(dir) {
   return map;
 }
 
-async function screenshotPage(page, url, outPath, selector = null) {
+async function screenshotPage(page, url, outPath, opts = {}) {
+  let selector = null;
+  let maskSelectors = [];
+  if (typeof opts === 'string') {
+    selector = opts;
+  } else if (opts && typeof opts === 'object') {
+    selector = opts.selector || null;
+    maskSelectors = Array.isArray(opts.maskSelectors) ? opts.maskSelectors : [];
+  }
   // Chờ tới sự kiện load để ổn định tài nguyên trước khi chụp
   await page.goto(url, { waitUntil: 'load', timeout: 60000 });
   // Ẩn một số widget động có thể gây sai khác nhỏ
+  const maskCss = maskSelectors.length
+    ? `\n/* Mask vùng động */\n${maskSelectors.map((s) => `${s} { visibility: hidden !important; }`).join('\n')}`
+    : '';
   await page.addStyleTag({
     content: `
     /* Ẩn widget động gây nhiễu */
@@ -65,6 +76,7 @@ async function screenshotPage(page, url, outPath, selector = null) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     /* Dừng marquee/ticker */
     .marquee-content, .fd-elementor-news-ticker { animation: none !important; transform: none !important; }
+    ${maskCss}
   `,
   });
   // Đợi ổn định layout: fonts + images + lazy-load
@@ -171,8 +183,17 @@ async function main() {
     const diffOut = path.join(OUT_DIR, 'diff', `${name}.png`);
 
     console.log(`Chụp: live=${liveUrl} | local=${localUrl}`);
-    await screenshotPage(page, liveUrl, liveOut);
-    await screenshotPage(page, localUrl, localOut);
+    // Thiết lập mask cho các vùng động (post grid, ticker, hero carousel nếu có)
+    const globalMask = [
+      '.elementor-widget-posts',
+      '.eael-post-grid',
+      '.elementor-swiper',
+      '.elementor-widget-elementor-news-ticker',
+      '.marquee-container',
+    ];
+
+    await screenshotPage(page, liveUrl, liveOut, { maskSelectors: globalMask });
+    await screenshotPage(page, localUrl, localOut, { maskSelectors: globalMask });
 
     try {
       const mismatch = compareImages(liveOut, localOut, diffOut);
@@ -196,8 +217,8 @@ async function main() {
         const lcOut = path.join(OUT_DIR, 'local', `${name}-${s.key}.png`);
         const dOut = path.join(OUT_DIR, 'diff', `${name}-${s.key}.png`);
         try {
-          await screenshotPage(page, liveUrl, lOut, s.sel);
-          await screenshotPage(page, localUrl, lcOut, s.sel);
+          await screenshotPage(page, liveUrl, lOut, { selector: s.sel });
+          await screenshotPage(page, localUrl, lcOut, { selector: s.sel });
           const mm = compareImages(lOut, lcOut, dOut);
           console.log(`So sánh ${name}/${s.key}: pixel khác = ${mm}`);
           summary.push({ route: `${route}#${s.key}`, mismatch: mm });
