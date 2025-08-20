@@ -626,14 +626,28 @@ async function main() {
     JSON.stringify({ timestamp: new Date().toISOString(), summary }, null, 2)
   );
   // Tạo báo cáo HTML tổng hợp
-  const html = generateHtmlReport(summary);
+  const totals = computeTotals(summary);
+  const html = generateHtmlReport(summary, totals);
   const htmlPath = path.join(OUT_DIR, 'report.html');
   fs.writeFileSync(htmlPath, html);
   console.log('Đã tạo báo cáo:', reportPath);
   console.log('Đã tạo báo cáo HTML:', htmlPath);
+  if (process.env.STRICT === '1' && (totals.FAIL > 0 || totals.ERROR > 0)) {
+    console.error(`STRICT mode: Có ${totals.FAIL} FAIL và ${totals.ERROR} ERROR.`);
+    process.exitCode = 2;
+  }
 }
 
-function generateHtmlReport(summary) {
+function computeTotals(summary) {
+  const totals = { PASS: 0, FAIL: 0, ERROR: 0, SKIPPED: 0 };
+  for (const s of summary) {
+    const st = s.status || (s.error ? 'ERROR' : s.skipped ? 'SKIPPED' : '');
+    if (st && totals[st] !== undefined) totals[st] += 1;
+  }
+  return totals;
+}
+
+function generateHtmlReport(summary, totals) {
   const rows = summary.map((s) => {
     const file = s.fileBase ? s.fileBase + '.png' : '';
     const linkCell = s.fileBase
@@ -642,7 +656,8 @@ function generateHtmlReport(summary) {
     const mismatch = s.mismatch ?? '';
     const threshold = s.threshold ?? '';
     const status = s.status ?? (s.error ? 'ERROR' : s.skipped ? 'SKIPPED' : '');
-    return `<tr><td>${s.route}</td><td>${mismatch}</td><td>${threshold}</td><td>${status}</td><td>${linkCell}</td></tr>`;
+    const cls = status ? ` class="${status}"` : '';
+    return `<tr${cls}><td>${s.route}</td><td>${mismatch}</td><td>${threshold}</td><td>${status}</td><td>${linkCell}</td></tr>`;
   });
   return `<!doctype html>
 <html lang="vi">
@@ -659,10 +674,18 @@ body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:16
  .FAIL{color:#a00;font-weight:600}
  .ERROR{color:#a60;font-weight:600}
  .SKIPPED{color:#666}
+ .summary{margin:8px 0 16px; font-size:14px}
+ .summary b{margin-right:12px}
 </style>
 </head>
 <body>
 <h1>Visual diff report</h1>
+<div class="summary">
+  <b class="PASS">PASS: ${totals.PASS}</b>
+  <b class="FAIL">FAIL: ${totals.FAIL}</b>
+  <b class="ERROR">ERROR: ${totals.ERROR}</b>
+  <b class="SKIPPED">SKIPPED: ${totals.SKIPPED}</b>
+</div>
 <table>
 <thead><tr><th>Route/Section</th><th>Mismatch(px)</th><th>Threshold</th><th>Status</th><th>Images</th></tr></thead>
 <tbody>
