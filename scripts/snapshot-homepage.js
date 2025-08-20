@@ -5,13 +5,27 @@ import fs from 'node:fs';
 const TARGET_URL = 'https://bkstar.com.vn/';
 const OUT_DIR = path.resolve('public', 'snapshot');
 
+// Danh sách trang cần snapshot (whitelist)
+const WHITELIST_PATHS = [
+  '/',
+  '/ve-bkstar/',
+  '/why-bkstar/',
+  '/dich-vu/',
+  '/tai-nguyen/',
+  '/thanh-tich-va-su-kien/',
+  '/bao-chi/',
+  '/tuyen-dung/',
+  '/faq/',
+];
+const URLS = WHITELIST_PATHS.map((p) => new URL(p, TARGET_URL).href);
+
 async function snapshot() {
   if (fs.existsSync(OUT_DIR)) {
     fs.rmSync(OUT_DIR, { recursive: true, force: true });
   }
 
   await scrape({
-    urls: [TARGET_URL],
+    urls: URLS,
     directory: OUT_DIR,
     request: {
       headers: {
