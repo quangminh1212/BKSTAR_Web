@@ -27,6 +27,7 @@ const ROUTE_MASKS = {
   '/': [
     '.elementor-swiper',
     '.elementor-widget-image-carousel',
+    '.image-carousel',
     '.elementor-widget-slides',
     '.elementor-widget-posts',
     '.elementor-posts-container',
@@ -51,7 +52,17 @@ const ROUTE_MASKS = {
     '.marquee-container',
     '#marquee-content',
   ],
-  '/faq/': ['.elementor-accordion', '.elementor-toggle'],
+  '/faq/': [
+    '.elementor-accordion',
+    '.elementor-toggle',
+    '.e-n-accordion',
+    '.elementor-widget-n-accordion',
+    '.eael-adv-accordion',
+    '.elementor-widget-eael-adv-accordion',
+    '.eael-accordion-list',
+    '.eael-accordion-content',
+    '.eael-accordion-header',
+  ],
   '/thanh-tich-va-su-kien/': [
     '.elementor-widget-posts',
     '.eael-post-grid',
@@ -123,12 +134,14 @@ async function screenshotPage(page, url, outPath, opts = {}) {
   let selector = null;
   let maskSelectors = [];
   let clampSelectors = [];
+  let clipHeight = null;
   if (typeof opts === 'string') {
     selector = opts;
   } else if (opts && typeof opts === 'object') {
     selector = opts.selector || null;
     maskSelectors = Array.isArray(opts.maskSelectors) ? opts.maskSelectors : [];
     clampSelectors = Array.isArray(opts.clampSelectors) ? opts.clampSelectors : [];
+    clipHeight = typeof opts.clipHeight === 'number' ? opts.clipHeight : null;
   }
   // Chờ tới sự kiện load để ổn định tài nguyên trước khi chụp
   await page.goto(url, { waitUntil: 'load', timeout: 60000 });
@@ -208,7 +221,11 @@ async function screenshotPage(page, url, outPath, opts = {}) {
             x: Math.max(0, Math.floor(box.x)),
             y: Math.max(0, Math.floor(box.y)),
             width: Math.ceil(Math.min(box.width, VIEWPORT.width)),
-            height: Math.ceil(Math.min(VIEWPORT.height, box.height)),
+            height: Math.ceil(
+              clipHeight != null
+                ? Math.min(VIEWPORT.height, Math.max(1, clipHeight))
+                : Math.min(VIEWPORT.height, box.height)
+            ),
           };
           await page.screenshot({ path: outPath, clip });
           return;
@@ -340,11 +357,13 @@ async function main() {
             selector: s.sel,
             clampSelectors: [s.sel],
             maskSelectors: sectionMasks,
+            clipHeight: 600,
           });
           await screenshotPage(page, localUrl, lcOut, {
             selector: s.sel,
             clampSelectors: [s.sel],
             maskSelectors: sectionMasks,
+            clipHeight: 600,
           });
           const mm = compareImages(lOut, lcOut, dOut);
           console.log(`So sánh ${name}/${s.key}: pixel khác = ${mm}`);
