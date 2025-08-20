@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
-    "img:opt": "node scripts/optimize-images.js"
+    "img:opt": "node scripts/optimize-images.js",
+    "snapshot": "node scripts/snapshot-homepage.js"
   },
   "keywords": [],
   "author": "",
@@ -21,7 +22,7 @@
     "eslint-plugin-import": "^2.32.0",
     "prettier": "^3.6.2",
     "sharp": "^0.34.3",
-    "vite": "^6.3.5"
-  },
-  "dependencies": {}
+    "vite": "^6.3.5",
+    "website-scraper": "^5.3.1"
+  }
 }

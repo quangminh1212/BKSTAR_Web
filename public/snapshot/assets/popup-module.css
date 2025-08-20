@@ -1,0 +1,186 @@
+body:not(.elementor-editor-active) .king-addons-pb-template-popup {
+    display: none;
+}
+
+.king-addons-pb-template-popup {
+    position: fixed;
+    z-index: 99999999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.king-addons-pb-template-popup-inner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.king-addons-pb-popup-container {
+    position: relative;
+}
+
+.king-addons-pb-popup-container-inner {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.king-addons-pb-popup-container-inner > div {
+    flex-shrink: 0;
+    width: 100%;
+}
+
+.king-addons-pb-popup-container > div {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.king-addons-pb-popup-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+}
+
+.king-addons-pb-popup-overlay {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.king-addons-pb-popup-close-btn {
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    right: 0;
+    display: flex;
+    cursor: pointer;
+    text-align: center;
+}
+
+.king-addons-pb-popup-notification.king-addons-pb-template-popup,
+.king-addons-pb-popup-notification .king-addons-pb-template-popup-inner {
+    height: auto !important;
+}
+
+.king-addons-pb-popup-notification .king-addons-pb-popup-overlay {
+    display: none !important;
+}
+
+.king-addons-pb-popup-container-inner.ps-container.ps-active-y > .ps-scrollbar-y-rail,
+.king-addons-pb-popup-container-inner.ps.ps--active-y > .ps__rail-y {
+    display: block;
+    background-color: transparent;
+}
+
+.king-addons-pb-popup-container-inner.ps-container > .ps-scrollbar-y-rail,
+.king-addons-pb-popup-container-inner.ps > .ps__rail-y {
+    position: absolute;
+    right: 3px;
+    display: none;
+    width: 3px;
+}
+
+.king-addons-pb-popup-container-inner.ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y,
+.king-addons-pb-popup-container-inner.ps > .ps__rail-y > .ps__thumb-y {
+    position: absolute;
+    right: 0;
+    width: 3px;
+    cursor: pointer;
+}
+
+.king-addons-pb-popup-container .ps-scrollbar-x-rail {
+    display: none !important;
+}
+
+.king-addons-pb-popup-notification .king-addons-pb-popup-container .slideInDown {
+    animation-timing-function: linear;
+}
+
+.king-addons-pb-popup-notification .king-addons-pb-popup-container {
+    align-items: flex-start !important;
+    width: 100% !important;
+}
+
+.king-addons-pb-popup-trigger-button {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 14px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.king-addons-pb-popup-container .elementor-editor-section-settings {
+    transform: translateX(-50%);
+    border-radius: 0 0 5px 5px;
+}
+
+.king-addons-pb-popup-container .elementor-editor-section-settings .elementor-editor-element-setting:first-child {
+    border-radius: 0 0 0 5px;
+}
+
+.king-addons-pb-popup-container .elementor-editor-section-settings .elementor-editor-element-setting:first-child:before {
+    top: 0;
+    border-width: 0 12px 22px 0;
+}
+
+.king-addons-pb-popup-container .elementor-editor-section-settings .elementor-editor-element-setting:last-child {
+    border-radius: 0 0 5px 0;
+}
+
+.king-addons-pb-popup-container .elementor-editor-section-settings .elementor-editor-element-setting:last-child:after {
+    top: 0;
+    border-width: 0 0 22px 12px;
+}
+
+.elementor-editor-active [data-elementor-type="king-addons-pb-popups"] .elementor-section-wrap:not(:empty) + #elementor-add-new-section,
+.elementor-editor-active [data-elementor-type="king-addons-pb-popups"]:not(.elementor-edit-mode) {
+    display: none;
+}
+
+.elementor .elementor-widget-king-addons-pb-popup-trigger .king-addons-pb-popup-trigger-button {
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.elementor-editor-active [data-elementor-type="king-addons-pb-popup"] .elementor-section-wrap:not(:empty) + #elementor-add-new-section,
+.elementor-editor-active [data-elementor-type="king-addons-pb-popup"]:not(.elementor-edit-mode) {
+    display: none;
+}
+
+.king-addons-pb-template-edit-btn {
+    line-height: 1;
+    position: absolute;
+    top: 0;
+    right: 40px;
+    display: none;
+    padding: 8px 13px;
+    cursor: pointer;
+    color: #fff;
+    border: 1px solid #000;
+    background: #333;
+}
+
+.elementor-editor-active .king-addons-pb-template-edit-btn {
+    display: inline-block;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.elementor-editor-active .elementor-element-edit-mode:hover .king-addons-pb-template-edit-btn {
+    visibility: visible;
+    opacity: 1;
+}
