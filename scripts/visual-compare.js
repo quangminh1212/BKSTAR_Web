@@ -292,6 +292,17 @@ async function screenshotPage(page, url, outPath, opts = {}) {
       }
     } catch {}
   }
+  // Fallback: nếu có clipHeight nhưng không tìm thấy selector, vẫn chụp khung cố định
+  if (clipHeight != null) {
+    const clip = {
+      x: 0,
+      y: 0,
+      width: VIEWPORT.width,
+      height: Math.min(VIEWPORT.height, Math.max(1, clipHeight)),
+    };
+    await page.screenshot({ path: outPath, clip });
+    return;
+  }
   await page.screenshot({ path: outPath, fullPage: false });
 }
 
