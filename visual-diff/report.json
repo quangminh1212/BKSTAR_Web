@@ -1,53 +1,53 @@
 {
-  "timestamp": "2025-08-20T12:28:49.975Z",
+  "timestamp": "2025-08-20T12:32:47.038Z",
   "summary": [
     {
       "route": "/",
-      "mismatch": 22212
+      "mismatch": 12721
     },
     {
       "route": "/ve-bkstar/",
-      "mismatch": 362117
+      "mismatch": 199596
     },
     {
       "route": "/dich-vu/",
-      "mismatch": 0
+      "mismatch": 455693
     },
     {
       "route": "/tai-nguyen/",
-      "mismatch": 633944
+      "mismatch": 647204
     },
     {
       "route": "/tai-nguyen/#header-contest",
-      "mismatch": 4872
+      "mismatch": 4971
     },
     {
       "route": "/tai-nguyen/#ticker",
-      "mismatch": 4782
+      "mismatch": 4458
     },
     {
       "route": "/tai-nguyen/#post-grid",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\tai-nguyen-post-grid.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\tai-nguyen-post-grid.png"
-    },
-    {
-      "route": "/tai-nguyen/#footer",
-      "mismatch": 2305
-    },
-    {
-      "route": "/thanh-tich-va-su-kien/",
-      "mismatch": 11981
-    },
-    {
-      "route": "/bao-chi/",
       "mismatch": 0
     },
     {
+      "route": "/tai-nguyen/#footer",
+      "mismatch": 0
+    },
+    {
+      "route": "/thanh-tich-va-su-kien/",
+      "mismatch": 14708
+    },
+    {
+      "route": "/bao-chi/",
+      "mismatch": 194694
+    },
+    {
       "route": "/tuyen-dung/",
-      "mismatch": 114123
+      "mismatch": 436417
     },
     {
       "route": "/faq/",
-      "mismatch": 178614
+      "mismatch": 0
     }
   ]
 }
