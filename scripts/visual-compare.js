@@ -22,6 +22,29 @@ const LOCAL_BASE = 'http://localhost:5173/snapshot/';
 const SNAPSHOT_DIR = path.resolve('public', 'snapshot');
 const OUT_DIR = path.resolve('visual-diff');
 
+// Mask theo route để bỏ qua vùng động đặc thù
+const ROUTE_MASKS = {
+  '/': [
+    '.elementor-swiper',
+    '.elementor-widget-image-carousel',
+    '.elementor-widget-slides',
+    '.elementor-widget-posts',
+    '.eael-post-grid',
+    '.elementor-widget-counter',
+    '.elementor-widget-marquee',
+    '.marquee-container',
+  ],
+  '/bao-chi/': [
+    '.elementor-widget-posts',
+    '.eael-post-grid',
+    '.elementor-swiper',
+    '.elementor-widget-image-carousel',
+  ],
+  '/faq/': ['.elementor-accordion', '.elementor-toggle'],
+  '/thanh-tich-va-su-kien/': ['.elementor-widget-posts', '.eael-post-grid', '.elementor-swiper'],
+  '/ve-bkstar/': [],
+};
+
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
@@ -56,17 +79,27 @@ function buildCanonicalMap(dir) {
 async function screenshotPage(page, url, outPath, opts = {}) {
   let selector = null;
   let maskSelectors = [];
+  let clampSelectors = [];
   if (typeof opts === 'string') {
     selector = opts;
   } else if (opts && typeof opts === 'object') {
     selector = opts.selector || null;
     maskSelectors = Array.isArray(opts.maskSelectors) ? opts.maskSelectors : [];
+    clampSelectors = Array.isArray(opts.clampSelectors) ? opts.clampSelectors : [];
   }
   // Chờ tới sự kiện load để ổn định tài nguyên trước khi chụp
   await page.goto(url, { waitUntil: 'load', timeout: 60000 });
   // Ẩn một số widget động có thể gây sai khác nhỏ
   const maskCss = maskSelectors.length
     ? `\n/* Mask vùng động */\n${maskSelectors.map((s) => `${s} { visibility: hidden !important; }`).join('\n')}`
+    : '';
+  const clampCss = clampSelectors.length
+    ? `\n/* Giới hạn chiều cao vùng động để ổn định kích thước */\n${clampSelectors
+        .map(
+          (s) =>
+            `${s} { max-height: ${VIEWPORT.height}px !important; overflow: hidden !important; }`
+        )
+        .join('\n')}`
     : '';
   await page.addStyleTag({
     content: `
@@ -77,6 +110,7 @@ async function screenshotPage(page, url, outPath, opts = {}) {
     /* Dừng marquee/ticker */
     .marquee-content, .fd-elementor-news-ticker { animation: none !important; transform: none !important; }
     ${maskCss}
+    ${clampCss}
   `,
   });
   // Đợi ổn định layout: fonts + images + lazy-load
@@ -183,7 +217,8 @@ async function main() {
     const diffOut = path.join(OUT_DIR, 'diff', `${name}.png`);
 
     console.log(`Chụp: live=${liveUrl} | local=${localUrl}`);
-    // Thiết lập mask cho các vùng động (post grid, ticker, hero carousel nếu có)
+    // Mask theo route để bỏ qua vùng động đặc thù + mask chung
+    const routeMasks = ROUTE_MASKS[route] || [];
     const globalMask = [
       '.elementor-widget-posts',
       '.eael-post-grid',
@@ -191,9 +226,11 @@ async function main() {
       '.elementor-widget-elementor-news-ticker',
       '.marquee-container',
     ];
+    const maskSelectors = Array.from(new Set([...globalMask, ...routeMasks]));
+    const clampSelectors = ['.elementor-widget-posts', '.eael-post-grid'];
 
-    await screenshotPage(page, liveUrl, liveOut, { maskSelectors: globalMask });
-    await screenshotPage(page, localUrl, localOut, { maskSelectors: globalMask });
+    await screenshotPage(page, liveUrl, liveOut, { maskSelectors, clampSelectors });
+    await screenshotPage(page, localUrl, localOut, { maskSelectors, clampSelectors });
 
     try {
       const mismatch = compareImages(liveOut, localOut, diffOut);
