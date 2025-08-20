@@ -11,7 +11,13 @@
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
     "img:opt": "node scripts/optimize-images.js",
-    "snapshot": "node scripts/snapshot-homepage.js"
+    "snapshot": "node scripts/snapshot-homepage.js",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,css,html}": [
+      "prettier --write"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -20,6 +26,8 @@
     "eslint": "^9.33.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.6.2",
     "sharp": "^0.34.3",
     "vite": "^6.3.5",
