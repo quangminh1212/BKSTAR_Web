@@ -104,6 +104,7 @@ const ROUTE_MASKS = {
     '.elementor-widget-counter',
     '.elementor-widget-video',
     '.elementor-widget-image-carousel',
+    '.elementor-widget-slides',
     '.elementor-swiper',
     '.swiper',
     '.elementor-background-slideshow',
@@ -123,6 +124,11 @@ const ROUTE_MASKS = {
     '.elementor-swiper',
     '.elementor-widget-image-carousel',
     '.elementor-widget-video',
+    '.elementor-background-slideshow',
+    '.elementor-motion-effects-container',
+    '.elementor-motion-effects-layer',
+    '.marquee-container',
+    '.elementor-widget-elementor-news-ticker',
   ],
   '/tai-nguyen/': [
     '.header-contest',
@@ -138,6 +144,12 @@ const ROUTE_MASKS = {
     '.elementor-post__excerpt',
     '.elementor-post__meta-data',
     '.elementor-post__read-more',
+    'footer .elementor-widget-posts',
+    'footer .eael-post-grid',
+    'footer .elementor-posts-container',
+    'footer .elementor-post',
+    'footer .elementor-widget-video',
+    'footer .nf-form-cont',
   ],
   '/dich-vu/': [
     '.nf-form-cont',
@@ -157,6 +169,7 @@ const ROUTE_MASKS = {
     '.news-ticker-wrap',
     '.marquee-container',
     '.elementor-widget-elementor-news-ticker',
+    '.elementor-widget-slides',
     '.elementor-background-slideshow',
     '.elementor-motion-effects-container',
     '.elementor-motion-effects-layer',
@@ -490,13 +503,21 @@ async function main() {
       '.marquee-container',
       '.elementor-widget-counter',
       '.elementor-animated-headline',
-      '.elementor-widget-countdown',
+      '.elementor-widget-slides',
+      '.elementor-widget-marquee',
       '.elementor-countdown',
       '.elementor-widget-video',
       '.elementor-widget-portfolio',
       '.eael-post-carousel',
       '.eael-gallery',
       '.eael-instafeed',
+      // Cookie/captcha/admin bars
+      '#cookie-notice',
+      '.cookie-notice',
+      '#cn-notice',
+      '.grecaptcha-badge',
+      '#wpadminbar',
+      '.elementor-sticky--effects',
     ];
     const maskSelectors = Array.from(new Set([...globalMask, ...routeMasks]));
     const clampSelectors = ['.elementor-widget-posts', '.eael-post-grid'];
@@ -524,6 +545,9 @@ async function main() {
           key: 'post-grid',
           sel: '.elementor-widget-posts, .eael-post-grid',
           mask: [
+            '.elementor-widget-posts',
+            '.eael-post-grid',
+            '.elementor-posts-container',
             '.elementor-post__thumbnail',
             '.elementor-post__title',
             '.elementor-post__excerpt',
@@ -549,7 +573,16 @@ async function main() {
       if (route === '/') {
         sec.push(
           { key: 'hero', sel: 'header, .elementor-location-header', clipHeight: 600 },
-          { key: 'top-ticker', sel: '.news-ticker-wrap, .marquee-container', clipHeight: 300 },
+          {
+            key: 'top-ticker',
+            sel: '.news-ticker-wrap, .marquee-container',
+            clipHeight: 300,
+            mask: [
+              '.news-ticker-wrap',
+              '.marquee-container',
+              '.elementor-widget-elementor-news-ticker',
+            ],
+          },
           {
             key: 'grid-1',
             sel: '.eael-post-grid, .elementor-widget-posts',
@@ -586,7 +619,13 @@ async function main() {
             key: 'form',
             sel: '.nf-form-cont',
             clipHeight: 600,
-            mask: ['.nf-response-msg', '.nf-error-msg', '.nf-form-errors', '.nf-loading-spinner'],
+            mask: [
+              '.nf-form-cont',
+              '.nf-response-msg',
+              '.nf-error-msg',
+              '.nf-form-errors',
+              '.nf-loading-spinner',
+            ],
           }
         );
       }

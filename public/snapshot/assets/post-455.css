@@ -15,7 +15,7 @@
   .elementor-element.elementor-element-5a03e10a
   > .elementor-motion-effects-container
   > .elementor-motion-effects-layer {
-  background-image: url('../images/BG_1.png');
+  background-image: url('../images/BG.png');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -156,6 +156,23 @@
   height: 18px;
   width: 18px;
 }
+.elementor-455 .elementor-element.elementor-element-213933d5 .eael-load-more-button {
+  margin: 20px 0px 0px 0px;
+  font-family: 'Montserrat', Sans-serif;
+  font-size: 14px;
+  color: #1e5dbc;
+  background: #29d8d800;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: var(--e-global-color-astglobalcolor0);
+}
+.elementor-455 .elementor-element.elementor-element-213933d5 .eael-load-more-button:hover {
+  color: #1e5dbc;
+  background: #27bdbd00;
+}
+.elementor-455 .elementor-element.elementor-element-213933d5 .eael-load-more-button-wrap {
+  justify-content: center;
+}
 .elementor-455 .elementor-element.elementor-element-060b15b {
   --display: flex;
   --margin-top: 0vw;
@@ -246,6 +263,24 @@
   > img {
   height: 18px;
   width: 18px;
+}
+.elementor-455 .elementor-element.elementor-element-8464310 .eael-load-more-button {
+  margin: 20px 0px 0px 0px;
+  font-family: 'Montserrat', Sans-serif;
+  font-size: 14px;
+  color: #1e5dbc;
+  background: #29d8d800;
+  border-style: solid;
+  border-width: 1px 1px 1px 1px;
+  border-color: #1e5dbc;
+}
+.elementor-455 .elementor-element.elementor-element-8464310 .eael-load-more-button:hover {
+  color: #1e5dbc;
+  background: #27bdbd00;
+  border-color: #1e5dbc;
+}
+.elementor-455 .elementor-element.elementor-element-8464310 .eael-load-more-button-wrap {
+  justify-content: center;
 }
 .elementor-455 .elementor-element.elementor-element-151a843 {
   --display: flex;
