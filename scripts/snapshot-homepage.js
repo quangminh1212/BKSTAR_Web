@@ -16,13 +16,14 @@ async function snapshot() {
     request: {
       headers: {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/124 Safari/537.36',
-        'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        accept:
+          'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
       },
     },
     subdirectories: [
       { directory: 'assets', extensions: ['.css', '.js'] },
       { directory: 'images', extensions: ['.jpg', '.jpeg', '.png', '.webp', '.svg', '.ico'] },
-      { directory: 'fonts', extensions: ['.woff', '.woff2', '.ttf', '.eot'] }
+      { directory: 'fonts', extensions: ['.woff', '.woff2', '.ttf', '.eot'] },
     ],
     sources: [
       { selector: 'img', attr: 'src' },
@@ -30,7 +31,7 @@ async function snapshot() {
       { selector: 'script', attr: 'src' },
       { selector: 'link[rel="icon"]', attr: 'href' },
       { selector: 'link[rel="apple-touch-icon"]', attr: 'href' },
-      { selector: 'a', attr: 'href' }
+      { selector: 'a', attr: 'href' },
     ],
     recursive: true,
     maxDepth: 3,
@@ -64,4 +65,3 @@ snapshot().catch((e) => {
   console.error(e);
   process.exit(1);
 });
-
