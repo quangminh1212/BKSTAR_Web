@@ -39,6 +39,8 @@ const ROUTE_MASKS = {
     '.eael-post-grid',
     '.elementor-swiper',
     '.elementor-widget-image-carousel',
+    '.elementor-widget-portfolio',
+    '.elementor-widget-video',
   ],
   '/faq/': ['.elementor-accordion', '.elementor-toggle'],
   '/thanh-tich-va-su-kien/': [
@@ -53,12 +55,18 @@ const ROUTE_MASKS = {
     '.elementor-widget-image-carousel',
     '.elementor-swiper',
     '.swiper',
+    '.news-ticker-wrap',
+    '#fd-ticker-ad9ea0a',
+    '.marquee-container',
+    '#marquee-content',
+    '.image-carousel',
   ],
   '/tuyen-dung/': [
     '.elementor-widget-posts',
     '.eael-post-grid',
     '.elementor-swiper',
     '.elementor-widget-image-carousel',
+    '.elementor-widget-video',
   ],
   '/tai-nguyen/': [
     '.header-contest',
