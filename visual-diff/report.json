@@ -1,97 +1,204 @@
 {
-  "timestamp": "2025-08-20T16:20:04.640Z",
+  "timestamp": "2025-08-20T16:58:29.933Z",
   "summary": [
     {
       "route": "/",
-      "mismatch": 29687
+      "name": "home",
+      "fileBase": "home",
+      "mismatch": 22069,
+      "threshold": 50000,
+      "status": "PASS"
     },
     {
       "route": "/#hero",
-      "mismatch": 4654
+      "name": "home",
+      "sectionKey": "hero",
+      "fileBase": "home-hero",
+      "mismatch": 4359,
+      "threshold": 50000,
+      "status": "PASS"
     },
     {
       "route": "/#top-ticker",
-      "mismatch": 4271
+      "name": "home",
+      "sectionKey": "top-ticker",
+      "fileBase": "home-top-ticker",
+      "mismatch": 51542,
+      "threshold": 50000,
+      "status": "FAIL"
     },
     {
       "route": "/#grid-1",
-      "mismatch": 4726
+      "name": "home",
+      "sectionKey": "grid-1",
+      "fileBase": "home-grid-1",
+      "mismatch": 4562,
+      "threshold": 50000,
+      "status": "PASS"
     },
     {
       "route": "/ve-bkstar/",
-      "mismatch": 110847
+      "name": "ve-bkstar",
+      "fileBase": "ve-bkstar",
+      "mismatch": 197636,
+      "threshold": 150000,
+      "status": "FAIL"
     },
     {
       "route": "/ve-bkstar/#hero",
-      "mismatch": 4838
+      "name": "ve-bkstar",
+      "sectionKey": "hero",
+      "fileBase": "ve-bkstar-hero",
+      "mismatch": 4952,
+      "threshold": 150000,
+      "status": "PASS"
     },
     {
       "route": "/ve-bkstar/#grid",
-      "mismatch": 4865
+      "name": "ve-bkstar",
+      "sectionKey": "grid",
+      "fileBase": "ve-bkstar-grid",
+      "mismatch": 4834,
+      "threshold": 150000,
+      "status": "PASS"
     },
     {
       "route": "/dich-vu/",
-      "mismatch": 0
+      "name": "dich-vu",
+      "fileBase": "dich-vu",
+      "mismatch": 269506,
+      "threshold": 200000,
+      "status": "FAIL"
     },
     {
       "route": "/dich-vu/#hero",
-      "mismatch": 4539
+      "name": "dich-vu",
+      "sectionKey": "hero",
+      "fileBase": "dich-vu-hero",
+      "mismatch": 4875,
+      "threshold": 200000,
+      "status": "PASS"
     },
     {
       "route": "/dich-vu/#form",
-      "mismatch": 195169
+      "name": "dich-vu",
+      "sectionKey": "form",
+      "fileBase": "dich-vu-form",
+      "mismatch": 228646,
+      "threshold": 2000000,
+      "status": "PASS"
     },
     {
       "route": "/tai-nguyen/",
-      "mismatch": 0
+      "name": "tai-nguyen",
+      "fileBase": "tai-nguyen",
+      "mismatch": 596320,
+      "threshold": 200000,
+      "status": "FAIL"
     },
     {
       "route": "/tai-nguyen/#header-contest",
-      "mismatch": 117392
+      "name": "tai-nguyen",
+      "sectionKey": "header-contest",
+      "fileBase": "tai-nguyen-header-contest",
+      "mismatch": 17800,
+      "threshold": 200000,
+      "status": "PASS"
     },
     {
       "route": "/tai-nguyen/#ticker",
-      "mismatch": 157081
+      "name": "tai-nguyen",
+      "sectionKey": "ticker",
+      "fileBase": "tai-nguyen-ticker",
+      "mismatch": 191931,
+      "threshold": 200000,
+      "status": "PASS"
     },
     {
       "route": "/tai-nguyen/#post-grid",
-      "mismatch": 108056
+      "name": "tai-nguyen",
+      "sectionKey": "post-grid",
+      "fileBase": "tai-nguyen-post-grid",
+      "mismatch": 234174,
+      "threshold": 200000,
+      "status": "FAIL"
     },
     {
       "route": "/tai-nguyen/#footer",
-      "mismatch": 0
+      "name": "tai-nguyen",
+      "sectionKey": "footer",
+      "fileBase": "tai-nguyen-footer",
+      "mismatch": 156633,
+      "threshold": 50000,
+      "status": "FAIL"
     },
     {
       "route": "/thanh-tich-va-su-kien/",
-      "mismatch": 5506
+      "name": "thanh-tich-va-su-kien",
+      "fileBase": "thanh-tich-va-su-kien",
+      "mismatch": 19074,
+      "threshold": 50000,
+      "status": "PASS"
     },
     {
       "route": "/thanh-tich-va-su-kien/#hero",
-      "mismatch": 4711
+      "name": "thanh-tich-va-su-kien",
+      "sectionKey": "hero",
+      "fileBase": "thanh-tich-va-su-kien-hero",
+      "mismatch": 4101,
+      "threshold": 50000,
+      "status": "PASS"
     },
     {
       "route": "/thanh-tich-va-su-kien/#grid",
-      "mismatch": 115175
+      "name": "thanh-tich-va-su-kien",
+      "sectionKey": "grid",
+      "fileBase": "thanh-tich-va-su-kien-grid",
+      "mismatch": 0,
+      "threshold": 120000,
+      "status": "PASS"
     },
     {
       "route": "/bao-chi/",
-      "mismatch": 0
+      "name": "bao-chi",
+      "fileBase": "bao-chi",
+      "mismatch": 0,
+      "threshold": 50000,
+      "status": "PASS"
     },
     {
       "route": "/tuyen-dung/",
-      "mismatch": 155618
+      "name": "tuyen-dung",
+      "fileBase": "tuyen-dung",
+      "mismatch": 112163,
+      "threshold": 200000,
+      "status": "PASS"
     },
     {
       "route": "/tuyen-dung/#hero",
-      "mismatch": 4778
+      "name": "tuyen-dung",
+      "sectionKey": "hero",
+      "fileBase": "tuyen-dung-hero",
+      "mismatch": 4943,
+      "threshold": 200000,
+      "status": "PASS"
     },
     {
       "route": "/tuyen-dung/#grid",
-      "mismatch": 0
+      "name": "tuyen-dung",
+      "sectionKey": "grid",
+      "fileBase": "tuyen-dung-grid",
+      "mismatch": 96828,
+      "threshold": 200000,
+      "status": "PASS"
     },
     {
       "route": "/faq/",
-      "mismatch": 109676
+      "name": "faq",
+      "fileBase": "faq",
+      "mismatch": 181162,
+      "threshold": 150000,
+      "status": "FAIL"
     }
   ]
 }
