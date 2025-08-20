@@ -1,37 +1,37 @@
 {
-  "timestamp": "2025-08-20T06:50:24.254Z",
+  "timestamp": "2025-08-20T07:16:21.128Z",
   "summary": [
     {
       "route": "/",
-      "mismatch": 121041
+      "mismatch": 4662
     },
     {
       "route": "/ve-bkstar/",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\ve-bkstar.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\ve-bkstar.png"
+      "mismatch": 783016
     },
     {
       "route": "/dich-vu/",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\dich-vu.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\dich-vu.png"
+      "mismatch": 863102
     },
     {
       "route": "/tai-nguyen/",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\tai-nguyen.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\tai-nguyen.png"
+      "mismatch": 824146
     },
     {
       "route": "/thanh-tich-va-su-kien/",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\thanh-tich-va-su-kien.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\thanh-tich-va-su-kien.png"
+      "mismatch": 805854
     },
     {
       "route": "/bao-chi/",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\bao-chi.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\bao-chi.png"
+      "mismatch": 876286
     },
     {
       "route": "/tuyen-dung/",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\tuyen-dung.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\tuyen-dung.png"
+      "mismatch": 749288
     },
     {
       "route": "/faq/",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\faq.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\faq.png"
+      "mismatch": 752571
     }
   ]
 }

@@ -19,17 +19,48 @@ const PAGES = [
 
 const LIVE_BASE = 'https://bkstar.com.vn';
 const LOCAL_BASE = 'http://localhost:5173/snapshot';
+const SNAPSHOT_DIR = path.resolve('public', 'snapshot');
 const OUT_DIR = path.resolve('visual-diff');
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
+function buildCanonicalMap(dir) {
+  const map = new Map();
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const e of entries) {
+    if (!e.isFile()) continue;
+    if (!e.name.endsWith('.html')) continue;
+    const fullPath = path.join(dir, e.name);
+    const html = fs.readFileSync(fullPath, 'utf8');
+    const m = html.match(/<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["'][^>]*>/i);
+    if (m) {
+      try {
+        const u = new URL(m[1]);
+        let p = u.pathname;
+        if (!p.endsWith('/')) p += '/';
+        map.set(p, e.name);
+      } catch {}
+    }
+  }
+  // Trang chủ
+  if (!map.has('/')) map.set('/', 'index-snapshot.html');
+  return map;
+}
+
 async function screenshotPage(page, url, outPath) {
-  await page.goto(url, { waitUntil: 'load', timeout: 60000 });
-  // Đợi fonts/JS động ổn định
-  await page.waitForTimeout(2000);
-  await page.screenshot({ path: outPath, fullPage: true });
+  await page.goto(url, { waitUntil: 'networkidle', timeout: 60000 });
+  // Ẩn một số widget động có thể gây sai khác nhỏ
+  await page.addStyleTag({
+    content: `
+    #ast-scroll-top, .chaty-widget, #chaty-widget, .astra-cart-drawer, .ast-related-posts { display: none !important; }
+  `,
+  });
+  // Đợi ổn định
+  await page.waitForTimeout(1000);
+  // Chụp theo viewport để đảm bảo cùng kích thước
+  await page.screenshot({ path: outPath, fullPage: false });
 }
 
 function compareImages(imgAPath, imgBPath, diffPath) {
@@ -62,15 +93,21 @@ async function main() {
   const ctx = await browser.newContext({ viewport: VIEWPORT });
   const page = await ctx.newPage();
 
+  // Xây map canonical -> file local
+  const canonicalMap = buildCanonicalMap(SNAPSHOT_DIR);
+
   const summary = [];
   for (const route of PAGES) {
     const name = sanitize(route);
     const liveUrl = new URL(route, LIVE_BASE).href;
-    // Map route -> file trong snapshot
-    const localUrl = new URL(
-      route === '/' ? 'index-snapshot.html' : route.replace(/^\//, '').replace(/\/$/, '') + '.html',
-      LOCAL_BASE
-    ).href;
+    // Tìm file local theo canonical
+    const localFile = canonicalMap.get(route) || (route === '/' ? 'index-snapshot.html' : null);
+    if (!localFile) {
+      console.warn(`Không tìm thấy file local cho route ${route}, bỏ qua.`);
+      summary.push({ route, skipped: true, reason: 'missing-local-file' });
+      continue;
+    }
+    const localUrl = new URL(localFile, LOCAL_BASE).href;
 
     const liveOut = path.join(OUT_DIR, 'live', `${name}.png`);
     const localOut = path.join(OUT_DIR, 'local', `${name}.png`);
