@@ -41,8 +41,32 @@ const ROUTE_MASKS = {
     '.elementor-widget-image-carousel',
   ],
   '/faq/': ['.elementor-accordion', '.elementor-toggle'],
-  '/thanh-tich-va-su-kien/': ['.elementor-widget-posts', '.eael-post-grid', '.elementor-swiper'],
-  '/ve-bkstar/': [],
+  '/thanh-tich-va-su-kien/': [
+    '.elementor-widget-posts',
+    '.eael-post-grid',
+    '.elementor-swiper',
+    '.elementor-widget-image-carousel',
+  ],
+  '/ve-bkstar/': [
+    '.elementor-widget-counter',
+    '.elementor-widget-video',
+    '.elementor-widget-image-carousel',
+    '.elementor-swiper',
+    '.swiper',
+  ],
+  '/tuyen-dung/': [
+    '.elementor-widget-posts',
+    '.eael-post-grid',
+    '.elementor-swiper',
+    '.elementor-widget-image-carousel',
+  ],
+  '/tai-nguyen/': [
+    '.header-contest',
+    '.elementor-widget-elementor-news-ticker',
+    '.marquee-container',
+    '.elementor-widget-posts',
+    '.eael-post-grid',
+  ],
 };
 
 function ensureDir(dir) {
@@ -158,8 +182,21 @@ async function screenshotPage(page, url, outPath, opts = {}) {
       await page.waitForSelector(selector, { timeout: 8000, state: 'visible' });
       const el = await page.$(selector);
       if (el) {
-        await el.screenshot({ path: outPath });
-        return;
+        await el.scrollIntoViewIfNeeded();
+        const box = await el.boundingBox();
+        if (box) {
+          const clip = {
+            x: Math.max(0, Math.floor(box.x)),
+            y: Math.max(0, Math.floor(box.y)),
+            width: Math.ceil(Math.min(box.width, VIEWPORT.width)),
+            height: Math.ceil(Math.min(VIEWPORT.height, box.height)),
+          };
+          await page.screenshot({ path: outPath, clip });
+          return;
+        } else {
+          await el.screenshot({ path: outPath });
+          return;
+        }
       }
     } catch {}
   }
