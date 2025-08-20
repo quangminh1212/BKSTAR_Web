@@ -18,7 +18,7 @@ const PAGES = [
 ];
 
 const LIVE_BASE = 'https://bkstar.com.vn';
-const LOCAL_BASE = 'http://localhost:5173/snapshot';
+const LOCAL_BASE = 'http://localhost:5173/snapshot/';
 const SNAPSHOT_DIR = path.resolve('public', 'snapshot');
 const OUT_DIR = path.resolve('visual-diff');
 

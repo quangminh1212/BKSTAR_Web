@@ -1,37 +1,37 @@
 {
-  "timestamp": "2025-08-20T07:16:21.128Z",
+  "timestamp": "2025-08-20T07:27:28.964Z",
   "summary": [
     {
       "route": "/",
-      "mismatch": 4662
+      "mismatch": 4641
     },
     {
       "route": "/ve-bkstar/",
-      "mismatch": 783016
+      "mismatch": 4790
     },
     {
       "route": "/dich-vu/",
-      "mismatch": 863102
+      "mismatch": 4580
     },
     {
       "route": "/tai-nguyen/",
-      "mismatch": 824146
+      "mismatch": 144463
     },
     {
       "route": "/thanh-tich-va-su-kien/",
-      "mismatch": 805854
+      "mismatch": 4975
     },
     {
       "route": "/bao-chi/",
-      "mismatch": 876286
+      "mismatch": 4422
     },
     {
       "route": "/tuyen-dung/",
-      "mismatch": 749288
+      "mismatch": 541
     },
     {
       "route": "/faq/",
-      "mismatch": 752571
+      "mismatch": 4550
     }
   ]
 }
