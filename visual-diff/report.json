@@ -1,11 +1,211 @@
 {
-  "timestamp": "2025-08-20T19:49:02.149Z",
+  "timestamp": "2025-08-20T20:25:29.699Z",
   "summary": [
+    {
+      "route": "/1-ideal-1-world-competition-2025/",
+      "name": "1-ideal-1-world-competition-2025",
+      "fileBase": "1-ideal-1-world-competition-2025",
+      "mismatch": 119609,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/ai-jam-2025/",
+      "name": "ai-jam-2025",
+      "fileBase": "ai-jam-2025",
+      "mismatch": 106677,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/aigc-singapore-innovate-grow-lead/",
+      "name": "aigc-singapore-innovate-grow-lead",
+      "fileBase": "aigc-singapore-innovate-grow-lead",
+      "mismatch": 379198,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/bi-quyet-trung-tuyen-dai-hoc-columbia-ty-le-chap-thuan-va-chien-nop-ho-so/",
+      "name": "bi-quyet-trung-tuyen-dai-hoc-columbia-ty-le-chap-thuan-va-chien-nop-ho-so",
+      "fileBase": "bi-quyet-trung-tuyen-dai-hoc-columbia-ty-le-chap-thuan-va-chien-nop-ho-so",
+      "mismatch": 141317,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/bi-quyet-trung-tuyen-vien-cong-nghe-georgia-ty-le-chap-thuan-va-chien-luoc-ung-tuyen/",
+      "name": "bi-quyet-trung-tuyen-vien-cong-nghe-georgia-ty-le-chap-thuan-va-chien-luoc-ung-tuyen",
+      "fileBase": "bi-quyet-trung-tuyen-vien-cong-nghe-georgia-ty-le-chap-thuan-va-chien-luoc-ung-tuyen",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/bkstar-dong-hanh-cung-ngay-hoi-sang-tao-khoa-hoc-va-cong-nghe-2024-tai-truong-thcs-doan-thi-diem/",
+      "name": "bkstar-dong-hanh-cung-ngay-hoi-sang-tao-khoa-hoc-va-cong-nghe-2024-tai-truong-thcs-doan-thi-diem",
+      "fileBase": "bkstar-dong-hanh-cung-ngay-hoi-sang-tao-khoa-hoc-va-cong-nghe-2024-tai-truong-thcs-doan-thi-diem",
+      "mismatch": 451266,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/bkstar-gap-go-hoc-sinh-thpt-yen-hoa-mo-ra-canh-cua-tuong-lai/",
+      "name": "bkstar-gap-go-hoc-sinh-thpt-yen-hoa-mo-ra-canh-cua-tuong-lai",
+      "fileBase": "bkstar-gap-go-hoc-sinh-thpt-yen-hoa-mo-ra-canh-cua-tuong-lai",
+      "mismatch": 461348,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/bkstar-khuay-dong-stem-day-2024-tai-truong-thcs-nguyen-truong-to/",
+      "name": "bkstar-khuay-dong-stem-day-2024-tai-truong-thcs-nguyen-truong-to",
+      "fileBase": "bkstar-khuay-dong-stem-day-2024-tai-truong-thcs-nguyen-truong-to",
+      "mismatch": 357302,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/bright-expo-2024/",
+      "name": "bright-expo-2024",
+      "fileBase": "bright-expo-2024",
+      "mismatch": 142063,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/chuc-mung-nguyen-huu-son-truc-hoc-sinh-bkstar-trung-tuyen-vinuniversity-voi-hoc-bong-danh-gia-gan-25-ty-dong/",
+      "name": "chuc-mung-nguyen-huu-son-truc-hoc-sinh-bkstar-trung-tuyen-vinuniversity-voi-hoc-bong-danh-gia-gan-25-ty-dong",
+      "fileBase": "chuc-mung-nguyen-huu-son-truc-hoc-sinh-bkstar-trung-tuyen-vinuniversity-voi-hoc-bong-danh-gia-gan-25-ty-dong",
+      "mismatch": 247083,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/chuong-trinh-dao-tao-cong-nghe-ky-nang-tuong-lai/",
+      "name": "chuong-trinh-dao-tao-cong-nghe-ky-nang-tuong-lai",
+      "fileBase": "chuong-trinh-dao-tao-cong-nghe-ky-nang-tuong-lai",
+      "mismatch": 213968,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/chuong-trinh-tu-van-du-hoc-toan-dien/",
+      "name": "chuong-trinh-tu-van-du-hoc-toan-dien",
+      "fileBase": "chuong-trinh-tu-van-du-hoc-toan-dien",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/cuoc-thi-quoc-te/",
+      "name": "cuoc-thi-quoc-te",
+      "fileBase": "cuoc-thi-quoc-te",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/dao-tao-ki-thi-quoc-te-chuyen-sau/",
+      "name": "dao-tao-ki-thi-quoc-te-chuyen-sau",
+      "fileBase": "dao-tao-ki-thi-quoc-te-chuyen-sau",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/dao-tao-tham-du-cuoc-thi-sang-tao-quoc-te/",
+      "name": "dao-tao-tham-du-cuoc-thi-sang-tao-quoc-te",
+      "fileBase": "dao-tao-tham-du-cuoc-thi-sang-tao-quoc-te",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/dong-hanh-suot-hanh-trinh-du-hoc/",
+      "name": "dong-hanh-suot-hanh-trinh-du-hoc",
+      "fileBase": "dong-hanh-suot-hanh-trinh-du-hoc",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/du-hanh-stem-tuyen-quang-2023-bung-no-sang-tao-gat-hai-thanh-cong/",
+      "name": "du-hanh-stem-tuyen-quang-2023-bung-no-sang-tao-gat-hai-thanh-cong",
+      "fileBase": "du-hanh-stem-tuyen-quang-2023-bung-no-sang-tao-gat-hai-thanh-cong",
+      "mismatch": 378385,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/hn-hcm-tuyen-dung-nhan-vien-tu-van-tuyen-sinh/",
+      "name": "hn-hcm-tuyen-dung-nhan-vien-tu-van-tuyen-sinh",
+      "fileBase": "hn-hcm-tuyen-dung-nhan-vien-tu-van-tuyen-sinh",
+      "mismatch": 189455,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/ho-tro-ho-so-va-visa-toan-dien/",
+      "name": "ho-tro-ho-so-va-visa-toan-dien",
+      "fileBase": "ho-tro-ho-so-va-visa-toan-dien",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/ho-tro-san-hoc-bong-toi-uu/",
+      "name": "ho-tro-san-hoc-bong-toi-uu",
+      "fileBase": "ho-tro-san-hoc-bong-toi-uu",
+      "mismatch": 118600,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/hoc-vien-bkstar-gianh-tong-hoc-bong-453-ty-dong-tu-loat-dai-hoc-hang-dau-hoa-ky/",
+      "name": "hoc-vien-bkstar-gianh-tong-hoc-bong-453-ty-dong-tu-loat-dai-hoc-hang-dau-hoa-ky",
+      "fileBase": "hoc-vien-bkstar-gianh-tong-hoc-bong-453-ty-dong-tu-loat-dai-hoc-hang-dau-hoa-ky",
+      "mismatch": 336844,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/hoc-vien-bkstar-trung-tuyen-nganh-ky-thuat-dien-dien-tu-tai-nanyang-technological-university-ntu-singapore/",
+      "name": "hoc-vien-bkstar-trung-tuyen-nganh-ky-thuat-dien-dien-tu-tai-nanyang-technological-university-ntu-singapore",
+      "fileBase": "hoc-vien-bkstar-trung-tuyen-nganh-ky-thuat-dien-dien-tu-tai-nanyang-technological-university-ntu-singapore",
+      "mismatch": 273851,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/huong-dan-toan-dien-cho-sinh-vien-chuyen-truong-dai-hoc-phan-iii/",
+      "name": "huong-dan-toan-dien-cho-sinh-vien-chuyen-truong-dai-hoc-phan-iii",
+      "fileBase": "huong-dan-toan-dien-cho-sinh-vien-chuyen-truong-dai-hoc-phan-iii",
+      "mismatch": 271250,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/huong-dan-toan-dien-cho-sinh-vien-chuyen-truong-dai-hoc-phan-iv/",
+      "name": "huong-dan-toan-dien-cho-sinh-vien-chuyen-truong-dai-hoc-phan-iv",
+      "fileBase": "huong-dan-toan-dien-cho-sinh-vien-chuyen-truong-dai-hoc-phan-iv",
+      "mismatch": 166704,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/ican-2025/",
+      "name": "ican-2025",
+      "fileBase": "ican-2025",
+      "mismatch": 222617,
+      "threshold": 300000,
+      "status": "PASS"
+    },
     {
       "route": "/",
       "name": "home",
       "fileBase": "home",
-      "mismatch": 41481,
+      "mismatch": 38495,
       "threshold": 50000,
       "status": "PASS"
     },
@@ -14,7 +214,7 @@
       "name": "home",
       "sectionKey": "hero",
       "fileBase": "home-hero",
-      "mismatch": 4762,
+      "mismatch": 4427,
       "threshold": 50000,
       "status": "PASS"
     },
@@ -32,7 +232,7 @@
       "name": "home",
       "sectionKey": "grid-1",
       "fileBase": "home-grid-1",
-      "mismatch": 4906,
+      "mismatch": 4763,
       "threshold": 50000,
       "status": "PASS"
     },
@@ -40,16 +240,16 @@
       "route": "/ve-bkstar/",
       "name": "ve-bkstar",
       "fileBase": "ve-bkstar",
-      "mismatch": 193713,
+      "mismatch": 354177,
       "threshold": 350000,
-      "status": "PASS"
+      "status": "FAIL"
     },
     {
       "route": "/ve-bkstar/#hero",
       "name": "ve-bkstar",
       "sectionKey": "hero",
       "fileBase": "ve-bkstar-hero",
-      "mismatch": 4934,
+      "mismatch": 4828,
       "threshold": 350000,
       "status": "PASS"
     },
@@ -58,15 +258,23 @@
       "name": "ve-bkstar",
       "sectionKey": "grid",
       "fileBase": "ve-bkstar-grid",
-      "mismatch": 4743,
+      "mismatch": 4775,
       "threshold": 350000,
+      "status": "PASS"
+    },
+    {
+      "route": "/why-bkstar/",
+      "name": "why-bkstar",
+      "fileBase": "why-bkstar",
+      "mismatch": 162727,
+      "threshold": 300000,
       "status": "PASS"
     },
     {
       "route": "/dich-vu/",
       "name": "dich-vu",
       "fileBase": "dich-vu",
-      "mismatch": 20057,
+      "mismatch": 424432,
       "threshold": 600000,
       "status": "PASS"
     },
@@ -75,7 +283,7 @@
       "name": "dich-vu",
       "sectionKey": "hero",
       "fileBase": "dich-vu-hero",
-      "mismatch": 4920,
+      "mismatch": 4476,
       "threshold": 600000,
       "status": "PASS"
     },
@@ -84,7 +292,7 @@
       "name": "dich-vu",
       "sectionKey": "form",
       "fileBase": "dich-vu-form",
-      "mismatch": 4815,
+      "mismatch": 0,
       "threshold": 2000000,
       "status": "PASS"
     },
@@ -92,7 +300,7 @@
       "route": "/tai-nguyen/",
       "name": "tai-nguyen",
       "fileBase": "tai-nguyen",
-      "mismatch": 583076,
+      "mismatch": 504488,
       "threshold": 700000,
       "status": "PASS"
     },
@@ -101,7 +309,7 @@
       "name": "tai-nguyen",
       "sectionKey": "header-contest",
       "fileBase": "tai-nguyen-header-contest",
-      "mismatch": 51555,
+      "mismatch": 141943,
       "threshold": 200000,
       "status": "PASS"
     },
@@ -110,7 +318,7 @@
       "name": "tai-nguyen",
       "sectionKey": "ticker",
       "fileBase": "tai-nguyen-ticker",
-      "mismatch": 123561,
+      "mismatch": 141391,
       "threshold": 200000,
       "status": "PASS"
     },
@@ -119,7 +327,7 @@
       "name": "tai-nguyen",
       "sectionKey": "post-grid",
       "fileBase": "tai-nguyen-post-grid",
-      "mismatch": 4680,
+      "mismatch": 4740,
       "threshold": 200000,
       "status": "PASS"
     },
@@ -128,7 +336,7 @@
       "name": "tai-nguyen",
       "sectionKey": "footer",
       "fileBase": "tai-nguyen-footer",
-      "mismatch": 4789,
+      "mismatch": 4706,
       "threshold": 50000,
       "status": "PASS"
     },
@@ -136,7 +344,7 @@
       "route": "/thanh-tich-va-su-kien/",
       "name": "thanh-tich-va-su-kien",
       "fileBase": "thanh-tich-va-su-kien",
-      "mismatch": 22546,
+      "mismatch": 22499,
       "threshold": 50000,
       "status": "PASS"
     },
@@ -145,7 +353,7 @@
       "name": "thanh-tich-va-su-kien",
       "sectionKey": "hero",
       "fileBase": "thanh-tich-va-su-kien-hero",
-      "mismatch": 4240,
+      "mismatch": 4687,
       "threshold": 50000,
       "status": "PASS"
     },
@@ -154,7 +362,7 @@
       "name": "thanh-tich-va-su-kien",
       "sectionKey": "grid",
       "fileBase": "thanh-tich-va-su-kien-grid",
-      "mismatch": 4521,
+      "mismatch": 4827,
       "threshold": 120000,
       "status": "PASS"
     },
@@ -162,7 +370,7 @@
       "route": "/bao-chi/",
       "name": "bao-chi",
       "fileBase": "bao-chi",
-      "mismatch": 183921,
+      "mismatch": 171290,
       "threshold": 400000,
       "status": "PASS"
     },
@@ -170,7 +378,7 @@
       "route": "/tuyen-dung/",
       "name": "tuyen-dung",
       "fileBase": "tuyen-dung",
-      "mismatch": 75794,
+      "mismatch": 159472,
       "threshold": 200000,
       "status": "PASS"
     },
@@ -179,7 +387,7 @@
       "name": "tuyen-dung",
       "sectionKey": "hero",
       "fileBase": "tuyen-dung-hero",
-      "mismatch": 4893,
+      "mismatch": 4511,
       "threshold": 200000,
       "status": "PASS"
     },
@@ -188,7 +396,7 @@
       "name": "tuyen-dung",
       "sectionKey": "grid",
       "fileBase": "tuyen-dung-grid",
-      "mismatch": 0,
+      "mismatch": 96828,
       "threshold": 200000,
       "status": "PASS"
     },
@@ -198,6 +406,286 @@
       "fileBase": "faq",
       "mismatch": 108718,
       "threshold": 400000,
+      "status": "PASS"
+    },
+    {
+      "route": "/innoverse-2025/",
+      "name": "innoverse-2025",
+      "fileBase": "innoverse-2025",
+      "mismatch": 257680,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/intarg-2025/",
+      "name": "intarg-2025",
+      "fileBase": "intarg-2025",
+      "mismatch": 399052,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/international-youth-business-competition-iybc-2025/",
+      "name": "international-youth-business-competition-iybc-2025",
+      "fileBase": "international-youth-business-competition-iybc-2025",
+      "mismatch": 398845,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/ispc-2025/",
+      "name": "ispc-2025",
+      "fileBase": "ispc-2025",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/itex-2025/",
+      "name": "itex-2025",
+      "fileBase": "itex-2025",
+      "mismatch": 125267,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/lam-the-nao-de-vao-duoc-dai-hoc-illinois-tai-urbana-champaign-uiuc-ty-le-trung-tuyen-va-chien-luoc/",
+      "name": "lam-the-nao-de-vao-duoc-dai-hoc-illinois-tai-urbana-champaign-uiuc-ty-le-trung-tuyen-va-chien-luoc",
+      "fileBase": "lam-the-nao-de-vao-duoc-dai-hoc-illinois-tai-urbana-champaign-uiuc-ty-le-trung-tuyen-va-chien-luoc",
+      "mismatch": 74424,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/lam-the-nao-de-vao-duoc-truong-northwestern-ty-le-trung-tuyen-va-chien-luoc/",
+      "name": "lam-the-nao-de-vao-duoc-truong-northwestern-ty-le-trung-tuyen-va-chien-luoc",
+      "fileBase": "lam-the-nao-de-vao-duoc-truong-northwestern-ty-le-trung-tuyen-va-chien-luoc",
+      "mismatch": 127418,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/liberal-arts-colleges-va-universities-chon-truong-nao-phu-hop-nhat-voi-ban/",
+      "name": "liberal-arts-colleges-va-universities-chon-truong-nao-phu-hop-nhat-voi-ban",
+      "fileBase": "liberal-arts-colleges-va-universities-chon-truong-nao-phu-hop-nhat-voi-ban",
+      "mismatch": 12619,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/little-ivies-lua-chon-thay-the-ivy-league-danh-cho-hoc-sinh-uu-tu/",
+      "name": "little-ivies-lua-chon-thay-the-ivy-league-danh-cho-hoc-sinh-uu-tu",
+      "fileBase": "little-ivies-lua-chon-thay-the-ivy-league-danh-cho-hoc-sinh-uu-tu",
+      "mismatch": 154953,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/nghe-thuat-chinh-phuc-co-hoi-thuc-tap-va-trai-nghiem-nghe-nghiep/",
+      "name": "nghe-thuat-chinh-phuc-co-hoi-thuc-tap-va-trai-nghiem-nghe-nghiep",
+      "fileBase": "nghe-thuat-chinh-phuc-co-hoi-thuc-tap-va-trai-nghiem-nghe-nghiep",
+      "mismatch": 110057,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/public-ivy-la-gi/",
+      "name": "public-ivy-la-gi",
+      "fileBase": "public-ivy-la-gi",
+      "mismatch": 368124,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/su-menh-tam-nhin/",
+      "name": "su-menh-tam-nhin",
+      "fileBase": "su-menh-tam-nhin",
+      "mismatch": 148080,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/test-3/",
+      "name": "test-3",
+      "fileBase": "test-3",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/test-4/",
+      "name": "test-4",
+      "fileBase": "test-4",
+      "mismatch": 145184,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/test-5/",
+      "name": "test-5",
+      "fileBase": "test-5",
+      "mismatch": 106144,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/test-6/",
+      "name": "test-6",
+      "fileBase": "test-6",
+      "mismatch": 104384,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/test-7/",
+      "name": "test-7",
+      "fileBase": "test-7",
+      "mismatch": 29477,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/tham-quan-cac-truong-dai-hoc-my-voi-vai-tro-sinh-vien-quoc-te/",
+      "name": "tham-quan-cac-truong-dai-hoc-my-voi-vai-tro-sinh-vien-quoc-te",
+      "fileBase": "tham-quan-cac-truong-dai-hoc-my-voi-vai-tro-sinh-vien-quoc-te",
+      "mismatch": 451514,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/the-he-ivy-league-moi-va-goc-khuat-cua-chinh-sach-khong-can-diem-chuan/",
+      "name": "the-he-ivy-league-moi-va-goc-khuat-cua-chinh-sach-khong-can-diem-chuan",
+      "fileBase": "the-he-ivy-league-moi-va-goc-khuat-cua-chinh-sach-khong-can-diem-chuan",
+      "mismatch": 352369,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/top-10-truong-dai-hoc-lam-nen-danh-tieng-cua-cuu-hoc-sinh-cai-noi-dao-tao-ngoi-sao-lon/",
+      "name": "top-10-truong-dai-hoc-lam-nen-danh-tieng-cua-cuu-hoc-sinh-cai-noi-dao-tao-ngoi-sao-lon",
+      "fileBase": "top-10-truong-dai-hoc-lam-nen-danh-tieng-cua-cuu-hoc-sinh-cai-noi-dao-tao-ngoi-sao-lon",
+      "mismatch": 240458,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/tu-ho-so-khong-giai-quoc-gia-den-hoc-bong-asean-danh-gia-hanh-trinh-chinh-phuc-dai-hoc-ntu-cua-hoang-quan-cung-bkstar/",
+      "name": "tu-ho-so-khong-giai-quoc-gia-den-hoc-bong-asean-danh-gia-hanh-trinh-chinh-phuc-dai-hoc-ntu-cua-hoang-quan-cung-bkstar",
+      "fileBase": "tu-ho-so-khong-giai-quoc-gia-den-hoc-bong-asean-danh-gia-hanh-trinh-chinh-phuc-dai-hoc-ntu-cua-hoang-quan-cung-bkstar",
+      "mismatch": 148755,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/tu-va-ca-nhan-hoa-day-du/",
+      "name": "tu-va-ca-nhan-hoa-day-du",
+      "fileBase": "tu-va-ca-nhan-hoa-day-du",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/tuyen-dung-1/",
+      "name": "tuyen-dung-1",
+      "fileBase": "tuyen-dung-1",
+      "mismatch": 180476,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/tuyen-dung-2/",
+      "name": "tuyen-dung-2",
+      "fileBase": "tuyen-dung-2",
+      "mismatch": 236015,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/tuyen-dung-3/",
+      "name": "tuyen-dung-3",
+      "fileBase": "tuyen-dung-3",
+      "mismatch": 0,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/tuyen-dung-4/",
+      "name": "tuyen-dung-4",
+      "fileBase": "tuyen-dung-4",
+      "mismatch": 140556,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/tuyen-dung-test/",
+      "name": "tuyen-dung-test",
+      "fileBase": "tuyen-dung-test",
+      "mismatch": 250952,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/ty-le-trung-tuyen-ivy-league-nam-2025-thach-thuc-lon-den-muc-nao/",
+      "name": "ty-le-trung-tuyen-ivy-league-nam-2025-thach-thuc-lon-den-muc-nao",
+      "fileBase": "ty-le-trung-tuyen-ivy-league-nam-2025-thach-thuc-lon-den-muc-nao",
+      "mismatch": 132330,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/vao-cac-truong-dai-hoc-ivy-league-kho-nhu-the-nao-phan-ii/",
+      "name": "vao-cac-truong-dai-hoc-ivy-league-kho-nhu-the-nao-phan-ii",
+      "fileBase": "vao-cac-truong-dai-hoc-ivy-league-kho-nhu-the-nao-phan-ii",
+      "mismatch": 290190,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/vao-cac-truong-dai-hoc-ivy-league-kho-nhu-the-nao-phan-iii/",
+      "name": "vao-cac-truong-dai-hoc-ivy-league-kho-nhu-the-nao-phan-iii",
+      "fileBase": "vao-cac-truong-dai-hoc-ivy-league-kho-nhu-the-nao-phan-iii",
+      "mismatch": 286888,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/vao-cac-truong-dai-hoc-ivy-league-kho-nhu-the-nao/",
+      "name": "vao-cac-truong-dai-hoc-ivy-league-kho-nhu-the-nao",
+      "fileBase": "vao-cac-truong-dai-hoc-ivy-league-kho-nhu-the-nao",
+      "mismatch": 546069,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/viet-bai-luan-ivy-league-an-tuong-huong-dan-vi-du-thuc-te-phan-ii/",
+      "name": "viet-bai-luan-ivy-league-an-tuong-huong-dan-vi-du-thuc-te-phan-ii",
+      "fileBase": "viet-bai-luan-ivy-league-an-tuong-huong-dan-vi-du-thuc-te-phan-ii",
+      "mismatch": 425218,
+      "threshold": 300000,
+      "status": "FAIL"
+    },
+    {
+      "route": "/viet-bai-luan-ivy-league-an-tuong-huong-dan-vi-du-thuc-te-phan-iii/",
+      "name": "viet-bai-luan-ivy-league-an-tuong-huong-dan-vi-du-thuc-te-phan-iii",
+      "fileBase": "viet-bai-luan-ivy-league-an-tuong-huong-dan-vi-du-thuc-te-phan-iii",
+      "mismatch": 168204,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/viet-bai-luan-ivy-league-an-tuong-huong-dan-vi-du-thuc-te/",
+      "name": "viet-bai-luan-ivy-league-an-tuong-huong-dan-vi-du-thuc-te",
+      "fileBase": "viet-bai-luan-ivy-league-an-tuong-huong-dan-vi-du-thuc-te",
+      "mismatch": 102420,
+      "threshold": 300000,
+      "status": "PASS"
+    },
+    {
+      "route": "/wico-korea-2025/",
+      "name": "wico-korea-2025",
+      "fileBase": "wico-korea-2025",
+      "mismatch": 163992,
+      "threshold": 300000,
       "status": "PASS"
     }
   ]

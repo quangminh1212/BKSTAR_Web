@@ -51,13 +51,21 @@ async function snapshot() {
     maxDepth: 3,
     prettifyUrls: true,
     urlFilter: (url) => {
-      // Chỉ giữ tài nguyên cùng domain và CDN phổ biến (wordpress, wp-content, s.w.org)
+      // Chỉ giữ tài nguyên cùng domain và CDN/phụ trợ phổ biến (wordpress, s.w.org, Google Fonts, domain font BKSTAR)
       try {
         const u = new URL(url, TARGET_URL);
         const host = u.hostname;
         if (host.endsWith('bkstar.com.vn')) return true;
         if (host.endsWith('s.w.org')) return true;
-        if (host.includes('wp-content') || host.includes('wp-includes')) return true;
+        // Domain phục vụ font của BKSTAR (có cả biến thể urlshortner/urlshortern)
+        if (host.endsWith('bkstar.urlshortner.com') || host.endsWith('bkstar.urlshortern.com'))
+          return true;
+        // Google Fonts
+        if (host.endsWith('fonts.gstatic.com') || host.endsWith('fonts.googleapis.com'))
+          return true;
+        // Dự phòng theo path chứa wp-content/wp-includes
+        if (u.pathname.includes('/wp-content/') || u.pathname.includes('/wp-includes/'))
+          return true;
         return false;
       } catch {
         return false;
