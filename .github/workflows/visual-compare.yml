@@ -1,0 +1,58 @@
+name: Visual Compare
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  visual-compare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright chromium + system deps
+        run: npx playwright install --with-deps chromium
+
+      - name: Start static server for public/
+        run: |
+          npx http-server public -p 5173 -s &
+          echo $! > server.pid
+
+      - name: Wait for server to be ready
+        run: |
+          for i in {1..60}; do
+            if curl -sf "http://localhost:5173/snapshot/index-snapshot.html" > /dev/null; then
+              echo "Server is up"; exit 0; fi; sleep 1; done
+          echo "Server did not start in time"; exit 1
+
+      - name: Run visual compare (STRICT)
+        env:
+          LOCAL_PORT: '5173'
+          STRICT: '1'
+        run: npm run visual:compare
+
+      - name: Upload visual diff artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diff
+          path: visual-diff
+
+      - name: Stop server
+        if: always()
+        run: |
+          if [ -f server.pid ]; then kill $(cat server.pid) || true; fi
+
