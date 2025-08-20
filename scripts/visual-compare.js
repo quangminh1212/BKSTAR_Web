@@ -29,6 +29,8 @@ const ROUTE_MASKS = {
     '.elementor-widget-image-carousel',
     '.elementor-widget-slides',
     '.elementor-widget-posts',
+    '.elementor-posts-container',
+    '.wp-block-latest-posts',
     '.eael-post-grid',
     '.elementor-widget-counter',
     '.elementor-widget-marquee',
@@ -36,11 +38,18 @@ const ROUTE_MASKS = {
   ],
   '/bao-chi/': [
     '.elementor-widget-posts',
+    '.elementor-posts-container',
+    '.wp-block-latest-posts',
     '.eael-post-grid',
+    '.eael-post-grid-container',
     '.elementor-swiper',
     '.elementor-widget-image-carousel',
     '.elementor-widget-portfolio',
     '.elementor-widget-video',
+    '.news-ticker-wrap',
+    '#fd-ticker-ad9ea0a',
+    '.marquee-container',
+    '#marquee-content',
   ],
   '/faq/': ['.elementor-accordion', '.elementor-toggle'],
   '/thanh-tich-va-su-kien/': [
@@ -63,6 +72,8 @@ const ROUTE_MASKS = {
   ],
   '/tuyen-dung/': [
     '.elementor-widget-posts',
+    '.elementor-posts-container',
+    '.wp-block-latest-posts',
     '.eael-post-grid',
     '.elementor-swiper',
     '.elementor-widget-image-carousel',
@@ -266,7 +277,10 @@ async function main() {
     const routeMasks = ROUTE_MASKS[route] || [];
     const globalMask = [
       '.elementor-widget-posts',
+      '.elementor-posts-container',
+      '.wp-block-latest-posts',
       '.eael-post-grid',
+      '.eael-post-grid-container',
       '.elementor-swiper',
       '.swiper',
       '.swiper-container',
