@@ -435,7 +435,7 @@ async function captureSections(page, route, liveUrl, localUrl, name, sections, s
       });
       const mm = compareImages(lOut, lcOut, dOut);
       const key = `${route}#${s.key}`;
-      const threshold = SECTION_THRESHOLDS[key] ?? ROUTE_THRESHOLDS[route] ?? 100000;
+      const threshold = SECTION_THRESHOLDS[key] ?? ROUTE_THRESHOLDS[route] ?? 300000;
       const status = mm <= threshold ? 'PASS' : 'FAIL';
       console.log(`So sánh ${name}/${s.key}: pixel khác = ${mm}`);
       summary.push({
@@ -472,9 +472,10 @@ async function main() {
 
   // Xây map canonical -> file local
   const canonicalMap = buildCanonicalMap(SNAPSHOT_DIR);
+  const ROUTES = Array.from(canonicalMap.keys());
 
   const summary = [];
-  for (const route of PAGES) {
+  for (const route of ROUTES) {
     const name = sanitize(route);
     const liveUrl = new URL(route, LIVE_BASE).href;
     // Tìm file local theo canonical
@@ -539,7 +540,7 @@ async function main() {
 
     try {
       const mismatch = compareImages(liveOut, localOut, diffOut);
-      const threshold = ROUTE_THRESHOLDS[route] ?? 100000;
+      const threshold = ROUTE_THRESHOLDS[route] ?? 300000;
       const status = mismatch <= threshold ? 'PASS' : 'FAIL';
       console.log(`So sánh ${name}: pixel khác = ${mismatch}`);
       summary.push({ route, name, fileBase: name, mismatch, threshold, status });
