@@ -1,33 +1,33 @@
 {
-  "timestamp": "2025-08-20T14:29:42.909Z",
+  "timestamp": "2025-08-20T14:58:23.841Z",
   "summary": [
     {
       "route": "/",
-      "mismatch": 23298
+      "mismatch": 36553
     },
     {
       "route": "/#hero",
-      "mismatch": 4892
+      "mismatch": 3743
     },
     {
       "route": "/#top-ticker",
-      "mismatch": 4386
+      "mismatch": 4940
     },
     {
       "route": "/#grid-1",
-      "mismatch": 4856
+      "mismatch": 4430
     },
     {
       "route": "/ve-bkstar/",
-      "mismatch": 443363
+      "mismatch": 437772
     },
     {
       "route": "/ve-bkstar/#hero",
-      "mismatch": 494690
+      "mismatch": 457707
     },
     {
       "route": "/ve-bkstar/#grid",
-      "mismatch": 494692
+      "mismatch": 457686
     },
     {
       "route": "/dich-vu/",
@@ -35,23 +35,23 @@
     },
     {
       "route": "/dich-vu/#hero",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\dich-vu-hero.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\dich-vu-hero.png"
+      "mismatch": 515967
     },
     {
       "route": "/dich-vu/#form",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\dich-vu-form.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\dich-vu-form.png"
+      "mismatch": 20448
     },
     {
       "route": "/tai-nguyen/",
-      "mismatch": 421215
+      "mismatch": 403311
     },
     {
       "route": "/tai-nguyen/#header-contest",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\tai-nguyen-header-contest.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\tai-nguyen-header-contest.png"
+      "mismatch": 467532
     },
     {
       "route": "/tai-nguyen/#ticker",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\tai-nguyen-ticker.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\tai-nguyen-ticker.png"
+      "mismatch": 413374
     },
     {
       "route": "/tai-nguyen/#post-grid",
@@ -63,11 +63,11 @@
     },
     {
       "route": "/thanh-tich-va-su-kien/",
-      "mismatch": 4433
+      "mismatch": 4029
     },
     {
       "route": "/thanh-tich-va-su-kien/#hero",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\thanh-tich-va-su-kien-hero.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\thanh-tich-va-su-kien-hero.png"
+      "mismatch": 454480
     },
     {
       "route": "/thanh-tich-va-su-kien/#grid",
@@ -75,19 +75,19 @@
     },
     {
       "route": "/bao-chi/",
-      "mismatch": 662319
+      "mismatch": 649643
     },
     {
       "route": "/tuyen-dung/",
-      "mismatch": 374480
+      "mismatch": 396080
     },
     {
       "route": "/tuyen-dung/#hero",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\tuyen-dung-hero.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\tuyen-dung-hero.png"
+      "mismatch": 461668
     },
     {
       "route": "/tuyen-dung/#grid",
-      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\tuyen-dung-grid.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\tuyen-dung-grid.png"
+      "mismatch": 38142
     },
     {
       "route": "/faq/",
