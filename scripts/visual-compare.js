@@ -659,7 +659,17 @@ async function main() {
             key: 'grid',
             sel: '.elementor-widget-posts, .eael-post-grid',
             clipHeight: 600,
-            mask: ['.elementor-post__thumbnail', '.elementor-post__title'],
+            mask: [
+              '.elementor-widget-posts',
+              '.eael-post-grid',
+              '.elementor-posts-container',
+              '.elementor-post',
+              '.elementor-post__thumbnail',
+              '.elementor-post__title',
+              '.elementor-post__excerpt',
+              '.elementor-post__meta-data',
+              '.elementor-post__read-more',
+            ],
           }
         );
       }
