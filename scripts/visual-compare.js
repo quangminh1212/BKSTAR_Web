@@ -66,6 +66,11 @@ const ROUTE_MASKS = {
     '.elementor-widget-image-carousel',
     '.elementor-widget-portfolio',
     '.elementor-widget-video',
+    '.elementor-post__thumbnail',
+    '.elementor-post__title',
+    '.elementor-post__excerpt',
+    '.elementor-post__meta-data',
+    '.elementor-post__read-more',
     '.news-ticker-wrap',
     '#fd-ticker-ad9ea0a',
     '.marquee-container',
@@ -128,6 +133,11 @@ const ROUTE_MASKS = {
     '.eael-post-grid',
     '.elementor-posts-container',
     '.elementor-post',
+    '.elementor-post__thumbnail',
+    '.elementor-post__title',
+    '.elementor-post__excerpt',
+    '.elementor-post__meta-data',
+    '.elementor-post__read-more',
   ],
   '/dich-vu/': [
     '.nf-form-cont',
@@ -152,6 +162,11 @@ const ROUTE_MASKS = {
     '.elementor-motion-effects-layer',
     '.elementor-animated-headline',
     '.elementor-widget-animated-headline',
+    '.elementor-post__thumbnail',
+    '.elementor-post__title',
+    '.elementor-post__excerpt',
+    '.elementor-post__meta-data',
+    '.elementor-post__read-more',
   ],
 };
 
@@ -396,7 +411,7 @@ async function main() {
   resetDir(path.join(OUT_DIR, 'diff'));
 
   const browser = await chromium.launch();
-  const ctx = await browser.newContext({ viewport: VIEWPORT });
+  const ctx = await browser.newContext({ viewport: VIEWPORT, deviceScaleFactor: 1 });
   const page = await ctx.newPage();
 
   // Xây map canonical -> file local
