@@ -10,6 +10,67 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScrolling();
     loadDynamicData();
 });
+// WP REST API integration to mirror live content
+const WP_BASE = 'https://bkstar.com.vn/wp-json/wp/v2';
+const WP_CATEGORIES = {
+  news: 27, // 'bao-chi' (fallback to 26 'su-kien' if empty)
+  competitions: 12, // 'cuoc-thi-quoc-te'
+  blog: 1, // 'blog-tai-nguyen'
+  achievements: 4 // 'thanh-tich-hoc-vien'
+};
+
+async function wpFetchJson(url) {
+  const res = await fetch(url, { mode: 'cors' });
+  if (!res.ok) throw new Error('WP fetch failed: ' + url);
+  return res.json();
+}
+
+function stripHtml(html) {
+  const tmp = document.createElement('div');
+  tmp.innerHTML = html || '';
+  return tmp.textContent || tmp.innerText || '';
+}
+
+async function fetchPostsByCategory(catId, perPage = 3) {
+  const url = `${WP_BASE}/posts?per_page=${perPage}&categories=${catId}&_fields=link,date,title,excerpt,jetpack_featured_media_url`;
+  const posts = await wpFetchJson(url);
+  return posts.map(p => ({
+    title: stripHtml(p.title?.rendered),
+    date: p.date,
+    excerpt: stripHtml(p.excerpt?.rendered).replace(/\s+\[.*?\]$/, '').trim(),
+    url: p.link,
+    image: p.jetpack_featured_media_url || ''
+  }));
+}
+
+async function loadWPContent() {
+  try {
+    const [competitions, blog, achievements] = await Promise.all([
+      fetchPostsByCategory(WP_CATEGORIES.competitions, 3),
+      fetchPostsByCategory(WP_CATEGORIES.blog, 3),
+      fetchPostsByCategory(WP_CATEGORIES.achievements, 3)
+    ]);
+
+    // News: try bao-chi (27), fallback su-kien (26)
+    let news = await fetchPostsByCategory(WP_CATEGORIES.news, 2);
+    if (!news || news.length === 0) {
+      news = await fetchPostsByCategory(26, 2);
+    }
+
+    const newsRendered = renderCards('#news-grid', news, 'news');
+    const newsEmpty = document.querySelector('#news-empty');
+    if (newsEmpty) newsEmpty.style.display = newsRendered ? 'none' : 'block';
+    renderCards('#competitions-grid', competitions, 'competitions');
+    renderCards('#blog-grid', blog, 'blog');
+    renderCards('#achievements-grid', achievements, 'achievements');
+
+    return true;
+  } catch (e) {
+    console.warn('WP content load failed, fallback to local data.json', e);
+    return false;
+  }
+}
+
 
 // Hero Slider
 function initHeroSlider() {
@@ -418,6 +479,10 @@ document.addEventListener('DOMContentLoaded', function() {
 // Dynamic data loader
 async function loadDynamicData() {
     try {
+        // Try live content first
+        const ok = await loadWPContent();
+        if (ok) return;
+
         const res = await fetch('/data.json', { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to load data.json');
         const data = await res.json();
