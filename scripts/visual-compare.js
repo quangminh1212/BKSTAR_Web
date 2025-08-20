@@ -170,6 +170,26 @@ const ROUTE_MASKS = {
   ],
 };
 
+// Ngưỡng cho phép (pixel khác) theo route/section để đánh giá PASS/FAIL
+const ROUTE_THRESHOLDS = {
+  '/': 50000,
+  '/ve-bkstar/': 150000,
+  '/dich-vu/': 200000,
+  '/tai-nguyen/': 200000,
+  '/thanh-tich-va-su-kien/': 50000,
+  '/bao-chi/': 50000,
+  '/tuyen-dung/': 200000,
+  '/faq/': 150000,
+};
+const SECTION_THRESHOLDS = {
+  '/dich-vu/#form': 2000000,
+  '/tai-nguyen/#header-contest': 200000,
+  '/tai-nguyen/#ticker': 200000,
+  '/tai-nguyen/#post-grid': 200000,
+  '/tai-nguyen/#footer': 50000,
+  '/thanh-tich-va-su-kien/#grid': 120000,
+};
+
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
@@ -376,9 +396,10 @@ function sanitize(p) {
 
 async function captureSections(page, route, liveUrl, localUrl, name, sections, summary) {
   for (const s of sections) {
-    const lOut = path.join(OUT_DIR, 'live', `${name}-${s.key}.png`);
-    const lcOut = path.join(OUT_DIR, 'local', `${name}-${s.key}.png`);
-    const dOut = path.join(OUT_DIR, 'diff', `${name}-${s.key}.png`);
+    const fileBase = `${name}-${s.key}`;
+    const lOut = path.join(OUT_DIR, 'live', `${fileBase}.png`);
+    const lcOut = path.join(OUT_DIR, 'local', `${fileBase}.png`);
+    const dOut = path.join(OUT_DIR, 'diff', `${fileBase}.png`);
     try {
       const sectionMasks = Array.isArray(s.mask) ? s.mask : [];
       const clipH = typeof s.clipHeight === 'number' ? s.clipHeight : 600;
@@ -395,11 +416,28 @@ async function captureSections(page, route, liveUrl, localUrl, name, sections, s
         clipHeight: clipH,
       });
       const mm = compareImages(lOut, lcOut, dOut);
+      const key = `${route}#${s.key}`;
+      const threshold = SECTION_THRESHOLDS[key] ?? ROUTE_THRESHOLDS[route] ?? 100000;
+      const status = mm <= threshold ? 'PASS' : 'FAIL';
       console.log(`So sánh ${name}/${s.key}: pixel khác = ${mm}`);
-      summary.push({ route: `${route}#${s.key}`, mismatch: mm });
+      summary.push({
+        route: key,
+        name,
+        sectionKey: s.key,
+        fileBase,
+        mismatch: mm,
+        threshold,
+        status,
+      });
     } catch (e) {
       console.warn(`Bỏ qua section ${s.key}:`, e.message);
-      summary.push({ route: `${route}#${s.key}`, error: e.message });
+      summary.push({
+        route: `${route}#${s.key}`,
+        name,
+        sectionKey: s.key,
+        error: e.message,
+        status: 'ERROR',
+      });
     }
   }
 }
@@ -468,11 +506,13 @@ async function main() {
 
     try {
       const mismatch = compareImages(liveOut, localOut, diffOut);
+      const threshold = ROUTE_THRESHOLDS[route] ?? 100000;
+      const status = mismatch <= threshold ? 'PASS' : 'FAIL';
       console.log(`So sánh ${name}: pixel khác = ${mismatch}`);
-      summary.push({ route, mismatch });
+      summary.push({ route, name, fileBase: name, mismatch, threshold, status });
     } catch (e) {
       console.warn(`Lỗi so sánh ${name}:`, e.message);
-      summary.push({ route, error: e.message });
+      summary.push({ route, name, fileBase: name, error: e.message, status: 'ERROR' });
     }
 
     // Nếu là trang /tai-nguyen/, chụp theo section để xác định phần lệch
@@ -585,7 +625,52 @@ async function main() {
     reportPath,
     JSON.stringify({ timestamp: new Date().toISOString(), summary }, null, 2)
   );
+  // Tạo báo cáo HTML tổng hợp
+  const html = generateHtmlReport(summary);
+  const htmlPath = path.join(OUT_DIR, 'report.html');
+  fs.writeFileSync(htmlPath, html);
   console.log('Đã tạo báo cáo:', reportPath);
+  console.log('Đã tạo báo cáo HTML:', htmlPath);
+}
+
+function generateHtmlReport(summary) {
+  const rows = summary.map((s) => {
+    const file = s.fileBase ? s.fileBase + '.png' : '';
+    const linkCell = s.fileBase
+      ? `<a href="live/${file}">live</a> | <a href="local/${file}">local</a> | <a href="diff/${file}">diff</a>`
+      : '';
+    const mismatch = s.mismatch ?? '';
+    const threshold = s.threshold ?? '';
+    const status = s.status ?? (s.error ? 'ERROR' : s.skipped ? 'SKIPPED' : '');
+    return `<tr><td>${s.route}</td><td>${mismatch}</td><td>${threshold}</td><td>${status}</td><td>${linkCell}</td></tr>`;
+  });
+  return `<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<title>Visual diff report</title>
+<style>
+body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:16px}
+ table{border-collapse:collapse;width:100%}
+ th,td{border:1px solid #ddd;padding:6px 8px;font-size:14px}
+ th{background:#f5f5f5;text-align:left}
+ tr:nth-child(even){background:#fafafa}
+ .PASS{color:#0a0;font-weight:600}
+ .FAIL{color:#a00;font-weight:600}
+ .ERROR{color:#a60;font-weight:600}
+ .SKIPPED{color:#666}
+</style>
+</head>
+<body>
+<h1>Visual diff report</h1>
+<table>
+<thead><tr><th>Route/Section</th><th>Mismatch(px)</th><th>Threshold</th><th>Status</th><th>Images</th></tr></thead>
+<tbody>
+${rows.join('\n')}
+</tbody>
+</table>
+</body>
+</html>`;
 }
 
 main().catch((e) => {
