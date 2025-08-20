@@ -29,7 +29,8 @@ async function snapshot() {
       { selector: 'link[rel="stylesheet"]', attr: 'href' },
       { selector: 'script', attr: 'src' },
       { selector: 'link[rel="icon"]', attr: 'href' },
-      { selector: 'link[rel="apple-touch-icon"]', attr: 'href' }
+      { selector: 'link[rel="apple-touch-icon"]', attr: 'href' },
+      { selector: 'a', attr: 'href' }
     ],
     recursive: true,
     maxDepth: 3,
