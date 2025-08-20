@@ -72,7 +72,12 @@ const ROUTE_MASKS = {
   ],
   '/faq/': [
     '.elementor-accordion',
+    '.elementor-widget-accordion',
+    '.elementor-accordion-item',
+    '.elementor-accordion-title',
+    '.elementor-accordion-content',
     '.elementor-toggle',
+    '.elementor-widget-toggle',
     '.e-n-accordion',
     '.elementor-widget-n-accordion',
     '.eael-adv-accordion',
@@ -132,9 +137,20 @@ const ROUTE_MASKS = {
     '.nf-field-element',
     '.nf-form-title',
     '.nf-form-fields-required',
+    '.nf-response-msg',
+    '.nf-error-msg',
+    '.nf-form-errors',
+    '.nf-debug-msg',
+    '.nf-loading-spinner',
+    '.nf-form-hp',
     '.news-ticker-wrap',
     '.marquee-container',
     '.elementor-widget-elementor-news-ticker',
+    '.elementor-background-slideshow',
+    '.elementor-motion-effects-container',
+    '.elementor-motion-effects-layer',
+    '.elementor-animated-headline',
+    '.elementor-widget-animated-headline',
   ],
 };
 
@@ -257,9 +273,10 @@ async function screenshotPage(page, url, outPath, opts = {}) {
         const box = await el.boundingBox();
         if (box) {
           const clip = {
-            x: Math.max(0, Math.floor(box.x)),
+            x: clipHeight != null ? 0 : Math.max(0, Math.floor(box.x)),
             y: Math.max(0, Math.floor(box.y)),
-            width: Math.ceil(Math.min(box.width, VIEWPORT.width)),
+            width:
+              clipHeight != null ? VIEWPORT.width : Math.ceil(Math.min(box.width, VIEWPORT.width)),
             height: Math.ceil(
               clipHeight != null
                 ? Math.min(VIEWPORT.height, Math.max(1, clipHeight))
