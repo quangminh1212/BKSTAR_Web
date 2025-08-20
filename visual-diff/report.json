@@ -1,89 +1,89 @@
 {
-  "timestamp": "2025-08-20T15:56:04.358Z",
+  "timestamp": "2025-08-20T16:20:04.640Z",
   "summary": [
     {
       "route": "/",
-      "mismatch": 37479
+      "mismatch": 29687
     },
     {
       "route": "/#hero",
-      "mismatch": 4679
+      "mismatch": 4654
     },
     {
       "route": "/#top-ticker",
-      "mismatch": 68493
+      "mismatch": 4271
     },
     {
       "route": "/#grid-1",
-      "mismatch": 4343
+      "mismatch": 4726
     },
     {
       "route": "/ve-bkstar/",
-      "mismatch": 0
+      "mismatch": 110847
     },
     {
       "route": "/ve-bkstar/#hero",
-      "mismatch": 4834
+      "mismatch": 4838
     },
     {
       "route": "/ve-bkstar/#grid",
-      "mismatch": 4631
+      "mismatch": 4865
     },
     {
       "route": "/dich-vu/",
-      "mismatch": 50886
-    },
-    {
-      "route": "/dich-vu/#hero",
-      "mismatch": 4858
-    },
-    {
-      "route": "/dich-vu/#form",
-      "mismatch": 151934
-    },
-    {
-      "route": "/tai-nguyen/",
-      "mismatch": 285748
-    },
-    {
-      "route": "/tai-nguyen/#header-contest",
-      "mismatch": 155542
-    },
-    {
-      "route": "/tai-nguyen/#ticker",
-      "mismatch": 63768
-    },
-    {
-      "route": "/tai-nguyen/#post-grid",
-      "mismatch": 108078
-    },
-    {
-      "route": "/tai-nguyen/#footer",
-      "mismatch": 198363
-    },
-    {
-      "route": "/thanh-tich-va-su-kien/",
-      "mismatch": 25827
-    },
-    {
-      "route": "/thanh-tich-va-su-kien/#hero",
-      "mismatch": 4608
-    },
-    {
-      "route": "/thanh-tich-va-su-kien/#grid",
       "mismatch": 0
     },
     {
+      "route": "/dich-vu/#hero",
+      "mismatch": 4539
+    },
+    {
+      "route": "/dich-vu/#form",
+      "mismatch": 195169
+    },
+    {
+      "route": "/tai-nguyen/",
+      "mismatch": 0
+    },
+    {
+      "route": "/tai-nguyen/#header-contest",
+      "mismatch": 117392
+    },
+    {
+      "route": "/tai-nguyen/#ticker",
+      "mismatch": 157081
+    },
+    {
+      "route": "/tai-nguyen/#post-grid",
+      "mismatch": 108056
+    },
+    {
+      "route": "/tai-nguyen/#footer",
+      "mismatch": 0
+    },
+    {
+      "route": "/thanh-tich-va-su-kien/",
+      "mismatch": 5506
+    },
+    {
+      "route": "/thanh-tich-va-su-kien/#hero",
+      "mismatch": 4711
+    },
+    {
+      "route": "/thanh-tich-va-su-kien/#grid",
+      "mismatch": 115175
+    },
+    {
       "route": "/bao-chi/",
-      "mismatch": 184823
+      "mismatch": 0
     },
     {
       "route": "/tuyen-dung/",
-      "mismatch": 112163
+      "mismatch": 155618
     },
     {
       "route": "/tuyen-dung/#hero",
-      "mismatch": 4489
+      "mismatch": 4778
     },
     {
       "route": "/tuyen-dung/#grid",
