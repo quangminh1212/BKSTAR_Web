@@ -18,7 +18,8 @@ const PAGES = [
 ];
 
 const LIVE_BASE = 'https://bkstar.com.vn';
-const LOCAL_BASE = 'http://localhost:5173/snapshot/';
+const LOCAL_PORT = process.env.LOCAL_PORT || '5173';
+const LOCAL_BASE = `http://localhost:${LOCAL_PORT}/snapshot/`;
 const SNAPSHOT_DIR = path.resolve('public', 'snapshot');
 const OUT_DIR = path.resolve('visual-diff');
 
@@ -158,6 +159,16 @@ function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
+function resetDir(dir) {
+  if (fs.existsSync(dir)) {
+    for (const f of fs.readdirSync(dir)) {
+      fs.rmSync(path.join(dir, f), { recursive: true, force: true });
+    }
+  } else {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+}
+
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
@@ -214,6 +225,9 @@ async function screenshotPage(page, url, outPath, opts = {}) {
     : '';
   await page.addStyleTag({
     content: `
+    /* Ổn định scrollbar để tránh lệch bề rộng do thanh cuộn */
+    html { scrollbar-gutter: stable both-edges; }
+    body { overflow-y: scroll !important; }
     /* Ẩn widget động gây nhiễu */
     #ast-scroll-top, .chaty-widget, #chaty-widget, .astra-cart-drawer, .ast-related-posts { display: none !important; }
     /* Tắt animation/transition để ảnh chụp ổn định */
@@ -272,16 +286,24 @@ async function screenshotPage(page, url, outPath, opts = {}) {
         await el.scrollIntoViewIfNeeded();
         const box = await el.boundingBox();
         if (box) {
+          // Nếu có clipHeight: đưa phần tử lên đỉnh viewport và chụp vùng cố định từ y=0
+          if (clipHeight != null) {
+            await page.evaluate((y) => window.scrollTo(0, y), Math.max(0, Math.floor(box.y)));
+            await sleep(120);
+            const clip = {
+              x: 0,
+              y: 0,
+              width: VIEWPORT.width,
+              height: Math.min(VIEWPORT.height, Math.max(1, clipHeight)),
+            };
+            await page.screenshot({ path: outPath, clip });
+            return;
+          }
           const clip = {
-            x: clipHeight != null ? 0 : Math.max(0, Math.floor(box.x)),
+            x: Math.max(0, Math.floor(box.x)),
             y: Math.max(0, Math.floor(box.y)),
-            width:
-              clipHeight != null ? VIEWPORT.width : Math.ceil(Math.min(box.width, VIEWPORT.width)),
-            height: Math.ceil(
-              clipHeight != null
-                ? Math.min(VIEWPORT.height, Math.max(1, clipHeight))
-                : Math.min(VIEWPORT.height, box.height)
-            ),
+            width: Math.ceil(Math.min(box.width, VIEWPORT.width)),
+            height: Math.ceil(Math.min(VIEWPORT.height, box.height)),
           };
           await page.screenshot({ path: outPath, clip });
           return;
@@ -369,9 +391,9 @@ async function captureSections(page, route, liveUrl, localUrl, name, sections, s
 
 async function main() {
   ensureDir(OUT_DIR);
-  ensureDir(path.join(OUT_DIR, 'live'));
-  ensureDir(path.join(OUT_DIR, 'local'));
-  ensureDir(path.join(OUT_DIR, 'diff'));
+  resetDir(path.join(OUT_DIR, 'live'));
+  resetDir(path.join(OUT_DIR, 'local'));
+  resetDir(path.join(OUT_DIR, 'diff'));
 
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: VIEWPORT });
