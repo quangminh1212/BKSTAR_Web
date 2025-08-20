@@ -1,41 +1,41 @@
 {
-  "timestamp": "2025-08-20T13:49:58.707Z",
+  "timestamp": "2025-08-20T13:56:37.638Z",
   "summary": [
     {
       "route": "/",
-      "mismatch": 25856
+      "mismatch": 34801
     },
     {
       "route": "/#hero",
-      "mismatch": 4863
+      "mismatch": 4860
     },
     {
       "route": "/#top-ticker",
-      "mismatch": 4631
+      "mismatch": 4627
     },
     {
       "route": "/#grid-1",
-      "mismatch": 4810
+      "mismatch": 4682
     },
     {
       "route": "/ve-bkstar/",
-      "mismatch": 199596
+      "mismatch": 0
     },
     {
       "route": "/ve-bkstar/#hero",
-      "mismatch": 4641
+      "mismatch": 4922
     },
     {
       "route": "/ve-bkstar/#grid",
-      "mismatch": 4567
+      "mismatch": 4678
     },
     {
       "route": "/dich-vu/",
-      "mismatch": 464276
+      "mismatch": 266790
     },
     {
       "route": "/dich-vu/#hero",
-      "mismatch": 4992
+      "mismatch": 4669
     },
     {
       "route": "/dich-vu/#form",
@@ -43,19 +43,19 @@
     },
     {
       "route": "/tai-nguyen/",
-      "mismatch": 0
+      "mismatch": 633944
     },
     {
       "route": "/tai-nguyen/#header-contest",
-      "mismatch": 81558
+      "mismatch": 79715
     },
     {
       "route": "/tai-nguyen/#ticker",
-      "mismatch": 47183
+      "mismatch": 53196
     },
     {
       "route": "/tai-nguyen/#post-grid",
-      "mismatch": 0
+      "error": "Kích thước ảnh khác nhau: C:\\VF\\BKSTAR_Web\\visual-diff\\live\\tai-nguyen-post-grid.png vs C:\\VF\\BKSTAR_Web\\visual-diff\\local\\tai-nguyen-post-grid.png"
     },
     {
       "route": "/tai-nguyen/#footer",
@@ -63,11 +63,11 @@
     },
     {
       "route": "/thanh-tich-va-su-kien/",
-      "mismatch": 30523
+      "mismatch": 28693
     },
     {
       "route": "/thanh-tich-va-su-kien/#hero",
-      "mismatch": 4735
+      "mismatch": 4762
     },
     {
       "route": "/thanh-tich-va-su-kien/#grid",
@@ -79,11 +79,11 @@
     },
     {
       "route": "/tuyen-dung/",
-      "mismatch": 0
+      "mismatch": 114123
     },
     {
       "route": "/tuyen-dung/#hero",
-      "mismatch": 4761
+      "mismatch": 5031
     },
     {
       "route": "/tuyen-dung/#grid",
