@@ -1,0 +1,21 @@
+{
+  "name": "bkstar_web",
+  "version": "1.0.0",
+  "description": "Đây là bản clone của website BKSTAR (https://bkstar.com.vn/) - một trang web tư vấn du học chuyên nghiệp.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "prettier": "^3.6.2",
+    "sharp": "^0.34.3",
+    "vite": "^6.3.5"
+  }
+}
+
