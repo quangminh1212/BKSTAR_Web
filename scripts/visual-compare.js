@@ -286,7 +286,18 @@ async function screenshotPage(page, url, outPath, opts = {}) {
           await page.screenshot({ path: outPath, clip });
           return;
         } else {
-          await el.screenshot({ path: outPath });
+          // Tránh el.screenshot vì kích thước ảnh có thể khác nhau
+          if (clipHeight != null) {
+            const clip = {
+              x: 0,
+              y: 0,
+              width: VIEWPORT.width,
+              height: Math.min(VIEWPORT.height, Math.max(1, clipHeight)),
+            };
+            await page.screenshot({ path: outPath, clip });
+            return;
+          }
+          await page.screenshot({ path: outPath, fullPage: false });
           return;
         }
       }
