@@ -57,6 +57,9 @@ Dự án clone giao diện BKSTAR (https://bkstar.com.vn/) nhằm mục đích h
 - npm run preview:pretty (dành cho trình diễn):
   - Tự động snapshot, chèn stylesheet ép Inter vào toàn bộ HTML trong public/snapshot, rồi mở preview tại /snapshot/index-snapshot.html
   - Lưu ý: CI/visual test không dùng chế độ này để giữ so khớp 1-1 với site gốc
+- npm run preview:pretty:selfhost (demo không phụ thuộc Google Fonts):
+  - Dùng SELF_HOST_INTER=1 để tự tải Inter (.woff2) về dưới public/snapshot/fonts/inter, sinh @font-face cục bộ và ép Inter cho toàn bộ HTML snapshot
+  - Phù hợp khi môi trường chặn Google Fonts; chỉ tác động khi preview, CI không ảnh hưởng
 
 ## Ghi chú
 
