@@ -1,7 +1,7 @@
 {
-  "name": "bkstar_web",
+  "name": "bkstar-web",
   "version": "1.0.0",
-  "description": "Đây là bản clone của website BKSTAR (https://bkstar.com.vn/) - một trang web tư vấn du học chuyên nghiệp.",
+  "description": "Clone giao diện BKSTAR (https://bkstar.com.vn/) dùng cho mục đích học tập và kiểm thử.",
   "main": "script.js",
   "type": "module",
   "scripts": {
@@ -11,8 +11,9 @@
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
     "img:opt": "node scripts/optimize-images.js",
-    "snapshot": "node scripts/snapshot-homepage.js && node scripts/postprocess-fonts.js && node scripts/rename-friendly.js",
-    "visual:compare": "node scripts/visual-compare.js",
+    "snapshot": "node scripts/snapshot-site.js && node scripts/postprocess-fonts-and-rename.js",
+    "visual:test": "node scripts/visual-compare.js",
+    "test:visual:pages": "powershell -Command \"$env:PAGES_ONLY='1'; node scripts/visual-compare.js\"",
     "prepare": "husky"
   },
   "lint-staged": {

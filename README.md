@@ -1,8 +1,45 @@
 # BKSTAR Website Clone
 
-Đây là bản clone của website BKSTAR (https://bkstar.com.vn/) - một trang web tư vấn du học chuyên nghiệp.
+Dự án clone giao diện BKSTAR (https://bkstar.com.vn/) nhằm mục đích học tập và kiểm thử giao diện tự động.
 
-## Tính năng
+## Cấu trúc thư mục
+
+```
+.
+├─ public/                # Tài nguyên tĩnh (PWA manifest, sw), snapshot được lưu tại public/snapshot
+├─ src/                   # Nguồn giao diện demo (nếu cần mở rộng)
+├─ scripts/               # Tiện ích: snapshot site, hậu xử lý font, đổi tên thân thiện, so sánh hình ảnh
+├─ visual-diff/           # Kết quả so sánh (live/local/diff + report.json + report.html)
+├─ vite.config.js         # Cấu hình Vite (dev/build/preview)
+├─ package.json           # Scripts npm
+└─ .editorconfig          # Quy ước định dạng mã nguồn
+```
+
+## Cách chạy
+
+### Development server
+- npm run dev
+
+### Snapshot nội dung trang live về local
+- npm run snapshot
+  - Tải về các trang whitelist và tài nguyên cần thiết
+  - Hậu xử lý font và tự động đổi tên file theo slug canonical (dễ hiểu)
+
+### So sánh giao diện (Visual Regression Testing)
+- Toàn site: npm run visual:test
+- Chỉ các trang chính (nhanh): npm run test:visual:pages
+  - Lệnh này dùng biến môi trường PAGES_ONLY=1 để chỉ so sánh các trang chính
+
+### Build/Preview
+- npm run build
+- npm run preview
+
+## Ghi chú
+- scripts/visual-compare.js đã cấu hình mask/clamp để loại trừ vùng động (ticker, share, comments, related, meta…) giúp so sánh tập trung vào layout.
+- Báo cáo trực quan mở ở: visual-diff/report.html
+
+## License
+Dự án chỉ dùng cho mục đích học tập. Nội dung và tài sản thuộc về BKSTAR.
 
 ### ✅ Đã hoàn thành:
 - **Responsive Design**: Tương thích với mọi thiết bị (desktop, tablet, mobile)
