@@ -42,6 +42,10 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Snapshot live site
+        run: npm run snapshot
+        timeout-minutes: 10
+
       - name: Build
         run: npm run build
 
@@ -49,10 +53,6 @@ jobs:
         run: |
           npm run preview -- --host 0.0.0.0 --port 5173 &
           npx wait-on http-get://localhost:5173
-
-      - name: Snapshot live site
-        run: npm run snapshot
-        timeout-minutes: 10
 
       - name: Visual test (pages only)
         run: npm run visual:ci
