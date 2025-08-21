@@ -27,8 +27,9 @@ function injectLink(html) {
 }
 
 async function buildCssSelfHost() {
-  // Fetch Google CSS and download woff2 files, then emit local @font-face rules
-  const api = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+  // Fetch Google CSS and download woff2 files, then emit local @font-face rules (weights 300–800)
+  const api =
+    'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap';
   const res = await fetch(api, { headers: { 'user-agent': 'Mozilla/5.0' } });
   if (!res.ok) throw new Error('Failed to fetch Google Fonts CSS');
   const css = await res.text();
