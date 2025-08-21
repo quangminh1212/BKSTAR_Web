@@ -1,0 +1,23 @@
+{
+  "viewport": { "width": 1440, "height": 900 },
+  "routes": ["/", "/ve-bkstar/", "/dich-vu/", "/tai-nguyen/", "/thanh-tich-va-su-kien/", "/bao-chi/", "/tuyen-dung/", "/faq/"],
+  "thresholds": {
+    "/": 50000,
+    "/ve-bkstar/": 350000,
+    "/dich-vu/": 600000,
+    "/tai-nguyen/": 700000,
+    "/thanh-tich-va-su-kien/": 50000,
+    "/bao-chi/": 400000,
+    "/tuyen-dung/": 500000,
+    "/faq/": 400000
+  },
+  "sectionThresholds": {
+    "/dich-vu/#form": 2000000,
+    "/tai-nguyen/#header-contest": 200000,
+    "/tai-nguyen/#ticker": 200000,
+    "/tai-nguyen/#post-grid": 200000,
+    "/tai-nguyen/#footer": 50000,
+    "/thanh-tich-va-su-kien/#grid": 120000
+  }
+}
+

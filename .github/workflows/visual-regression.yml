@@ -1,0 +1,44 @@
+name: Visual Regression
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start Preview Server
+        run: |
+          npm run preview -- --host 0.0.0.0 --port 5173 &
+          sleep 3
+
+      - name: Snapshot live site
+        run: npm run snapshot
+
+      - name: Visual test (pages only)
+        run: npm run test:visual:pages
+        env:
+          PAGES_ONLY: '1'
+
+      - name: Upload visual report
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diff
+          path: visual-diff
+

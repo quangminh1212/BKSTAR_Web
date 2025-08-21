@@ -5,8 +5,8 @@ import pixelmatch from 'pixelmatch';
 import { PNG } from 'pngjs';
 
 // Config
-const VIEWPORT = { width: 1440, height: 900 };
-const PAGES = [
+let VIEWPORT = { width: 1440, height: 900 };
+let CONFIG_ROUTES = [
   '/',
   '/ve-bkstar/',
   '/dich-vu/',
@@ -16,6 +16,14 @@ const PAGES = [
   '/tuyen-dung/',
   '/faq/',
 ];
+try {
+  const cfgPath = path.resolve('scripts', 'visual-config.json');
+  if (fs.existsSync(cfgPath)) {
+    const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+    if (cfg.viewport) VIEWPORT = cfg.viewport;
+    if (Array.isArray(cfg.routes)) CONFIG_ROUTES = cfg.routes;
+  }
+} catch {}
 
 const LIVE_BASE = 'https://bkstar.com.vn';
 const LOCAL_PORT = process.env.LOCAL_PORT || '5173';
@@ -189,7 +197,7 @@ const ROUTE_MASKS = {
 };
 
 // Ngưỡng cho phép (pixel khác) theo route/section để đánh giá PASS/FAIL
-const ROUTE_THRESHOLDS = {
+let ROUTE_THRESHOLDS = {
   '/': 50000,
   '/ve-bkstar/': 350000,
   '/dich-vu/': 600000,
@@ -199,7 +207,7 @@ const ROUTE_THRESHOLDS = {
   '/tuyen-dung/': 500000,
   '/faq/': 400000,
 };
-const SECTION_THRESHOLDS = {
+let SECTION_THRESHOLDS = {
   '/dich-vu/#form': 2000000,
   '/tai-nguyen/#header-contest': 200000,
   '/tai-nguyen/#ticker': 200000,
@@ -207,6 +215,14 @@ const SECTION_THRESHOLDS = {
   '/tai-nguyen/#footer': 50000,
   '/thanh-tich-va-su-kien/#grid': 120000,
 };
+try {
+  const cfgPath = path.resolve('scripts', 'visual-config.json');
+  if (fs.existsSync(cfgPath)) {
+    const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+    if (cfg.thresholds) ROUTE_THRESHOLDS = cfg.thresholds;
+    if (cfg.sectionThresholds) SECTION_THRESHOLDS = cfg.sectionThresholds;
+  }
+} catch {}
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -472,7 +488,7 @@ async function main() {
 
   // Xây map canonical -> file local
   const canonicalMap = buildCanonicalMap(SNAPSHOT_DIR);
-  const ROUTES = process.env.PAGES_ONLY === '1' ? PAGES : Array.from(canonicalMap.keys());
+  const ROUTES = process.env.PAGES_ONLY === '1' ? CONFIG_ROUTES : Array.from(canonicalMap.keys());
 
   const summary = [];
   for (const route of ROUTES) {
