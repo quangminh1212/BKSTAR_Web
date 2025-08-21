@@ -46,7 +46,7 @@ jobs:
         run: npm run snapshot
 
       - name: Visual test (full site)
-        run: npm run visual:test
+        run: npm run visual:ci:full
 
       - name: Upload visual report
         uses: actions/upload-artifact@v4

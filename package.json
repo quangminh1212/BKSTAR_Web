@@ -15,11 +15,18 @@
     "snapshot": "node scripts/snapshot-site.js && node scripts/postprocess-fonts-and-rename.js",
     "visual:test": "node scripts/visual-compare.js",
     "test:visual:pages": "cross-env PAGES_ONLY=1 node scripts/visual-compare.js",
+    "visual:ci": "cross-env PAGES_ONLY=1 STRICT=1 node scripts/visual-compare.js",
+    "visual:ci:full": "cross-env STRICT=1 node scripts/visual-compare.js",
+    "playwright:install": "npx playwright install --with-deps chromium",
     "prepare": "husky",
     "commitlint": "commitlint --from=HEAD~1 --to=HEAD"
   },
   "lint-staged": {
-    "*.{js,css,html}": [
+    "*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,html,json,md,yml,yaml}": [
       "prettier --write"
     ]
   },
