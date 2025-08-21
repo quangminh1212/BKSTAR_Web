@@ -54,6 +54,9 @@ Dự án clone giao diện BKSTAR (https://bkstar.com.vn/) nhằm mục đích h
 
 - npm run build
 - npm run preview
+- npm run preview:pretty (dành cho trình diễn):
+  - Tự động snapshot, chèn stylesheet ép Inter vào toàn bộ HTML trong public/snapshot, rồi mở preview tại /snapshot/index-snapshot.html
+  - Lưu ý: CI/visual test không dùng chế độ này để giữ so khớp 1-1 với site gốc
 
 ## Ghi chú
 
