@@ -26,7 +26,8 @@ try {
   }
 } catch {}
 
-const LIVE_BASE = 'https://bkstar.com.vn';
+const LIVE_BASE =
+  process.env.LIVE_BASE || globalThis.__VISUAL_CFG__?.liveBase || 'https://bkstar.com.vn';
 const LOCAL_PORT = process.env.LOCAL_PORT || '5173';
 const LOCAL_BASE = `http://localhost:${LOCAL_PORT}/snapshot/`;
 const SNAPSHOT_DIR = path.resolve('public', 'snapshot');

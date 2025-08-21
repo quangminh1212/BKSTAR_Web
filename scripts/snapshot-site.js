@@ -2,7 +2,7 @@ import scrape from 'website-scraper';
 import path from 'node:path';
 import fs from 'node:fs';
 
-const TARGET_URL = 'https://bkstar.com.vn/';
+const TARGET_URL = process.env.LIVE_BASE || 'https://bkstar.com.vn/';
 const OUT_DIR = path.resolve('public', 'snapshot');
 
 // Danh sách trang cần snapshot (whitelist)

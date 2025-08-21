@@ -1,5 +1,6 @@
 {
   "viewport": { "width": 1440, "height": 900 },
+  "liveBase": "https://bkstar.com.vn",
   "routes": [
     "/",
     "/ve-bkstar/",
