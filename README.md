@@ -53,6 +53,7 @@ Dự án clone giao diện BKSTAR (https://bkstar.com.vn/) nhằm mục đích h
 
 - scripts/visual-compare.js đã cấu hình mask/clamp để loại trừ vùng động (ticker, share, comments, related, meta…) giúp so sánh tập trung vào layout.
 - Báo cáo trực quan mở ở: visual-diff/report.html
+- Cấu hình visual test nằm trong: scripts/visual-config.json (dễ chỉnh sửa, không cần sửa mã JS)
 
 ## License
 
