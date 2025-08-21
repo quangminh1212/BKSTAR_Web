@@ -1,6 +1,13 @@
-node_modules/
+# Build output
 dist/
-visual-diff/
+.vite/
+
+# Snapshots and reports
 public/snapshot/
-package-lock.json
+visual-diff/
+playwright-report/
+test-results/
+
+# Node modules
+node_modules/
 

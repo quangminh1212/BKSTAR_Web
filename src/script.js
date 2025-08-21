@@ -19,10 +19,64 @@ const WP_CATEGORIES = {
   achievements: 4, // 'thanh-tich-hoc-vien'
 };
 
-async function wpFetchJson(url) {
-  const res = await fetch(url, { mode: 'cors' });
-  if (!res.ok) throw new Error('WP fetch failed: ' + url);
-  return res.json();
+// Cấu hình cache và tiện ích
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 phút
+
+function throttle(fn, wait) {
+  let lastTime = 0;
+  let timeoutId;
+  let lastArgs;
+  return function throttled(...args) {
+    const now = Date.now();
+    lastArgs = args;
+    const remaining = wait - (now - lastTime);
+    if (remaining <= 0) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+        timeoutId = undefined;
+      }
+      lastTime = now;
+      fn.apply(this, args);
+    } else if (!timeoutId) {
+      timeoutId = setTimeout(() => {
+        lastTime = Date.now();
+        timeoutId = undefined;
+        fn.apply(this, lastArgs);
+      }, remaining);
+    }
+  };
+}
+
+async function wpFetchJson(url, timeoutMs = 7000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { mode: 'cors', signal: controller.signal });
+    if (!res.ok) throw new Error('WP fetch failed: ' + url);
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function getCache(cacheKey) {
+  try {
+    const raw = localStorage.getItem(cacheKey);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (Date.now() - (parsed.timestamp || 0) > CACHE_TTL_MS) return null;
+    return parsed.data;
+  } catch {
+    return null;
+  }
+}
+
+function setCache(cacheKey, data) {
+  try {
+    localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), data }));
+  } catch {
+    // ignore
+  }
 }
 
 function stripHtml(html) {
@@ -33,8 +87,12 @@ function stripHtml(html) {
 
 async function fetchPostsByCategory(catId, perPage = 3) {
   const url = `${WP_BASE}/posts?per_page=${perPage}&categories=${catId}&_fields=link,date,title,excerpt,jetpack_featured_media_url`;
-  const posts = await wpFetchJson(url);
-  return posts.map((p) => ({
+  const cacheKey = `wp:cat:${catId}:per:${perPage}`;
+  const cached = getCache(cacheKey);
+  if (cached && Array.isArray(cached)) return cached;
+
+  const posts = await wpFetchJson(url, 7000);
+  const normalized = posts.map((p) => ({
     title: stripHtml(p.title?.rendered),
     date: p.date,
     excerpt: stripHtml(p.excerpt?.rendered)
@@ -43,6 +101,8 @@ async function fetchPostsByCategory(catId, perPage = 3) {
     url: p.link,
     image: p.jetpack_featured_media_url || '',
   }));
+  setCache(cacheKey, normalized);
+  return normalized;
 }
 
 async function loadWPContent() {
@@ -101,8 +161,15 @@ function initHeroSlider() {
   if (nextBtn) nextBtn.addEventListener('click', nextSlide);
   if (prevBtn) prevBtn.addEventListener('click', prevSlide);
 
-  // Auto-play slider
-  setInterval(nextSlide, 5000);
+  // Auto-play slider (pause when tab hidden)
+  let sliderInterval = setInterval(nextSlide, 5000);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      clearInterval(sliderInterval);
+    } else {
+      sliderInterval = setInterval(nextSlide, 5000);
+    }
+  });
 }
 
 // Stats Counter Animation
@@ -225,8 +292,15 @@ function initTestimonialsSlider() {
   if (nextBtn) nextBtn.addEventListener('click', nextTestimonial);
   if (prevBtn) prevBtn.addEventListener('click', prevTestimonial);
 
-  // Auto-play testimonials
-  setInterval(nextTestimonial, 4000);
+  // Auto-play testimonials (pause when tab hidden)
+  let testiInterval = setInterval(nextTestimonial, 4000);
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+      clearInterval(testiInterval);
+    } else {
+      testiInterval = setInterval(nextTestimonial, 4000);
+    }
+  });
 }
 
 // Mobile Menu & Accessibility
@@ -266,14 +340,14 @@ function initMobileMenu() {
   });
 }
 
-// Scroll to Top
+// Scroll to Top (with throttled scroll handler)
 function initScrollToTop() {
   const scrollBtn = document.querySelector('.scroll-to-top');
 
   if (!scrollBtn) return;
 
   // Show/hide scroll button based on scroll position
-  window.addEventListener('scroll', function () {
+  const onScroll = throttle(function () {
     if (window.pageYOffset > 300) {
       scrollBtn.style.opacity = '1';
       scrollBtn.style.visibility = 'visible';
@@ -281,7 +355,8 @@ function initScrollToTop() {
       scrollBtn.style.opacity = '0';
       scrollBtn.style.visibility = 'hidden';
     }
-  });
+  }, 150);
+  window.addEventListener('scroll', onScroll);
 
   // Smooth scroll to top
   scrollBtn.addEventListener('click', function (e) {
