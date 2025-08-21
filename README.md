@@ -1,7 +1,7 @@
 # BKSTAR Website Clone
 
-[![CI - Visual Regression](https://img.shields.io/badge/CI-Visual%20Regression-blue)](#)
-[![Release](https://img.shields.io/badge/Release-semantic--release-brightgreen)](#)
+[![CI - Visual Regression](https://github.com/quangminh1212/BKSTAR_Web/actions/workflows/visual-regression.yml/badge.svg?branch=main)](https://github.com/quangminh1212/BKSTAR_Web/actions/workflows/visual-regression.yml)
+[![Release](https://img.shields.io/github/v/release/quangminh1212/BKSTAR_Web?sort=semver)](https://github.com/quangminh1212/BKSTAR_Web/releases)
 
 Dự án clone giao diện BKSTAR (https://bkstar.com.vn/) nhằm mục đích học tập và kiểm thử giao diện tự động.
 
@@ -20,7 +20,7 @@ Dự án clone giao diện BKSTAR (https://bkstar.com.vn/) nhằm mục đích h
 
 ## Release tự động (semantic-release)
 
-- Dùng Conventional Commits để semantic-release tính version và tạo changelog.
+- Dùng Conventional Commits để semantic-release tính version và tạo changelog (header ≤ 100 ký tự).
 - Workflow: .github/workflows/release.yml chạy khi push vào main/master.
 - Secrets:
   - GITHUB_TOKEN: có sẵn trong Actions (dùng tạo release/changelog)
