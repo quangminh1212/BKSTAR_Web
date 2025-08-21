@@ -12,7 +12,7 @@
     "build": "vite build",
     "build:gh": "cross-env BASE=/BKSTAR_Web/ vite build",
     "preview": "vite preview",
-    "preview:pretty": "npm run snapshot && node scripts/preview-inject-override.js && vite preview --open /snapshot/index-snapshot.html",
+    "preview:pretty": "npm run snapshot && node scripts/preview-inject-override.js && npm run build && vite preview --open /snapshot/index-snapshot.html",
     "preview:pretty:selfhost": "cross-env SELF_HOST_INTER=1 npm run preview:pretty",
     "preview:snapshot": "vite preview --open /snapshot/index-snapshot.html",
     "lint": "eslint . --ext .js",
