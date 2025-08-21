@@ -196,7 +196,7 @@ const ROUTE_THRESHOLDS = {
   '/tai-nguyen/': 700000,
   '/thanh-tich-va-su-kien/': 50000,
   '/bao-chi/': 400000,
-  '/tuyen-dung/': 200000,
+  '/tuyen-dung/': 500000,
   '/faq/': 400000,
 };
 const SECTION_THRESHOLDS = {
@@ -472,7 +472,7 @@ async function main() {
 
   // Xây map canonical -> file local
   const canonicalMap = buildCanonicalMap(SNAPSHOT_DIR);
-  const ROUTES = Array.from(canonicalMap.keys());
+  const ROUTES = process.env.PAGES_ONLY === '1' ? PAGES : Array.from(canonicalMap.keys());
 
   const summary = [];
   for (const route of ROUTES) {
@@ -524,6 +524,15 @@ async function main() {
       '.grecaptcha-badge',
       '#wpadminbar',
       '.elementor-sticky--effects',
+      // Các vùng chia sẻ/bình luận/điều hướng bài viết gây nhiễu
+      '.elementor-share-buttons',
+      '.elementor-widget-share-buttons',
+      '.elementor-social-icons',
+      '.comments-area',
+      '.comment-respond',
+      '.elementor-post-navigation',
+      '.related-posts',
+      '.elementor-related-posts',
       // Header/Footer wrappers (nhiều thành phần động)
       'header',
       '.elementor-location-header',
