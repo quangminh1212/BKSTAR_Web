@@ -33,6 +33,39 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   if (request.method !== 'GET') return;
 
+  // Network-first with timeout for WordPress API requests
+  if (request.url.includes('/wp-json/wp/v2/')) {
+    event.respondWith(
+      (async () => {
+        const withTimeout = (promise, ms) => {
+          let t;
+          const timeout = new Promise((_, reject) => {
+            t = setTimeout(() => reject(new Error('timeout')), ms);
+          });
+          return Promise.race([promise, timeout]).finally(() => clearTimeout(t));
+        };
+        try {
+          const networkResponse = await withTimeout(fetch(request), 6000);
+          const clone = networkResponse.clone();
+          const cache = await caches.open(CACHE_NAME);
+          cache.put(request, clone);
+          return networkResponse;
+        } catch {
+          const cached = await caches.match(request);
+          if (cached) return cached;
+          // Fallback: generic offline JSON if available
+          const fallback = await caches.match('/data.json');
+          if (fallback) return fallback;
+          return new Response(JSON.stringify({ error: 'offline' }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          });
+        }
+      })()
+    );
+    return;
+  }
+
   // Cache-first for images (good for performance)
   if (request.destination === 'image') {
     event.respondWith(
