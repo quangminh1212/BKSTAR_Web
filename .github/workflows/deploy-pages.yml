@@ -30,8 +30,8 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Build (GitHub Pages base)
+        run: npm run build:gh
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
