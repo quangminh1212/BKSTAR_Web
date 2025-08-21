@@ -16,6 +16,7 @@
     "preview:pretty:selfhost": "cross-env SELF_HOST_INTER=1 npm run preview:pretty",
     "preview:pretty:fast": "cross-env PRELOAD_STYLES=normal PRELOAD_WEIGHTS=400,700 npm run preview:pretty",
     "preview:pretty:content": "cross-env PRELOAD_STYLES=normal,italic PRELOAD_WEIGHTS=400,500,700 npm run preview:pretty",
+    "preview:pretty:brand": "cross-env PRELOAD_STYLES=normal,italic PRELOAD_WEIGHTS=400,600,800 npm run preview:pretty",
     "preview:snapshot": "vite preview --open /snapshot/index-snapshot.html",
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
