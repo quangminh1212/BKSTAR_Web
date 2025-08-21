@@ -1,0 +1,18 @@
+name: Feature request
+description: Đề xuất tính năng mới
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Vấn đề bạn đang gặp
+      placeholder: Mô tả vấn đề khiến bạn cần tính năng này
+  - type: textarea
+    id: solution
+    attributes:
+      label: Giải pháp bạn mong muốn
+      placeholder: Mô tả ngắn gọn
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Giải pháp thay thế đã thử

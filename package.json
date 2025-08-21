@@ -4,6 +4,9 @@
   "description": "Clone giao diện BKSTAR (https://bkstar.com.vn/) dùng cho mục đích học tập và kiểm thử.",
   "main": "script.js",
   "type": "module",
+  "engines": {
+    "node": ">=18.18.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -34,12 +37,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.33.0",
     "@commitlint/cli": "19.5.0",
     "@commitlint/config-conventional": "19.5.0",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@semantic-release/github": "10.3.5",
     "@semantic-release/npm": "12.0.1",
+    "globals": "^15.12.0",
     "cross-env": "^10.0.0",
     "eslint": "^9.33.0",
     "eslint-config-prettier": "^10.1.8",

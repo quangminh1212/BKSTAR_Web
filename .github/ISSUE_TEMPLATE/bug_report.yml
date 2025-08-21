@@ -1,0 +1,22 @@
+name: Bug report
+description: Báo lỗi để giúp chúng tôi cải thiện
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: Mô tả lỗi
+      description: Hành vi hiện tại là gì? Thay vì kỳ vọng gì?
+      placeholder: Mô tả rõ ràng, kèm ảnh đính kèm nếu có
+    validations:
+      required: true
+  - type: input
+    id: steps
+    attributes:
+      label: Các bước tái hiện
+      placeholder: 1) ... 2) ... 3) ...
+  - type: input
+    id: env
+    attributes:
+      label: Môi trường
+      placeholder: OS, Node, trình duyệt, v.v.

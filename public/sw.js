@@ -1,13 +1,14 @@
-const CACHE_NAME = 'bkstar-cache-v2';
+const CACHE_NAME = 'bkstar-cache-v3';
 const ASSETS = [
-  './',
-  './index.html',
-  './data.json',
-  './images/logo.svg',
-  './images/slide1.webp',
-  './images/slide2.webp',
-  './images/slide3.webp',
-  './images/slide4.webp',
+  '/',
+  '/index.html',
+  '/snapshot/index-snapshot.html',
+  '/data.json',
+  '/images/logo.svg',
+  '/images/slide1.webp',
+  '/images/slide2.webp',
+  '/images/slide3.webp',
+  '/images/slide4.webp',
 ];
 
 self.addEventListener('install', (event) => {

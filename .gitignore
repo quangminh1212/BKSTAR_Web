@@ -5,6 +5,15 @@ node_modules/
 dist/
 .vite/
 visual-diff/
+public/snapshot/
+playwright-report/
+test-results/
+coverage/
+.cache/
+
+# Misc generated
+bash.exe.stackdump
+package.json.bak
 
 
 # Env files

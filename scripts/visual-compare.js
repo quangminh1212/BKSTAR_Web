@@ -330,7 +330,7 @@ async function screenshotPage(page, url, outPath, opts = {}) {
       if (document.fonts && document.fonts.status !== 'loaded') {
         try {
           await Promise.race([document.fonts.ready, timeout(1200)]);
-        } catch (e) {}
+        } catch {}
       }
     });
   } catch {}

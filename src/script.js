@@ -514,17 +514,17 @@ function renderCards(containerSelector, items, type) {
       const src = item.localImage || item.image;
       const onerrorAttr =
         item.localImage && item.image
-          ? `onerror=\"this.onerror=null; this.src='${item.image}'\"`
+          ? `onerror="this.onerror=null; this.src='${item.image}'"`
           : '';
       const webp = src ? src.replace(/\.(jpe?g|png)$/i, '.webp') : '';
 
       const media = src
         ? `
-                <div class=\"card-media\">
+                <div class="card-media">
                     <picture>
                         <source srcset="${webp}" type="image/webp">
 
-                    <img src=\"${src}\" alt=\"${item.title}\" loading=\"lazy\" decoding=\"async\" ${onerrorAttr} />
+                    <img src="${src}" alt="${item.title}" loading="lazy" decoding="async" ${onerrorAttr} />
                     </picture>
 
                 </div>`
