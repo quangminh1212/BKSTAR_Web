@@ -1,0 +1,5 @@
+npx --no-install commitlint --edit "$1" || {
+  echo "Commit message không hợp lệ theo Conventional Commits."
+  exit 1
+}
+

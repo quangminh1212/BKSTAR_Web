@@ -22,6 +22,7 @@ try {
     const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
     if (cfg.viewport) VIEWPORT = cfg.viewport;
     if (Array.isArray(cfg.routes)) CONFIG_ROUTES = cfg.routes;
+    globalThis.__VISUAL_CFG__ = cfg; // lưu để dùng ở dưới
   }
 } catch {}
 
@@ -31,8 +32,8 @@ const LOCAL_BASE = `http://localhost:${LOCAL_PORT}/snapshot/`;
 const SNAPSHOT_DIR = path.resolve('public', 'snapshot');
 const OUT_DIR = path.resolve('visual-diff');
 
-// Mask theo route để bỏ qua vùng động đặc thù
-const ROUTE_MASKS = {
+// Mask theo route để bỏ qua vùng động đặc thù (có thể override qua visual-config.json)
+let ROUTE_MASKS = {
   '/': [
     '.elementor-swiper',
     '.elementor-widget-image-carousel',
@@ -221,6 +222,7 @@ try {
     const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
     if (cfg.thresholds) ROUTE_THRESHOLDS = cfg.thresholds;
     if (cfg.sectionThresholds) SECTION_THRESHOLDS = cfg.sectionThresholds;
+    if (cfg.routeMasks) ROUTE_MASKS = cfg.routeMasks;
   }
 } catch {}
 
@@ -510,7 +512,8 @@ async function main() {
     console.log(`Chụp: live=${liveUrl} | local=${localUrl}`);
     // Mask theo route để bỏ qua vùng động đặc thù + mask chung
     const routeMasks = ROUTE_MASKS[route] || [];
-    const globalMask = [
+    const cfgGlobalMask = globalThis.__VISUAL_CFG__?.globalMask;
+    const globalMask = cfgGlobalMask ?? [
       '.elementor-widget-posts',
       '.elementor-posts-container',
       '.wp-block-latest-posts',
@@ -565,7 +568,7 @@ async function main() {
       '.site-footer',
     ];
     const maskSelectors = Array.from(new Set([...globalMask, ...routeMasks]));
-    const clampSelectors = [
+    const clampSelectors = globalThis.__VISUAL_CFG__?.clampSelectors ?? [
       '.elementor-widget-posts',
       '.eael-post-grid',
       '.entry-content',
