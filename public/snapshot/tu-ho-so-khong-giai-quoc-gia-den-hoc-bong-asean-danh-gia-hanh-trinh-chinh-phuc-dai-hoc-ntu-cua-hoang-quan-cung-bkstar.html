@@ -44,142 +44,6 @@
             'https:\/\/bkstar.com.vn\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.8.2',
         },
       };
-      /*! This file is auto-generated */
-      !(function (s, n) {
-        var o, i, e;
-        function c(e) {
-          try {
-            var t = { supportTests: e, timestamp: new Date().valueOf() };
-            sessionStorage.setItem(o, JSON.stringify(t));
-          } catch (e) {}
-        }
-        function p(e, t, n) {
-          (e.clearRect(0, 0, e.canvas.width, e.canvas.height), e.fillText(t, 0, 0));
-          var t = new Uint32Array(e.getImageData(0, 0, e.canvas.width, e.canvas.height).data),
-            a =
-              (e.clearRect(0, 0, e.canvas.width, e.canvas.height),
-              e.fillText(n, 0, 0),
-              new Uint32Array(e.getImageData(0, 0, e.canvas.width, e.canvas.height).data));
-          return t.every(function (e, t) {
-            return e === a[t];
-          });
-        }
-        function u(e, t) {
-          (e.clearRect(0, 0, e.canvas.width, e.canvas.height), e.fillText(t, 0, 0));
-          for (var n = e.getImageData(16, 16, 1, 1), a = 0; a < n.data.length; a++)
-            if (0 !== n.data[a]) return !1;
-          return !0;
-        }
-        function f(e, t, n, a) {
-          switch (t) {
-            case 'flag':
-              return n(
-                e,
-                '\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f',
-                '\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f'
-              )
-                ? !1
-                : !n(e, '\ud83c\udde8\ud83c\uddf6', '\ud83c\udde8\u200b\ud83c\uddf6') &&
-                    !n(
-                      e,
-                      '\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f',
-                      '\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f'
-                    );
-            case 'emoji':
-              return !a(e, '\ud83e\udedf');
-          }
-          return !1;
-        }
-        function g(e, t, n, a) {
-          var r =
-              'undefined' != typeof WorkerGlobalScope && self instanceof WorkerGlobalScope
-                ? new OffscreenCanvas(300, 150)
-                : s.createElement('canvas'),
-            o = r.getContext('2d', { willReadFrequently: !0 }),
-            i = ((o.textBaseline = 'top'), (o.font = '600 32px Arial'), {});
-          return (
-            e.forEach(function (e) {
-              i[e] = t(o, e, n, a);
-            }),
-            i
-          );
-        }
-        function t(e) {
-          var t = s.createElement('script');
-          ((t.src = e), (t.defer = !0), s.head.appendChild(t));
-        }
-        'undefined' != typeof Promise &&
-          ((o = 'wpEmojiSettingsSupports'),
-          (i = ['flag', 'emoji']),
-          (n.supports = { everything: !0, everythingExceptFlag: !0 }),
-          (e = new Promise(function (e) {
-            s.addEventListener('DOMContentLoaded', e, { once: !0 });
-          })),
-          new Promise(function (t) {
-            var n = (function () {
-              try {
-                var e = JSON.parse(sessionStorage.getItem(o));
-                if (
-                  'object' == typeof e &&
-                  'number' == typeof e.timestamp &&
-                  new Date().valueOf() < e.timestamp + 604800 &&
-                  'object' == typeof e.supportTests
-                )
-                  return e.supportTests;
-              } catch (e) {}
-              return null;
-            })();
-            if (!n) {
-              if (
-                'undefined' != typeof Worker &&
-                'undefined' != typeof OffscreenCanvas &&
-                'undefined' != typeof URL &&
-                URL.createObjectURL &&
-                'undefined' != typeof Blob
-              )
-                try {
-                  var e =
-                      'postMessage(' +
-                      g.toString() +
-                      '(' +
-                      [JSON.stringify(i), f.toString(), p.toString(), u.toString()].join(',') +
-                      '));',
-                    a = new Blob([e], { type: 'text/javascript' }),
-                    r = new Worker(URL.createObjectURL(a), { name: 'wpTestEmojiSupports' });
-                  return void (r.onmessage = function (e) {
-                    (c((n = e.data)), r.terminate(), t(n));
-                  });
-                } catch (e) {}
-              c((n = g(i, f, p, u)));
-            }
-            t(n);
-          })
-            .then(function (e) {
-              for (var t in e)
-                ((n.supports[t] = e[t]),
-                  (n.supports.everything = n.supports.everything && n.supports[t]),
-                  'flag' !== t &&
-                    (n.supports.everythingExceptFlag =
-                      n.supports.everythingExceptFlag && n.supports[t]));
-              ((n.supports.everythingExceptFlag =
-                n.supports.everythingExceptFlag && !n.supports.flag),
-                (n.DOMReady = !1),
-                (n.readyCallback = function () {
-                  n.DOMReady = !0;
-                }));
-            })
-            .then(function () {
-              return e;
-            })
-            .then(function () {
-              var e;
-              n.supports.everything ||
-                (n.readyCallback(),
-                (e = n.source || {}).concatemoji
-                  ? t(e.concatemoji)
-                  : e.wpemoji && e.twemoji && (t(e.twemoji), t(e.wpemoji)));
-            }));
-      })((window, document), window._wpemojiSettings);
     </script>
     <link rel="stylesheet" id="astra-theme-css-css" href="assets/main.min.css" media="all" />
     <style id="astra-theme-css-inline-css">
@@ -3744,7 +3608,7 @@
       }
     </style>
     <link rel="stylesheet" id="eael-general-css" href="assets/general.min.css" media="all" />
-    <link rel="stylesheet" id="eael-593-css" href="assets/eael-593_11.css" media="all" />
+    <link rel="stylesheet" id="eael-593-css" href="assets/eael-593_4.css" media="all" />
     <link
       rel="stylesheet"
       id="widget-heading-css"
@@ -4391,13 +4255,15 @@
                               id="menu-item-1846"
                               class="menu-item menu-item-type-post_type menu-item-object-page hfe-creative-menu"
                             >
-                              <a href="index_1.html" class="hfe-sub-menu-item">Về BKStar</a>
+                              <a href="ve-bkstar.html" class="hfe-sub-menu-item">Về BKStar</a>
                             </li>
                             <li
                               id="menu-item-1863"
                               class="menu-item menu-item-type-post_type menu-item-object-page hfe-creative-menu"
                             >
-                              <a href="su-menh-tam-nhin.html" class="hfe-sub-menu-item"
+                              <a
+                                href="https://bkstar.com.vn/su-menh-tam-nhin/"
+                                class="hfe-sub-menu-item"
                                 >Sứ Mệnh &amp; Tầm Nhìn</a
                               >
                             </li>
@@ -4405,7 +4271,7 @@
                               id="menu-item-1889"
                               class="menu-item menu-item-type-post_type menu-item-object-page hfe-creative-menu"
                             >
-                              <a href="index_2.html" class="hfe-sub-menu-item"
+                              <a href="why-bkstar.html" class="hfe-sub-menu-item"
                                 >Tại sao lại chọn BKStar</a
                               >
                             </li>
@@ -4415,7 +4281,7 @@
                           id="menu-item-295"
                           class="menu-item menu-item-type-post_type menu-item-object-page parent hfe-creative-menu"
                         >
-                          <a href="index_3.html" class="hfe-menu-item">Dịch vụ</a>
+                          <a href="dich-vu.html" class="hfe-menu-item">Dịch vụ</a>
                         </li>
                         <li
                           id="menu-item-437"
@@ -4427,25 +4293,27 @@
                           id="menu-item-324"
                           class="menu-item menu-item-type-post_type menu-item-object-page parent hfe-creative-menu"
                         >
-                          <a href="index_4.html" class="hfe-menu-item">Tài nguyên</a>
+                          <a href="tai-nguyen.html" class="hfe-menu-item">Tài nguyên</a>
                         </li>
                         <li
                           id="menu-item-343"
                           class="menu-item menu-item-type-post_type menu-item-object-page parent hfe-creative-menu"
                         >
-                          <a href="index_8.html" class="hfe-menu-item">FAQ</a>
+                          <a href="faq.html" class="hfe-menu-item">FAQ</a>
                         </li>
                         <li
                           id="menu-item-507"
                           class="menu-item menu-item-type-post_type menu-item-object-page parent hfe-creative-menu"
                         >
-                          <a href="index_5.html" class="hfe-menu-item">Thành tích và sự kiện</a>
+                          <a href="thanh-tich-va-su-kien.html" class="hfe-menu-item"
+                            >Thành tích và sự kiện</a
+                          >
                         </li>
                         <li
                           id="menu-item-383"
                           class="menu-item menu-item-type-post_type menu-item-object-page parent hfe-creative-menu"
                         >
-                          <a href="index_7.html" class="hfe-menu-item">Tuyển dụng</a>
+                          <a href="tuyen-dung.html" class="hfe-menu-item">Tuyển dụng</a>
                         </li>
                       </ul>
                     </nav>
@@ -6355,7 +6223,7 @@
       };
     </script>
     <script src="assets/general.min.js" id="eael-general-js"></script>
-    <script src="assets/eael-593_11.js" id="eael-593-js"></script>
+    <script src="assets/eael-593_4.js" id="eael-593-js"></script>
     <script src="assets/webpack.runtime.min.js" id="elementor-webpack-runtime-js"></script>
     <script src="assets/frontend-modules.min.js" id="elementor-frontend-modules-js"></script>
     <script src="assets/core.min.js" id="jquery-ui-core-js"></script>

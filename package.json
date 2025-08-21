@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
     "img:opt": "node scripts/optimize-images.js",
-    "snapshot": "node scripts/snapshot-homepage.js && node scripts/postprocess-fonts.js",
+    "snapshot": "node scripts/snapshot-homepage.js && node scripts/postprocess-fonts.js && node scripts/rename-friendly.js",
     "visual:compare": "node scripts/visual-compare.js",
     "prepare": "husky"
   },
