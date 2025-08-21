@@ -93,6 +93,14 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => cached);
+      // TTL policy for data.json: prefer fresh if older than 10 minutes
+      if (request.url.endsWith('/data.json') && cached) {
+        const dateHeader = cached.headers.get('date');
+        const ageMs = dateHeader ? Date.now() - new Date(dateHeader).getTime() : 0;
+        if (ageMs > 10 * 60 * 1000) {
+          return fetchPromise;
+        }
+      }
       return cached || fetchPromise;
     })
   );
