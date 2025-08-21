@@ -88,4 +88,16 @@ export default [
       'no-empty': 'off',
     },
   },
+
+  // Vite config runs in Node environment
+  {
+    files: ['vite.config.js'],
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
 ];

@@ -632,15 +632,19 @@ function formatDate(isoDate) {
 }
 
 // Parallax effect for hero section
-window.addEventListener('scroll', function () {
-  const scrolled = window.pageYOffset;
-  const hero = document.querySelector('.hero');
+window.addEventListener(
+  'scroll',
+  throttle(function () {
+    const scrolled = window.pageYOffset;
+    const hero = document.querySelector('.hero');
 
-  if (hero) {
-    const rate = scrolled * -0.5;
-    hero.style.transform = `translateY(${rate}px)`;
-  }
-});
+    if (hero) {
+      const rate = scrolled * -0.5;
+      hero.style.transform = `translateY(${rate}px)`;
+    }
+  }, 50),
+  { passive: true }
+);
 
 // Add fade-in animation for sections
 function initScrollAnimations() {
