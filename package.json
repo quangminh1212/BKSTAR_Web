@@ -15,8 +15,8 @@
     "snapshot": "node scripts/snapshot-site.js && node scripts/postprocess-fonts-and-rename.js",
     "visual:test": "node scripts/visual-compare.js",
     "test:visual:pages": "cross-env PAGES_ONLY=1 node scripts/visual-compare.js",
-    "visual:ci": "cross-env PAGES_ONLY=1 STRICT=1 node scripts/visual-compare.js",
-    "visual:ci:full": "cross-env STRICT=1 node scripts/visual-compare.js",
+    "visual:ci": "cross-env PAGES_ONLY=1 STRICT=1 wait-on http-get://localhost:5173/snapshot/index-snapshot.html && node scripts/visual-compare.js",
+    "visual:ci:full": "cross-env STRICT=1 wait-on http-get://localhost:5173/snapshot/index-snapshot.html && node scripts/visual-compare.js",
     "playwright:install": "npx playwright install --with-deps chromium",
     "prepare": "husky",
     "commitlint": "commitlint --from=HEAD~1 --to=HEAD"
@@ -53,6 +53,7 @@
     "semantic-release": "24.2.0",
     "sharp": "^0.34.3",
     "vite": "^6.3.5",
+    "wait-on": "^8.0.4",
     "website-scraper": "^5.3.1"
   }
 }

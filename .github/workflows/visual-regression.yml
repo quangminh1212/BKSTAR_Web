@@ -46,7 +46,7 @@ jobs:
       - name: Start Preview Server
         run: |
           npm run preview -- --host 0.0.0.0 --port 5173 &
-          sleep 3
+          npx wait-on http-get://localhost:5173
 
       - name: Snapshot live site
         run: npm run snapshot
