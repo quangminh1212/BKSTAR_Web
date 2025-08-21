@@ -44,9 +44,20 @@ async function buildCssSelfHost() {
   const faceRe =
     /@font-face\s*{[^}]*?font-style:\s*(normal|italic);[^}]*?font-weight:\s*(\d+)[^}]*?src:[^}]*?url\((https:\/\/fonts\.gstatic\.com\/[^)]+\.woff2)\)[^}]*?}/gms;
   const entries = [];
+  const allowStyles = (process.env.PRELOAD_STYLES || 'normal,italic')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  const allowWeights = (process.env.PRELOAD_WEIGHTS || '300,400,500,600,700,800')
+    .split(',')
+    .map((s) => parseInt(s.trim(), 10))
+    .filter((n) => !Number.isNaN(n));
   let mm;
   while ((mm = faceRe.exec(css)) !== null) {
-    entries.push({ style: mm[1] || 'normal', weight: parseInt(mm[2], 10) || 400, url: mm[3] });
+    const style = mm[1] || 'normal';
+    const weight = parseInt(mm[2], 10) || 400;
+    if (!allowStyles.includes(style) || !allowWeights.includes(weight)) continue;
+    entries.push({ style, weight, url: mm[3] });
   }
   const fontDir = path.join(SNAP_DIR, 'fonts', 'inter');
   ensureDir(fontDir);
@@ -88,10 +99,24 @@ async function buildCssCdn() {
     const res = await fetch(api, { headers: { 'user-agent': 'Mozilla/5.0' } });
     if (res.ok) {
       const css = await res.text();
-      const urlRe = /url\((https:\/\/fonts\.gstatic\.com\/[^)]+\.woff2)\)/g;
+      const faceRe =
+        /@font-face\s*{[^}]*?font-style:\s*(normal|italic);[^}]*?font-weight:\s*(\d+)[^}]*?src:[^}]*?url\((https:\/\/fonts\.gstatic\.com\/[^)]+\.woff2)\)[^}]*?}/gms;
+      const allowStyles = (process.env.PRELOAD_STYLES || 'normal,italic')
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const allowWeights = (process.env.PRELOAD_WEIGHTS || '300,400,500,600,700,800')
+        .split(',')
+        .map((s) => parseInt(s.trim(), 10))
+        .filter((n) => !Number.isNaN(n));
       let m;
       const s = new Set();
-      while ((m = urlRe.exec(css)) !== null) s.add(m[1]);
+      while ((m = faceRe.exec(css)) !== null) {
+        const style = m[1] || 'normal';
+        const weight = parseInt(m[2], 10) || 400;
+        if (!allowStyles.includes(style) || !allowWeights.includes(weight)) continue;
+        s.add(m[3]);
+      }
       preloads = Array.from(s);
     }
   } catch {
