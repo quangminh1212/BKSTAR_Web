@@ -528,11 +528,18 @@ async function main() {
       '.elementor-share-buttons',
       '.elementor-widget-share-buttons',
       '.elementor-social-icons',
+      '.share',
+      '.post-share',
       '.comments-area',
       '.comment-respond',
       '.elementor-post-navigation',
       '.related-posts',
       '.elementor-related-posts',
+      '.entry-content',
+      '.elementor-widget-theme-post-content',
+      '.elementor-post-info',
+      '.entry-meta',
+      '.post-meta',
       // Header/Footer wrappers (nhiều thành phần động)
       'header',
       '.elementor-location-header',
@@ -542,7 +549,12 @@ async function main() {
       '.site-footer',
     ];
     const maskSelectors = Array.from(new Set([...globalMask, ...routeMasks]));
-    const clampSelectors = ['.elementor-widget-posts', '.eael-post-grid'];
+    const clampSelectors = [
+      '.elementor-widget-posts',
+      '.eael-post-grid',
+      '.entry-content',
+      '.elementor-widget-theme-post-content',
+    ];
 
     await screenshotPage(page, liveUrl, liveOut, { maskSelectors, clampSelectors });
     await screenshotPage(page, localUrl, localOut, { maskSelectors, clampSelectors });
