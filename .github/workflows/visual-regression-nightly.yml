@@ -1,0 +1,40 @@
+name: Visual Regression Nightly
+
+on:
+  schedule:
+    - cron: '0 20 * * *' # 20:00 UTC mỗi ngày (~03:00 ICT)
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start Preview Server
+        run: |
+          npm run preview -- --host 0.0.0.0 --port 5173 &
+          sleep 3
+
+      - name: Snapshot live site
+        run: npm run snapshot
+
+      - name: Visual test (full site)
+        run: npm run visual:test
+
+      - name: Upload visual report
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diff-nightly
+          path: visual-diff
+

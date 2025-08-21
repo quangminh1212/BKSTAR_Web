@@ -1,5 +1,7 @@
 # BKSTAR Website Clone
 
+[![Visual Regression](https://img.shields.io/badge/CI-Visual%20Regression-blue)](#)
+
 Dự án clone giao diện BKSTAR (https://bkstar.com.vn/) nhằm mục đích học tập và kiểm thử giao diện tự động.
 
 ## Cấu trúc thư mục
