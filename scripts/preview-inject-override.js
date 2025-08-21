@@ -5,6 +5,8 @@ const SNAP_DIR = path.resolve('public', 'snapshot');
 const CSS_NAME = '_preview-override.css';
 
 const CSS_CONTENT = `/* Preview-only typography override: do NOT use in CI */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 html, body, body * {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;
