@@ -1,6 +1,7 @@
 # BKSTAR Website Clone
 
 [![CI - Visual Regression](https://github.com/quangminh1212/BKSTAR_Web/actions/workflows/visual-regression.yml/badge.svg?branch=main)](https://github.com/quangminh1212/BKSTAR_Web/actions/workflows/visual-regression.yml)
+[![Nightly - Full Site](https://github.com/quangminh1212/BKSTAR_Web/actions/workflows/visual-regression-nightly.yml/badge.svg?branch=main)](https://github.com/quangminh1212/BKSTAR_Web/actions/workflows/visual-regression-nightly.yml)
 [![Release](https://img.shields.io/github/v/release/quangminh1212/BKSTAR_Web?sort=semver)](https://github.com/quangminh1212/BKSTAR_Web/releases)
 [![Pages](https://img.shields.io/badge/Pages-deployed-blue)](https://quangminh1212.github.io/BKSTAR_Web/)
 
@@ -44,6 +45,10 @@ Dự án clone giao diện BKSTAR (https://bkstar.com.vn/) nhằm mục đích h
 - Toàn site: npm run visual:test
 - Chỉ các trang chính (nhanh): npm run test:visual:pages
   - Lệnh này dùng biến môi trường PAGES_ONLY=1 để chỉ so sánh các trang chính
+- CI chạy STRICT, kèm kiểm tra ảnh tự động (HTML/CSS) trước khi so sánh để tránh “thiếu ảnh” do lazy-load.
+- Có thể override nguồn live để so sánh bằng biến môi trường:
+  - LIVE_BASE (cho workflow thường), LIVE_BASE_NIGHTLY (cho nightly)
+  - Hoặc chỉnh trong scripts/visual-config.json (thuộc tính liveBase)
 
 ### Build/Preview
 
