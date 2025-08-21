@@ -1,0 +1,6 @@
+node_modules/
+dist/
+visual-diff/
+public/snapshot/
+package-lock.json
+

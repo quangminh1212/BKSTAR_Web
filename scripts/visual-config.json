@@ -1,6 +1,15 @@
 {
   "viewport": { "width": 1440, "height": 900 },
-  "routes": ["/", "/ve-bkstar/", "/dich-vu/", "/tai-nguyen/", "/thanh-tich-va-su-kien/", "/bao-chi/", "/tuyen-dung/", "/faq/"],
+  "routes": [
+    "/",
+    "/ve-bkstar/",
+    "/dich-vu/",
+    "/tai-nguyen/",
+    "/thanh-tich-va-su-kien/",
+    "/bao-chi/",
+    "/tuyen-dung/",
+    "/faq/"
+  ],
   "thresholds": {
     "/": 50000,
     "/ve-bkstar/": 350000,
@@ -20,4 +29,3 @@
     "/thanh-tich-va-su-kien/#grid": 120000
   }
 }
-

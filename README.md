@@ -20,30 +20,37 @@ Dự án clone giao diện BKSTAR (https://bkstar.com.vn/) nhằm mục đích h
 ## Cách chạy
 
 ### Development server
+
 - npm run dev
 
 ### Snapshot nội dung trang live về local
+
 - npm run snapshot
   - Tải về các trang whitelist và tài nguyên cần thiết
   - Hậu xử lý font và tự động đổi tên file theo slug canonical (dễ hiểu)
 
 ### So sánh giao diện (Visual Regression Testing)
+
 - Toàn site: npm run visual:test
 - Chỉ các trang chính (nhanh): npm run test:visual:pages
   - Lệnh này dùng biến môi trường PAGES_ONLY=1 để chỉ so sánh các trang chính
 
 ### Build/Preview
+
 - npm run build
 - npm run preview
 
 ## Ghi chú
+
 - scripts/visual-compare.js đã cấu hình mask/clamp để loại trừ vùng động (ticker, share, comments, related, meta…) giúp so sánh tập trung vào layout.
 - Báo cáo trực quan mở ở: visual-diff/report.html
 
 ## License
+
 Dự án chỉ dùng cho mục đích học tập. Nội dung và tài sản thuộc về BKSTAR.
 
 ### ✅ Đã hoàn thành:
+
 - **Responsive Design**: Tương thích với mọi thiết bị (desktop, tablet, mobile)
 - **Header với Navigation**: Menu dropdown, thông tin liên hệ, social links
 - **Hero Slider**: Carousel tự động chuyển slide với điều khiển manual
@@ -63,6 +70,7 @@ Dự án chỉ dùng cho mục đích học tập. Nội dung và tài sản thu
 - **Form Validation**: Kiểm tra dữ liệu form trước khi submit
 
 ### 🎨 Thiết kế:
+
 - **Màu sắc chính**:
   - Primary Blue: #046bd2
   - Secondary Blue: #6ec4e4
@@ -73,6 +81,7 @@ Dự án chỉ dùng cho mục đích học tập. Nội dung và tài sản thu
 - **Icons**: Font Awesome 6.0
 
 ### 📱 Responsive Breakpoints:
+
 - Desktop: > 768px
 - Tablet: 768px - 1024px
 - Mobile: < 768px
@@ -101,16 +110,20 @@ BKSTAR_Web/
 ## Hướng dẫn sử dụng
 
 ### 1. Chuẩn bị hình ảnh:
+
 Thêm các file hình ảnh vào thư mục `images/`:
+
 - `logo.png`: Logo BKSTAR (khuyến nghị 200x60px)
 - `slide1.jpg` đến `slide4.jpg`: Hình slider (khuyến nghị 1200x500px)
 - `student1.jpg` đến `student5.jpg`: Ảnh học viên (khuyến nghị 120x120px, hình vuông)
 
 ### 2. Chạy website:
+
 - Mở file `index.html` trong trình duyệt web
 - Hoặc sử dụng live server để development
 
 ### 3. Tùy chỉnh nội dung:
+
 - **Thông tin liên hệ**: Sửa trong header và footer của `index.html`
 - **Nội dung các section**: Cập nhật text trong các section tương ứng
 - **Màu sắc**: Thay đổi CSS variables trong `styles.css`
@@ -119,28 +132,34 @@ Thêm các file hình ảnh vào thư mục `images/`:
 ## Tính năng JavaScript
 
 ### Hero Slider:
+
 - Tự động chuyển slide mỗi 5 giây
 - Điều khiển manual với nút prev/next
 - Smooth transition giữa các slide
 
 ### Stats Counter:
+
 - Animation đếm số khi section xuất hiện trong viewport
 - Sử dụng Intersection Observer API
 
 ### Testimonials Slider:
+
 - Tự động chuyển testimonial mỗi 4 giây
 - Hiển thị thông tin học viên và trường đại học
 
 ### Form Validation:
+
 - Kiểm tra các trường bắt buộc
 - Validation email và số điện thoại
 - Hiển thị thông báo success/error
 
 ### Mobile Menu:
+
 - Menu responsive cho thiết bị mobile
 - Click outside để đóng menu
 
 ### Scroll Effects:
+
 - Smooth scrolling cho anchor links
 - Fade-in animation khi scroll
 - Parallax effect cho hero section
@@ -163,6 +182,7 @@ Thêm các file hình ảnh vào thư mục `images/`:
 ## Customization
 
 ### Thay đổi màu sắc:
+
 ```css
 :root {
   --primary-color: #046bd2;
@@ -173,12 +193,13 @@ Thêm các file hình ảnh vào thư mục `images/`:
 ```
 
 ### Thêm testimonial mới:
+
 ```javascript
 const newTestimonial = {
-    university: "Tên trường đại học",
-    name: "Tên học viên",
-    school: "Trường phổ thông",
-    image: "images/student_new.jpg"
+  university: 'Tên trường đại học',
+  name: 'Tên học viên',
+  school: 'Trường phổ thông',
+  image: 'images/student_new.jpg',
 };
 testimonials.push(newTestimonial);
 ```
@@ -186,12 +207,14 @@ testimonials.push(newTestimonial);
 ## Deployment
 
 ### GitHub Pages:
+
 1. Push code lên GitHub repository
 2. Vào Settings > Pages
 3. Chọn source branch (main/master)
 4. Website sẽ có URL: `https://username.github.io/repository-name`
 
 ### Netlify:
+
 1. Kéo thả thư mục project vào Netlify
 2. Hoặc connect với GitHub repository
 3. Auto-deploy khi có commit mới

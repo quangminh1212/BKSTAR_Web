@@ -1,14 +1,14 @@
 // DOM Content Loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize all components
-    initHeroSlider();
-    initStatsCounter();
-    initTestimonialsSlider();
-    initMobileMenu();
-    initScrollToTop();
-    initFormValidation();
-    initSmoothScrolling();
-    loadDynamicData();
+document.addEventListener('DOMContentLoaded', function () {
+  // Initialize all components
+  initHeroSlider();
+  initStatsCounter();
+  initTestimonialsSlider();
+  initMobileMenu();
+  initScrollToTop();
+  initFormValidation();
+  initSmoothScrolling();
+  loadDynamicData();
 });
 // WP REST API integration to mirror live content
 const WP_BASE = 'https://bkstar.com.vn/wp-json/wp/v2';
@@ -16,7 +16,7 @@ const WP_CATEGORIES = {
   news: 27, // 'bao-chi' (fallback to 26 'su-kien' if empty)
   competitions: 12, // 'cuoc-thi-quoc-te'
   blog: 1, // 'blog-tai-nguyen'
-  achievements: 4 // 'thanh-tich-hoc-vien'
+  achievements: 4, // 'thanh-tich-hoc-vien'
 };
 
 async function wpFetchJson(url) {
@@ -34,12 +34,14 @@ function stripHtml(html) {
 async function fetchPostsByCategory(catId, perPage = 3) {
   const url = `${WP_BASE}/posts?per_page=${perPage}&categories=${catId}&_fields=link,date,title,excerpt,jetpack_featured_media_url`;
   const posts = await wpFetchJson(url);
-  return posts.map(p => ({
+  return posts.map((p) => ({
     title: stripHtml(p.title?.rendered),
     date: p.date,
-    excerpt: stripHtml(p.excerpt?.rendered).replace(/\s+\[.*?\]$/, '').trim(),
+    excerpt: stripHtml(p.excerpt?.rendered)
+      .replace(/\s+\[.*?\]$/, '')
+      .trim(),
     url: p.link,
-    image: p.jetpack_featured_media_url || ''
+    image: p.jetpack_featured_media_url || '',
   }));
 }
 
@@ -48,7 +50,7 @@ async function loadWPContent() {
     const [competitions, blog, achievements] = await Promise.all([
       fetchPostsByCategory(WP_CATEGORIES.competitions, 3),
       fetchPostsByCategory(WP_CATEGORIES.blog, 3),
-      fetchPostsByCategory(WP_CATEGORIES.achievements, 3)
+      fetchPostsByCategory(WP_CATEGORIES.achievements, 3),
     ]);
 
     // News: try bao-chi (27), fallback su-kien (26)
@@ -71,120 +73,119 @@ async function loadWPContent() {
   }
 }
 
-
 // Hero Slider
 function initHeroSlider() {
-    const slides = document.querySelectorAll('.slide');
-    const prevBtn = document.querySelector('.hero .prev-btn');
-    const nextBtn = document.querySelector('.hero .next-btn');
-    let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.querySelector('.hero .prev-btn');
+  const nextBtn = document.querySelector('.hero .next-btn');
+  let currentSlide = 0;
 
-    if (slides.length === 0) return;
+  if (slides.length === 0) return;
 
-    function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        slides[index].classList.add('active');
-    }
+  function showSlide(index) {
+    slides.forEach((slide) => slide.classList.remove('active'));
+    slides[index].classList.add('active');
+  }
 
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-    }
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
 
-    function prevSlide() {
-        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(currentSlide);
-    }
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
 
-    // Event listeners
-    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+  // Event listeners
+  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
 
-    // Auto-play slider
-    setInterval(nextSlide, 5000);
+  // Auto-play slider
+  setInterval(nextSlide, 5000);
 }
 
 // Stats Counter Animation
 function initStatsCounter() {
-    const counters = document.querySelectorAll('.counter');
-    const options = {
-        threshold: 0.5,
-        rootMargin: '0px 0px -100px 0px'
-    };
+  const counters = document.querySelectorAll('.counter');
+  const options = {
+    threshold: 0.5,
+    rootMargin: '0px 0px -100px 0px',
+  };
 
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const counter = entry.target;
-                const target = parseInt(counter.getAttribute('data-target'));
-                const increment = target / 100;
-                let current = 0;
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const counter = entry.target;
+        const target = parseInt(counter.getAttribute('data-target'));
+        const increment = target / 100;
+        let current = 0;
 
-                const updateCounter = () => {
-                    if (current < target) {
-                        current += increment;
-                        counter.textContent = Math.ceil(current);
-                        setTimeout(updateCounter, 20);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
+        const updateCounter = () => {
+          if (current < target) {
+            current += increment;
+            counter.textContent = Math.ceil(current);
+            setTimeout(updateCounter, 20);
+          } else {
+            counter.textContent = target;
+          }
+        };
 
-                updateCounter();
-                observer.unobserve(counter);
-            }
-        });
-    }, options);
-
-    counters.forEach(counter => {
-        observer.observe(counter);
+        updateCounter();
+        observer.unobserve(counter);
+      }
     });
+  }, options);
+
+  counters.forEach((counter) => {
+    observer.observe(counter);
+  });
 }
 
 // Testimonials Slider
 function initTestimonialsSlider() {
-    const testimonials = [
-        {
-            university: "Cornell University",
-            name: "Trần Nam Trân",
-            school: "Trường Trung học Cranbrook",
-            image: "images/student1.jpg"
-        },
-        {
-            university: "Học bổng ASEAN - Nanyang Technological University",
-            name: "Hoàng Quân",
-            school: "THPT Chuyên Hà Nội - Amsterdam",
-            image: "images/student2.jpg"
-        },
-        {
-            university: "Học bổng Toàn phần - University of Oxford",
-            name: "Nguyễn Cảnh Thái",
-            school: "THPT Chuyên Khoa học Tự nhiên",
-            image: "images/student3.jpg"
-        },
-        {
-            university: "Stanford University University of Pennsylvania USC Marshall",
-            name: "Nguyễn Quỳnh Anh",
-            school: "Trường Quốc Tế Concordia Hà Nội",
-            image: "images/student4.jpg"
-        },
-        {
-            university: "The University of Sydney",
-            name: "Vương Nhật Minh",
-            school: "THPT Chuyên Khoa học Tự nhiên",
-            image: "images/student5.jpg"
-        }
-    ];
+  const testimonials = [
+    {
+      university: 'Cornell University',
+      name: 'Trần Nam Trân',
+      school: 'Trường Trung học Cranbrook',
+      image: 'images/student1.jpg',
+    },
+    {
+      university: 'Học bổng ASEAN - Nanyang Technological University',
+      name: 'Hoàng Quân',
+      school: 'THPT Chuyên Hà Nội - Amsterdam',
+      image: 'images/student2.jpg',
+    },
+    {
+      university: 'Học bổng Toàn phần - University of Oxford',
+      name: 'Nguyễn Cảnh Thái',
+      school: 'THPT Chuyên Khoa học Tự nhiên',
+      image: 'images/student3.jpg',
+    },
+    {
+      university: 'Stanford University University of Pennsylvania USC Marshall',
+      name: 'Nguyễn Quỳnh Anh',
+      school: 'Trường Quốc Tế Concordia Hà Nội',
+      image: 'images/student4.jpg',
+    },
+    {
+      university: 'The University of Sydney',
+      name: 'Vương Nhật Minh',
+      school: 'THPT Chuyên Khoa học Tự nhiên',
+      image: 'images/student5.jpg',
+    },
+  ];
 
-    const slider = document.querySelector('.testimonials-slider');
-    const prevBtn = document.querySelector('.testimonials .prev-btn');
-    const nextBtn = document.querySelector('.testimonials .next-btn');
-    let currentTestimonial = 0;
+  const slider = document.querySelector('.testimonials-slider');
+  const prevBtn = document.querySelector('.testimonials .prev-btn');
+  const nextBtn = document.querySelector('.testimonials .next-btn');
+  let currentTestimonial = 0;
 
-    if (!slider) return;
+  if (!slider) return;
 
-    function createTestimonialSlide(testimonial) {
-        return `
+  function createTestimonialSlide(testimonial) {
+    return `
             <div class="testimonial-slide">
                 <div class="testimonial-content">
                     <h3>${testimonial.university}</h3>
@@ -201,175 +202,175 @@ function initTestimonialsSlider() {
                 </div>
             </div>
         `;
-    }
+  }
 
-    function showTestimonial(index) {
-        slider.innerHTML = createTestimonialSlide(testimonials[index]);
-    }
+  function showTestimonial(index) {
+    slider.innerHTML = createTestimonialSlide(testimonials[index]);
+  }
 
-    function nextTestimonial() {
-        currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-        showTestimonial(currentTestimonial);
-    }
+  function nextTestimonial() {
+    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+    showTestimonial(currentTestimonial);
+  }
 
-    function prevTestimonial() {
-        currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
-        showTestimonial(currentTestimonial);
-    }
+  function prevTestimonial() {
+    currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+    showTestimonial(currentTestimonial);
+  }
 
-    // Initialize first testimonial
-    showTestimonial(0);
+  // Initialize first testimonial
+  showTestimonial(0);
 
-    // Event listeners
-    if (nextBtn) nextBtn.addEventListener('click', nextTestimonial);
-    if (prevBtn) prevBtn.addEventListener('click', prevTestimonial);
+  // Event listeners
+  if (nextBtn) nextBtn.addEventListener('click', nextTestimonial);
+  if (prevBtn) prevBtn.addEventListener('click', prevTestimonial);
 
-    // Auto-play testimonials
-    setInterval(nextTestimonial, 4000);
+  // Auto-play testimonials
+  setInterval(nextTestimonial, 4000);
 }
 
 // Mobile Menu & Accessibility
 function initMobileMenu() {
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
+  const navToggle = document.querySelector('.nav-toggle');
+  const navMenu = document.querySelector('.nav-menu');
 
-    if (!navToggle || !navMenu) return;
+  if (!navToggle || !navMenu) return;
 
-    navToggle.setAttribute('role', 'button');
-    navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.setAttribute('aria-controls', 'primary-menu');
+  navToggle.setAttribute('role', 'button');
+  navToggle.setAttribute('aria-expanded', 'false');
+  navToggle.setAttribute('aria-controls', 'primary-menu');
 
-    navMenu.id = 'primary-menu';
-    navMenu.setAttribute('role', 'menu');
+  navMenu.id = 'primary-menu';
+  navMenu.setAttribute('role', 'menu');
 
-    navToggle.addEventListener('click', function() {
-        const isOpen = navMenu.style.display === 'block';
-        navMenu.style.display = isOpen ? 'none' : 'block';
-        navToggle.setAttribute('aria-expanded', String(!isOpen));
-    });
+  navToggle.addEventListener('click', function () {
+    const isOpen = navMenu.style.display === 'block';
+    navMenu.style.display = isOpen ? 'none' : 'block';
+    navToggle.setAttribute('aria-expanded', String(!isOpen));
+  });
 
-    // Keyboard support
-    navToggle.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            navToggle.click();
-        }
-    });
+  // Keyboard support
+  navToggle.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      navToggle.click();
+    }
+  });
 
-    // Close menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-            navMenu.style.display = 'none';
-            navToggle.setAttribute('aria-expanded', 'false');
-        }
-    });
+  // Close menu when clicking outside
+  document.addEventListener('click', function (e) {
+    if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+      navMenu.style.display = 'none';
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
 }
 
 // Scroll to Top
 function initScrollToTop() {
-    const scrollBtn = document.querySelector('.scroll-to-top');
+  const scrollBtn = document.querySelector('.scroll-to-top');
 
-    if (!scrollBtn) return;
+  if (!scrollBtn) return;
 
-    // Show/hide scroll button based on scroll position
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            scrollBtn.style.opacity = '1';
-            scrollBtn.style.visibility = 'visible';
-        } else {
-            scrollBtn.style.opacity = '0';
-            scrollBtn.style.visibility = 'hidden';
-        }
+  // Show/hide scroll button based on scroll position
+  window.addEventListener('scroll', function () {
+    if (window.pageYOffset > 300) {
+      scrollBtn.style.opacity = '1';
+      scrollBtn.style.visibility = 'visible';
+    } else {
+      scrollBtn.style.opacity = '0';
+      scrollBtn.style.visibility = 'hidden';
+    }
+  });
+
+  // Smooth scroll to top
+  scrollBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
     });
-
-    // Smooth scroll to top
-    scrollBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
+  });
 }
 
 // Form Validation
 function initFormValidation() {
-    const form = document.querySelector('.contact-form');
+  const form = document.querySelector('.contact-form');
 
-    if (!form) return;
+  if (!form) return;
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-        const name = form.querySelector('#name').value.trim();
-        const email = form.querySelector('#email').value.trim();
-        const phone = form.querySelector('#phone').value.trim();
-        const note = form.querySelector('#note').value.trim();
+    const name = form.querySelector('#name').value.trim();
+    const email = form.querySelector('#email').value.trim();
+    const phone = form.querySelector('#phone').value.trim();
+    const note = form.querySelector('#note').value.trim();
 
-        // Basic validation
-        if (!name) {
-            showAlert('Vui lòng nhập họ và tên', 'error');
-            return;
-        }
+    // Basic validation
+    if (!name) {
+      showAlert('Vui lòng nhập họ và tên', 'error');
+      return;
+    }
 
-        if (!email || !isValidEmail(email)) {
-            showAlert('Vui lòng nhập email hợp lệ', 'error');
-            return;
-        }
+    if (!email || !isValidEmail(email)) {
+      showAlert('Vui lòng nhập email hợp lệ', 'error');
+      return;
+    }
 
-        if (!phone || !isValidPhone(phone)) {
-            showAlert('Vui lòng nhập số điện thoại hợp lệ', 'error');
-            return;
-        }
+    if (!phone || !isValidPhone(phone)) {
+      showAlert('Vui lòng nhập số điện thoại hợp lệ', 'error');
+      return;
+    }
 
-        // Submit form to endpoint if configured
-        const endpoint = form.getAttribute('data-form-endpoint');
-        if (endpoint && endpoint.trim()) {
-            submitForm(endpoint.trim(), { name, email, phone, note });
-        } else {
-            showAlert('Cảm ơn bạn đã liên hệ! (Chưa cấu hình endpoint gửi form)', 'success');
-        }
-        form.reset();
-    });
+    // Submit form to endpoint if configured
+    const endpoint = form.getAttribute('data-form-endpoint');
+    if (endpoint && endpoint.trim()) {
+      submitForm(endpoint.trim(), { name, email, phone, note });
+    } else {
+      showAlert('Cảm ơn bạn đã liên hệ! (Chưa cấu hình endpoint gửi form)', 'success');
+    }
+    form.reset();
+  });
 }
 
 async function submitForm(endpoint, payload) {
-    try {
-        const res = await fetch(endpoint, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-        if (!res.ok) throw new Error('Submit failed');
-        showAlert('Gửi form thành công! Chúng tôi sẽ liên hệ sớm.', 'success');
-    } catch (e) {
-        console.error(e);
-        showAlert('Không thể gửi form lúc này. Vui lòng thử lại sau.', 'error');
-    }
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error('Submit failed');
+    showAlert('Gửi form thành công! Chúng tôi sẽ liên hệ sớm.', 'success');
+  } catch (e) {
+    console.error(e);
+    showAlert('Không thể gửi form lúc này. Vui lòng thử lại sau.', 'error');
+  }
 }
 
 // Helper functions
 function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
 
 function isValidPhone(phone) {
-    const phoneRegex = /^[0-9+\-\s()]{10,}$/;
-    return phoneRegex.test(phone);
+  const phoneRegex = /^[0-9+\-\s()]{10,}$/;
+  return phoneRegex.test(phone);
 }
 
 function showAlert(message, type) {
-    // Create alert element
-    const alert = document.createElement('div');
-    alert.className = `alert alert-${type}`;
-    alert.innerHTML = `
+  // Create alert element
+  const alert = document.createElement('div');
+  alert.className = `alert alert-${type}`;
+  alert.innerHTML = `
         <span>${message}</span>
         <button class="alert-close">&times;</button>
     `;
 
-    // Add styles
-    alert.style.cssText = `
+  // Add styles
+  alert.style.cssText = `
         position: fixed;
         top: 20px;
         right: 20px;
@@ -387,9 +388,9 @@ function showAlert(message, type) {
         ${type === 'success' ? 'background: #10b981;' : 'background: #ef4444;'}
     `;
 
-    // Add close button styles
-    const closeBtn = alert.querySelector('.alert-close');
-    closeBtn.style.cssText = `
+  // Add close button styles
+  const closeBtn = alert.querySelector('.alert-close');
+  closeBtn.style.cssText = `
         background: none;
         border: none;
         color: white;
@@ -399,116 +400,126 @@ function showAlert(message, type) {
         line-height: 1;
     `;
 
-    // Add to page
-    document.body.appendChild(alert);
+  // Add to page
+  document.body.appendChild(alert);
 
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-        if (alert.parentNode) {
-            alert.parentNode.removeChild(alert);
-        }
-    }, 5000);
+  // Auto remove after 5 seconds
+  setTimeout(() => {
+    if (alert.parentNode) {
+      alert.parentNode.removeChild(alert);
+    }
+  }, 5000);
 
-    // Close button functionality
-    closeBtn.addEventListener('click', () => {
-        if (alert.parentNode) {
-            alert.parentNode.removeChild(alert);
-        }
-    });
+  // Close button functionality
+  closeBtn.addEventListener('click', () => {
+    if (alert.parentNode) {
+      alert.parentNode.removeChild(alert);
+    }
+  });
 }
 
 // Smooth Scrolling for anchor links + Scroll Spy
 function initSmoothScrolling() {
-    const links = document.querySelectorAll('a[href^="#"]');
+  const links = document.querySelectorAll('a[href^="#"]');
 
-    links.forEach(link => {
-        link.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href === '#') {
-                e.preventDefault();
-                return;
-            }
+  links.forEach((link) => {
+    link.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (href === '#') {
+        e.preventDefault();
+        return;
+      }
 
-            const target = document.querySelector(href);
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
         });
+      }
     });
+  });
 
-    // Scroll Spy: highlight nav item for visible section
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
+  // Scroll Spy: highlight nav item for visible section
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
 
-    const spy = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${id}`));
-            }
-        });
-    }, { threshold: 0.6 });
+  const spy = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach((l) =>
+            l.classList.toggle('active', l.getAttribute('href') === `#${id}`)
+          );
+        }
+      });
+    },
+    { threshold: 0.6 }
+  );
 
-    sections.forEach(sec => spy.observe(sec));
+  sections.forEach((sec) => spy.observe(sec));
 }
 
 // Add loading animation for images
-document.addEventListener('DOMContentLoaded', function() {
-    const images = document.querySelectorAll('img');
+document.addEventListener('DOMContentLoaded', function () {
+  const images = document.querySelectorAll('img');
 
-    images.forEach(img => {
-        img.addEventListener('load', function() {
-            this.style.opacity = '1';
-        });
-
-        // Set initial opacity
-        img.style.opacity = '0';
-        img.style.transition = 'opacity 0.3s ease';
-
-        // If image is already loaded
-        if (img.complete) {
-            img.style.opacity = '1';
-        }
+  images.forEach((img) => {
+    img.addEventListener('load', function () {
+      this.style.opacity = '1';
     });
+
+    // Set initial opacity
+    img.style.opacity = '0';
+    img.style.transition = 'opacity 0.3s ease';
+
+    // If image is already loaded
+    if (img.complete) {
+      img.style.opacity = '1';
+    }
+  });
 });
 
 // Dynamic data loader
 async function loadDynamicData() {
-    try {
-        // Try live content first
-        const ok = await loadWPContent();
-        if (ok) return;
+  try {
+    // Try live content first
+    const ok = await loadWPContent();
+    if (ok) return;
 
-        const res = await fetch('/data.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load data.json');
-        const data = await res.json();
+    const res = await fetch('/data.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to load data.json');
+    const data = await res.json();
 
-        const newsRendered = renderCards('#news-grid', data.news, 'news');
-        const newsEmpty = document.querySelector('#news-empty');
-        if (newsEmpty) newsEmpty.style.display = newsRendered ? 'none' : 'block';
-        renderCards('#competitions-grid', data.competitions, 'competitions');
-        renderCards('#blog-grid', data.blog, 'blog');
-        renderCards('#achievements-grid', data.achievements, 'achievements');
-    } catch (err) {
-        console.error(err);
-    }
+    const newsRendered = renderCards('#news-grid', data.news, 'news');
+    const newsEmpty = document.querySelector('#news-empty');
+    if (newsEmpty) newsEmpty.style.display = newsRendered ? 'none' : 'block';
+    renderCards('#competitions-grid', data.competitions, 'competitions');
+    renderCards('#blog-grid', data.blog, 'blog');
+    renderCards('#achievements-grid', data.achievements, 'achievements');
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 function renderCards(containerSelector, items, type) {
-    const container = document.querySelector(containerSelector);
-    if (!container || !Array.isArray(items)) return false;
+  const container = document.querySelector(containerSelector);
+  if (!container || !Array.isArray(items)) return false;
 
-    const html = items.map(item => {
-        const dateFormatted = formatDate(item.date);
-        const src = item.localImage || item.image;
-        const onerrorAttr = item.localImage && item.image ? `onerror=\"this.onerror=null; this.src='${item.image}'\"` : '';
-        const webp = src ? src.replace(/\.(jpe?g|png)$/i, '.webp') : '';
+  const html = items
+    .map((item) => {
+      const dateFormatted = formatDate(item.date);
+      const src = item.localImage || item.image;
+      const onerrorAttr =
+        item.localImage && item.image
+          ? `onerror=\"this.onerror=null; this.src='${item.image}'\"`
+          : '';
+      const webp = src ? src.replace(/\.(jpe?g|png)$/i, '.webp') : '';
 
-        const media = src ? `
+      const media = src
+        ? `
                 <div class=\"card-media\">
                     <picture>
                         <source srcset="${webp}" type="image/webp">
@@ -516,8 +527,9 @@ function renderCards(containerSelector, items, type) {
                     <img src=\"${src}\" alt=\"${item.title}\" loading=\"lazy\" decoding=\"async\" ${onerrorAttr} />
                     </picture>
 
-                </div>` : '';
-        return `
+                </div>`
+        : '';
+      return `
             <article class="${type === 'blog' ? 'blog-card' : type === 'competitions' ? 'competition-card' : type === 'achievements' ? 'achievement-card' : 'news-card'}">
                 ${media}
                 <div class="card-content">
@@ -528,55 +540,56 @@ function renderCards(containerSelector, items, type) {
                 </div>
             </article>
         `;
-    }).join('');
+    })
+    .join('');
 
-    container.innerHTML = html;
-    return items.length > 0;
+  container.innerHTML = html;
+  return items.length > 0;
 }
 
 function formatDate(isoDate) {
-    try {
-        const d = new Date(isoDate);
-        return d.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
-    } catch {
-        return isoDate;
-    }
+  try {
+    const d = new Date(isoDate);
+    return d.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
+  } catch {
+    return isoDate;
+  }
 }
 
 // Parallax effect for hero section
-window.addEventListener('scroll', function() {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
+window.addEventListener('scroll', function () {
+  const scrolled = window.pageYOffset;
+  const hero = document.querySelector('.hero');
 
-    if (hero) {
-        const rate = scrolled * -0.5;
-        hero.style.transform = `translateY(${rate}px)`;
-    }
+  if (hero) {
+    const rate = scrolled * -0.5;
+    hero.style.transform = `translateY(${rate}px)`;
+  }
 });
 
 // Add fade-in animation for sections
 function initScrollAnimations() {
-    const sections = document.querySelectorAll('section');
-    const options = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
+  const sections = document.querySelectorAll('section');
+  const options = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px',
+  };
 
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, options);
-
-    sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(section);
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
     });
+  }, options);
+
+  sections.forEach((section) => {
+    section.style.opacity = '0';
+    section.style.transform = 'translateY(30px)';
+    section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(section);
+  });
 }
 
 // Initialize scroll animations

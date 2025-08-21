@@ -2,7 +2,7 @@ name: Deploy static site to Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
 
 permissions:
   contents: read
@@ -10,7 +10,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -38,4 +38,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

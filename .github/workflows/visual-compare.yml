@@ -2,7 +2,7 @@ name: Visual Compare
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -55,4 +55,3 @@ jobs:
         if: always()
         run: |
           if [ -f server.pid ]; then kill $(cat server.pid) || true; fi
-
