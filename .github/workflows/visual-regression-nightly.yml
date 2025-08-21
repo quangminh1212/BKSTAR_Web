@@ -12,6 +12,8 @@ concurrency:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      LIVE_BASE: ${{ vars.LIVE_BASE_NIGHTLY }}
     steps:
       - uses: actions/checkout@v4
         with:
