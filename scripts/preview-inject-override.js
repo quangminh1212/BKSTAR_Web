@@ -24,7 +24,10 @@ function injectLink(html, preloadHrefs = [], external = false) {
         : `    <link rel="preload" as="font" type="font/woff2" href="${href}">`
     )
     .join('\n');
-  const linkTag = `\n    <!-- preview-only font preload/override -->\n${preloadTags ? preloadTags + '\n' : ''}    <link rel="stylesheet" href="${CSS_NAME}">\n`;
+  const preconnect = external
+    ? `    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n`
+    : '';
+  const linkTag = `\n    <!-- preview-only font preload/override -->\n${preconnect}${preloadTags ? preloadTags + '\n' : ''}    <link rel="stylesheet" href="${CSS_NAME}">\n`;
   const idx = html.toLowerCase().lastIndexOf('</head>');
   if (idx >= 0) {
     return html.slice(0, idx) + linkTag + html.slice(idx);

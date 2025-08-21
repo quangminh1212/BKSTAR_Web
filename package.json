@@ -14,6 +14,7 @@
     "preview": "vite preview",
     "preview:pretty": "npm run snapshot && node scripts/preview-inject-override.js && npm run build && vite preview --open /snapshot/index-snapshot.html",
     "preview:pretty:selfhost": "cross-env SELF_HOST_INTER=1 npm run preview:pretty",
+    "preview:pretty:fast": "cross-env PRELOAD_STYLES=normal PRELOAD_WEIGHTS=400,700 npm run preview:pretty",
     "preview:snapshot": "vite preview --open /snapshot/index-snapshot.html",
     "lint": "eslint . --ext .js",
     "format": "prettier --write .",
