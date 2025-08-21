@@ -2,6 +2,7 @@
 
 [![CI - Visual Regression](https://github.com/quangminh1212/BKSTAR_Web/actions/workflows/visual-regression.yml/badge.svg?branch=main)](https://github.com/quangminh1212/BKSTAR_Web/actions/workflows/visual-regression.yml)
 [![Release](https://img.shields.io/github/v/release/quangminh1212/BKSTAR_Web?sort=semver)](https://github.com/quangminh1212/BKSTAR_Web/releases)
+[![Pages](https://img.shields.io/badge/Pages-deployed-blue)](https://quangminh1212.github.io/BKSTAR_Web/)
 
 Dự án clone giao diện BKSTAR (https://bkstar.com.vn/) nhằm mục đích học tập và kiểm thử giao diện tự động.
 
@@ -218,10 +219,9 @@ testimonials.push(newTestimonial);
 
 ### GitHub Pages:
 
-1. Push code lên GitHub repository
-2. Vào Settings > Pages
-3. Chọn source branch (main/master)
-4. Website sẽ có URL: `https://username.github.io/repository-name`
+- Workflow .github/workflows/deploy-pages.yml đã cấu hình sẵn. Khi push vào main, Actions sẽ build bằng `npm run build:gh` (BASE=/BKSTAR_Web/) và deploy dist lên Pages.
+- URL trang: https://quangminh1212.github.io/BKSTAR_Web/
+- Nếu đổi tên repo, cập nhật script `build:gh` (hoặc đặt biến BASE) cho đúng base path.
 
 ### Netlify:
 
