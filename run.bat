@@ -1,7 +1,7 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
 
-title BKSTAR_Web - Setup & Preview
+title "BKSTAR_Web - Setup & Preview"
 echo ==============================================
 echo   BKSTAR_Web - Install, Snapshot, Build, Preview
 echo ==============================================
@@ -17,9 +17,9 @@ if errorlevel 1 (
 
 REM Use CI-friendly install to match lockfile
 echo [1/5] Installing dependencies (including dev)...
-npm install --include=dev || (
+call npm install --include=dev || (
   echo [WARN] npm install failed, trying again with npm ci...
-  npm ci --no-audit --no-fund || (
+  call npm ci --no-audit --no-fund || (
     echo [ERROR] Failed to install dependencies.
     pause
     exit /b 1
@@ -28,6 +28,13 @@ npm install --include=dev || (
 
 REM Create fresh snapshot and inject theme/dark mode override
 echo [2/5] Creating snapshot and injecting theme override...
+if exist public\snapshot (
+  echo   Cleaning old snapshot directory...
+  attrib -R -A -S -H /S /D public\snapshot\* >nul 2>nul
+  del /f /s /q public\snapshot\* >nul 2>nul
+  rmdir /s /q public\snapshot >nul 2>nul
+  powershell -NoProfile -Command "Try { Remove-Item -LiteralPath 'public/snapshot' -Recurse -Force -ErrorAction Stop } Catch { }" >nul 2>nul
+)
 call npm run snapshot || (
   echo [ERROR] Snapshot step failed.
   pause
@@ -54,7 +61,7 @@ call npm run playwright:install >nul 2>nul
 REM Dev server on strict port 5173 (serves /public)
 echo [5/5] Starting dev server at http://127.0.0.1:5173/snapshot/index-snapshot.html
 echo Press Ctrl+C in this window to stop the server.
-call npm run dev -- --strictPort --host 127.0.0.1 --port 5173
+call npm start
 
 endlocal
 

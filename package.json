@@ -8,6 +8,7 @@
     "node": ">=18.18.0"
   },
   "scripts": {
+    "start": "npm run dev -- --strictPort --host 127.0.0.1 --port 5173",
     "dev": "vite",
     "build": "vite build",
     "build:gh": "cross-env BASE=/BKSTAR_Web/ vite build",
