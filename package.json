@@ -10,6 +10,10 @@
   "scripts": {
     "start": "npm run dev -- --strictPort --host 127.0.0.1 --port 5173",
     "dev": "vite",
+    "dev:info": "node scripts/detect-server.js info && npm run dev",
+    "dev:monitor": "node scripts/detect-server.js monitor",
+    "dev:port": "node scripts/detect-server.js port",
+    "dev:open": "vite --open",
     "build": "vite build",
     "build:gh": "cross-env BASE=/BKSTAR_Web/ vite build",
     "preview": "vite preview",
@@ -32,7 +36,10 @@
     "visual:ci:full": "cross-env STRICT=1 wait-on http-get://localhost:5173/snapshot/index-snapshot.html && node scripts/check-images.js && node scripts/check-css-images.js && node scripts/visual-compare.js",
     "playwright:install": "npx playwright install --with-deps chromium",
     "prepare": "husky",
-    "commitlint": "commitlint --from=HEAD~1 --to=HEAD"
+    "commitlint": "commitlint --from=HEAD~1 --to=HEAD",
+    "server:info": "node scripts/detect-server.js info",
+    "server:monitor": "node scripts/detect-server.js monitor",
+    "server:check": "node scripts/detect-server.js port 5173"
   },
   "lint-staged": {
     "*.js": [

@@ -1,9 +1,19 @@
 @echo off
 setlocal ENABLEDELAYEDEXPANSION
 
-title "BKSTAR_Web - Setup & Preview"
+title "BKSTAR_Web - Development Server"
 echo ==============================================
-echo   BKSTAR_Web - Install, Snapshot, Build, Preview
+echo   BKSTAR_Web - Development Environment
+echo ==============================================
+echo.
+echo Choose your development mode:
+echo [1] Quick Dev (Fast startup - recommended)
+echo [2] Full Build + Preview (Complete build with snapshot)
+echo.
+set /p "mode=Enter your choice (1 or 2, default: 1): "
+if "%mode%"=="" set mode=1
+
+echo.
 echo ==============================================
 
 REM Detect Node
@@ -11,23 +21,80 @@ where node >nul 2>nul
 if errorlevel 1 (
   echo [ERROR] Node.js is not installed or not in PATH.
   echo Please install Node.js >= 18.18.0 then run this script again.
+  echo.
   pause
   exit /b 1
 )
 
-REM Use CI-friendly install to match lockfile
-echo [1/5] Installing dependencies (including dev)...
-call npm install --include=dev || (
-  echo [WARN] npm install failed, trying again with npm ci...
-  call npm ci --no-audit --no-fund || (
-    echo [ERROR] Failed to install dependencies.
-    pause
-    exit /b 1
+REM Show Node version
+for /f "tokens=*" %%i in ('node --version') do set NODE_VERSION=%%i
+echo [INFO] Node.js version: %NODE_VERSION%
+
+REM Check if node_modules exists
+if not exist "node_modules" (
+  echo [1/3] Installing dependencies...
+  call npm install --include=dev || (
+    echo [WARN] npm install failed, trying again with npm ci...
+    call npm ci --no-audit --no-fund || (
+      echo [ERROR] Failed to install dependencies.
+      echo.
+      pause
+      exit /b 1
+    )
   )
+  echo [INFO] Dependencies installed successfully!
+) else (
+  echo [1/3] Dependencies already installed, skipping...
 )
 
+REM Execute based on mode selection
+if "%mode%"=="2" goto FULL_BUILD
+if "%mode%"=="1" goto QUICK_DEV
+goto QUICK_DEV
+
+:QUICK_DEV
+echo [INFO] Starting Quick Development Mode...
+echo [2/3] Checking port availability...
+
+REM Check if port 5173 is available
+netstat -an | find "127.0.0.1:5173" >nul 2>nul
+if not errorlevel 1 (
+  echo [WARN] Port 5173 is already in use!
+  echo [INFO] Vite will automatically find an available port...
+)
+
+echo.
+echo ==============================================
+echo   🚀 STARTING DEVELOPMENT SERVER
+echo ==============================================
+echo [INFO] Mode: Quick Development
+echo [INFO] URL will be displayed below...
+echo [INFO] Press Ctrl+C to stop the server
+echo.
+
+REM Ask about auto-opening browser
+set /p "open_browser=Open browser automatically? (y/n, default: y): "
+if "%open_browser%"=="" set open_browser=y
+
+echo [3/3] Launching development server...
+echo.
+
+REM Start dev server with auto-open option
+if /i "%open_browser%"=="y" (
+  echo [INFO] Browser will open automatically...
+  call npm run dev -- --open
+) else (
+  echo [INFO] Manual browser access required...
+  call npm run dev
+)
+
+goto END
+
+:FULL_BUILD
+echo [INFO] Starting Full Build Mode...
+echo [2/3] Creating snapshot and building...
+
 REM Create fresh snapshot and inject theme/dark mode override
-echo [2/5] Creating snapshot and injecting theme override...
 if exist public\snapshot (
   echo   Cleaning old snapshot directory...
   attrib -R -A -S -H /S /D public\snapshot\* >nul 2>nul
@@ -35,33 +102,48 @@ if exist public\snapshot (
   rmdir /s /q public\snapshot >nul 2>nul
   powershell -NoProfile -Command "Try { Remove-Item -LiteralPath 'public/snapshot' -Recurse -Force -ErrorAction Stop } Catch { }" >nul 2>nul
 )
+
 call npm run snapshot || (
   echo [ERROR] Snapshot step failed.
+  echo.
   pause
   exit /b 1
 )
+
 node scripts/preview-inject-override.js || (
   echo [ERROR] Inject override failed.
+  echo.
   pause
   exit /b 1
 )
 
 REM Build
-echo [3/5] Building project...
 call npm run build || (
   echo [ERROR] Build failed.
+  echo.
   pause
   exit /b 1
 )
 
 REM Install Playwright Chromium quietly (optional)
-echo [4/5] (Optional) Installing Playwright Chromium...
-call npm run playwright:install >nul 2>nul
+npm run playwright:install >nul 2>nul
 
-REM Dev server on strict port 5173 (serves /public)
-echo [5/5] Starting dev server at http://127.0.0.1:5173/snapshot/index-snapshot.html
-echo Press Ctrl+C in this window to stop the server.
+echo.
+echo ==============================================
+echo   🚀 STARTING PREVIEW SERVER
+echo ==============================================
+echo [INFO] Mode: Full Build + Preview
+echo [INFO] URL: http://127.0.0.1:5173/snapshot/index-snapshot.html
+echo [INFO] Press Ctrl+C to stop the server
+echo.
+
+echo [3/3] Launching preview server...
 call npm start
 
+:END
+echo.
+echo ==============================================
+echo   ✅ Server stopped
+echo ==============================================
+echo.
 endlocal
-
