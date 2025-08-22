@@ -138,15 +138,15 @@ async function buildCssCdn() {
 
 function buildThemeCss() {
   return `/* Global light/dark theme and soft UI refinements */
-:root{--bg:#ffffff;--text:#0f172a;--muted:#475569;--card:#ffffff;--border:#e5e7eb;--link:#046bd2;--link-hover:#0351a3;--elev:0 8px 24px rgba(0,0,0,.06)}
+:root{--bg:#f8fafc;--text:#0b1220;--muted:#465569;--card:#ffffff;--border:#e5e7eb;--link:#0b5ed7;--link-hover:#094db3;--elev:0 8px 24px rgba(0,0,0,.06)}
 html[data-theme="dark"]{--bg:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--card:#0f172a;--border:#1f2937;--link:#60a5fa;--link-hover:#93c5fd}
 html,body{background:var(--bg)!important;color:var(--text)!important}
 a{color:var(--link)!important}
 a:hover{color:var(--link-hover)!important}
 hr,.divider{border-color:var(--border)!important}
-/* soften common blocks */
-section,article,.card,.widget,.elementor-widget,.elementor-container,.elementor-section,.site-main>*{
-  background-color:var(--card)!important;border-color:var(--border)!important;border-radius:12px!important}
+/* soften common blocks when opted-in to avoid layout side-effects */
+.theme-soft :where(section,article,.card,.widget,.elementor-widget,.elementor-container,.elementor-section,.site-main>*){
+  background-color:var(--card);border-color:var(--border);border-radius:12px}
 /* dark scrollbars */
 html[data-theme="dark"] ::-webkit-scrollbar{width:12px;height:12px}
 html[data-theme="dark"] ::-webkit-scrollbar-thumb{background:#334155;border-radius:10px}
@@ -177,11 +177,11 @@ async function main() {
   }
   fs.writeFileSync(path.join(SNAP_DIR, CSS_NAME), result.css, 'utf8');
   // Write JS toggle script
-  const js = `(()=>{const KEY='theme';function pref(){try{const s=localStorage.getItem(KEY);if(s==='light'||s==='dark')return s;}catch(e){}return window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}
+  const js = `(()=>{const KEY='theme';function pref(){try{const s=localStorage.getItem(KEY);if(s==='light'||s==='dark')return s;}catch(e){}return 'light'}
 function apply(t){document.documentElement.setAttribute('data-theme',t)}
 function setBtn(t){const b=document.getElementById('__dm_toggle');if(!b)return;b.setAttribute('aria-pressed',String(t==='dark'));b.textContent=t==='dark'?'☀️':'🌙'}
 function toggle(){const cur=document.documentElement.getAttribute('data-theme')||pref();const nxt=cur==='dark'?'light':'dark';apply(nxt);setBtn(nxt);try{localStorage.setItem(KEY,nxt)}catch(e){}}
-function init(){const t=(()=>{try{return localStorage.getItem(KEY)||pref()}catch(e){return pref()}})();apply(t);const btn=document.createElement('button');btn.id='__dm_toggle';btn.type='button';btn.title='Toggle theme';btn.setAttribute('aria-label','Toggle theme');btn.setAttribute('aria-pressed',String(t==='dark'));btn.textContent=t==='dark'?'☀️':'🌙';btn.addEventListener('click',toggle);document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='j'){toggle()}});const header=document.querySelector('header, .elementor-location-header, .site-header');(header||document.body||document.documentElement).appendChild(btn)}
+function init(){const t=(()=>{try{return localStorage.getItem(KEY)||pref()}catch(e){return pref()}})();apply(t);document.body&&document.body.classList.add('theme-soft');const btn=document.createElement('button');btn.id='__dm_toggle';btn.type='button';btn.title='Toggle theme';btn.setAttribute('aria-label','Toggle theme');btn.setAttribute('aria-pressed',String(t==='dark'));btn.textContent=t==='dark'?'☀️':'🌙';btn.addEventListener('click',toggle);document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='j'){toggle()}});const header=document.querySelector('header, .elementor-location-header, .site-header');(header||document.body||document.documentElement).appendChild(btn)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();})();`;
   fs.writeFileSync(path.join(SNAP_DIR, JS_NAME), js, 'utf8');
 
