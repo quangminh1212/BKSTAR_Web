@@ -170,6 +170,14 @@ hr,.divider{border-color:var(--border)!important}
 /* slider arrow buttons - subtle */
 .theme-soft .slider-controls button{background:var(--brand)!important;border:none!important;color:#fff!important;opacity:.92;box-shadow:var(--elev)}
 .theme-soft .slider-controls button:hover{background:var(--brand-700)!important;opacity:1}
+/* header polish */
+.theme-soft .header-top{background:var(--brand)!important;border-bottom:1px solid rgba(255,255,255,.06)}
+.theme-soft .header-top .container{padding-top:6px;padding-bottom:6px}
+.theme-soft :where(.header-top .contact-item, header .contact-item){
+  background:#fff;border:1px solid var(--border-soft);color:var(--brand);border-radius:14px;padding:6px 10px;box-shadow:0 2px 8px rgba(2,6,23,.06)}
+html[data-theme="dark"] .theme-soft :where(.header-top .contact-item, header .contact-item){
+  background:var(--card);color:#e5e7eb;border-color:var(--border)}
+.theme-soft :where(.header-main){background:var(--card)!important;box-shadow:0 2px 10px var(--border-soft)}
 /* dark scrollbars */
 html[data-theme="dark"] ::-webkit-scrollbar{width:12px;height:12px}
 html[data-theme="dark"] ::-webkit-scrollbar-thumb{background:#334155;border-radius:10px}
