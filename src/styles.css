@@ -1,18 +1,40 @@
 /* Reset and Base Styles */
 :root {
-  --brand-navy: #0f314c;
-  --brand-blue: #046bd2;
-  --brand-orange: #fe9003;
-  --brand-slate: #1e293b;
+  --brand-navy: #1e293b;
+  --brand-blue: #3b82f6;
+  --brand-blue-light: #60a5fa;
+  --brand-blue-dark: #1d4ed8;
+  --brand-orange: #f59e0b;
+  --brand-slate: #334155;
   --brand-bg: #ffffff;
+  --brand-bg-light: #f8fafc;
+  --brand-bg-card: #ffffff;
+
+  /* Modern color palette */
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --secondary: #64748b;
+  --accent: #f59e0b;
+  --success: #10b981;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+
   /* Unified borders */
   --border-color: #e2e8f0;
   --border-color-strong: #cbd5e1;
   --border-width: 1px;
   --border-width-strong: 2px;
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 15px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 * {
   margin: 0;
@@ -33,8 +55,9 @@ body {
     'Helvetica Neue',
     sans-serif;
   line-height: 1.6;
-  color: #334155;
-  background-color: var(--brand-bg);
+  color: var(--text-primary);
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -52,8 +75,11 @@ body {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-md);
+  border-bottom: var(--border-width) solid var(--border-color);
 }
 
 /* HOT Ticker */
@@ -149,16 +175,21 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--brand-blue);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background 0.3s ease;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+  border: none;
 }
 
 .nav-toggle:hover {
-  background: #0369a1;
+  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--brand-blue-dark) 100%);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .nav-menu {
@@ -304,11 +335,29 @@ body {
 }
 
 .stat-item {
-  background: white;
+  background: var(--brand-bg-card);
   padding: 40px 20px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   border: var(--border-width) solid var(--border-color);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+}
+
+.stat-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
 }
 
 .stat-label {
@@ -446,17 +495,23 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--brand-blue);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   color: white;
-  padding: 15px 30px;
-  border-radius: 8px;
+  padding: 16px 32px;
+  border-radius: var(--radius-md);
   text-decoration: none;
-  font-weight: 500;
-  transition: background 0.3s ease;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  cursor: pointer;
 }
 
 .btn-primary:hover {
-  background: #0369a1;
+  background: linear-gradient(135deg, var(--primary-hover) 0%, var(--brand-blue-dark) 100%);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 .btn-secondary {
@@ -505,19 +560,35 @@ body {
 }
 
 .news-card {
-  background: white;
-  border-radius: var(--radius-md);
+  background: var(--brand-bg-card);
+  border-radius: var(--radius-lg);
   padding: 30px;
   border: var(--border-width) solid var(--border-color);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.news-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--brand-blue-light) 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
 .news-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.news-card:hover::before {
+  transform: scaleX(1);
 }
 
 .news-card h3 a {
@@ -591,21 +662,41 @@ body {
 .competition-card,
 .blog-card,
 .achievement-card {
-  background: white;
-  border-radius: var(--radius-md);
+  background: var(--brand-bg-card);
+  border-radius: var(--radius-lg);
   padding: 30px;
   border: var(--border-width) solid var(--border-color);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.competition-card::before,
+.blog-card::before,
+.achievement-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--success) 100%);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
 .competition-card:hover,
 .blog-card:hover,
 .achievement-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+}
+
+.competition-card:hover::before,
+.blog-card:hover::before,
+.achievement-card:hover::before {
+  transform: scaleX(1);
 }
 
 /* Card media (thumbnail) */
