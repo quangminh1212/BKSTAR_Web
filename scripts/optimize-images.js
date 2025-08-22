@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 
-const POSTS_DIR = path.resolve('images', 'posts');
-const HERO_DIR = path.resolve('images');
+const POSTS_DIR = path.resolve('public', 'images', 'posts');
+const HERO_DIR = path.resolve('public', 'images');
 
 async function ensureWebp(inputPath, maxWidth) {
   const ext = path.extname(inputPath).toLowerCase();

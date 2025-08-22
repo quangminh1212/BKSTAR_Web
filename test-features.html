@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Features - BKSTAR Web</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .test-section {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #ccc;
+      }
+      .test-btn {
+        padding: 10px 15px;
+        margin: 5px;
+        background: #046bd2;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .test-btn:hover {
+        background: #045cb4;
+      }
+      .result {
+        margin-top: 10px;
+        padding: 10px;
+        background: #f0f0f0;
+      }
+      .success {
+        color: green;
+      }
+      .error {
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Test Features - BKSTAR Web</h1>
+
+    <div class="test-section">
+      <h2>Hero Slider Test</h2>
+      <button class="test-btn" onclick="testHeroSlider()">Test Hero Slider</button>
+      <div id="hero-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>Testimonials Slider Test</h2>
+      <button class="test-btn" onclick="testTestimonialsSlider()">Test Testimonials Slider</button>
+      <div id="testimonials-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>Form Validation Test</h2>
+      <form id="testForm">
+        <input type="text" id="name" placeholder="Họ và tên" required /><br /><br />
+        <input type="email" id="email" placeholder="Email" required /><br /><br />
+        <input type="tel" id="phone" placeholder="Số điện thoại" required /><br /><br />
+        <button type="submit" class="test-btn">Test Form Validation</button>
+      </form>
+      <div id="form-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>WP API Test</h2>
+      <button class="test-btn" onclick="testWPAPI()">Test WP API Connection</button>
+      <div id="api-result" class="result"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>Data Loading Test</h2>
+      <button class="test-btn" onclick="testDataLoading()">Test Data Loading</button>
+      <div id="data-result" class="result"></div>
+    </div>
+
+    <script>
+      // Load the main script
+      const script = document.createElement('script');
+      script.src = 'src/script.js';
+      script.onload = function () {
+        console.log('Main script loaded');
+      };
+      document.head.appendChild(script);
+
+      function testHeroSlider() {
+        const result = document.getElementById('hero-result');
+        try {
+          const slides = document.querySelectorAll('.slide');
+          if (slides.length > 0) {
+            result.innerHTML =
+              '<span class="success">✓ Hero Slider: ' + slides.length + ' slides found</span>';
+          } else {
+            result.innerHTML = '<span class="error">✗ Hero Slider: No slides found</span>';
+          }
+        } catch (e) {
+          result.innerHTML = '<span class="error">✗ Hero Slider Error: ' + e.message + '</span>';
+        }
+      }
+
+      function testTestimonialsSlider() {
+        const result = document.getElementById('testimonials-result');
+        try {
+          const testimonials = document.querySelector('.testimonials-slider');
+          if (testimonials) {
+            result.innerHTML =
+              '<span class="success">✓ Testimonials Slider: Found testimonials container</span>';
+          } else {
+            result.innerHTML =
+              '<span class="error">✗ Testimonials Slider: Container not found</span>';
+          }
+        } catch (e) {
+          result.innerHTML =
+            '<span class="error">✗ Testimonials Slider Error: ' + e.message + '</span>';
+        }
+      }
+
+      document.getElementById('testForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const result = document.getElementById('form-result');
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+
+        if (!name) {
+          result.innerHTML = '<span class="error">✗ Form Validation: Name is required</span>';
+          return;
+        }
+        if (!email || !email.includes('@')) {
+          result.innerHTML =
+            '<span class="error">✗ Form Validation: Valid email is required</span>';
+          return;
+        }
+        if (!phone) {
+          result.innerHTML = '<span class="error">✗ Form Validation: Phone is required</span>';
+          return;
+        }
+
+        result.innerHTML = '<span class="success">✓ Form Validation: All fields are valid</span>';
+      });
+
+      async function testWPAPI() {
+        const result = document.getElementById('api-result');
+        try {
+          const response = await fetch(
+            'https://bkstar.com.vn/wp-json/wp/v2/posts?per_page=1&_fields=title'
+          );
+          if (response.ok) {
+            const data = await response.json();
+            result.innerHTML =
+              '<span class="success">✓ WP API: Connected successfully, ' +
+              data.length +
+              ' post(s) received</span>';
+          } else {
+            result.innerHTML =
+              '<span class="error">✗ WP API: Response failed with status ' +
+              response.status +
+              '</span>';
+          }
+        } catch (e) {
+          result.innerHTML = '<span class="error">✗ WP API Error: ' + e.message + '</span>';
+        }
+      }
+
+      async function testDataLoading() {
+        const result = document.getElementById('data-result');
+        try {
+          const response = await fetch('/data.json');
+          if (response.ok) {
+            const data = await response.json();
+            const totalItems =
+              (data.news?.length || 0) +
+              (data.competitions?.length || 0) +
+              (data.blog?.length || 0) +
+              (data.achievements?.length || 0);
+            result.innerHTML =
+              '<span class="success">✓ Data Loading: ' +
+              totalItems +
+              ' items loaded successfully</span>';
+          } else {
+            result.innerHTML =
+              '<span class="error">✗ Data Loading: Failed to load data.json</span>';
+          }
+        } catch (e) {
+          result.innerHTML = '<span class="error">✗ Data Loading Error: ' + e.message + '</span>';
+        }
+      }
+
+      // Auto-run some tests after page load
+      window.addEventListener('DOMContentLoaded', function () {
+        setTimeout(() => {
+          console.log('Running auto tests...');
+          testDataLoading();
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>

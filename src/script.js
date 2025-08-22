@@ -21,6 +21,8 @@ const WP_CATEGORIES = {
 
 // Cấu hình cache và tiện ích
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 phút
+const MAX_CACHE_SIZE = 50; // Giới hạn số lượng cache entries
+let cacheSize = 0;
 
 function throttle(fn, wait) {
   let lastTime = 0;
@@ -73,9 +75,49 @@ function getCache(cacheKey) {
 
 function setCache(cacheKey, data) {
   try {
+    // Kiểm tra giới hạn cache size
+    if (cacheSize >= MAX_CACHE_SIZE) {
+      // Clear expired caches first
+      const keys = Object.keys(localStorage);
+      const now = Date.now();
+      for (const key of keys) {
+        if (key.startsWith('wp:')) {
+          try {
+            const cached = JSON.parse(localStorage.getItem(key));
+            if (now - (cached.timestamp || 0) > CACHE_TTL_MS) {
+              localStorage.removeItem(key);
+              cacheSize--;
+            }
+          } catch {
+            localStorage.removeItem(key);
+            cacheSize--;
+          }
+        }
+      }
+    }
+
     localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), data }));
-  } catch {
-    // ignore
+    cacheSize++;
+  } catch (e) {
+    // Nếu localStorage đầy, clear expired entries
+    if (e.name === 'QuotaExceededError') {
+      try {
+        const keys = Object.keys(localStorage);
+        const now = Date.now();
+        for (const key of keys) {
+          if (key.startsWith('wp:')) {
+            const cached = JSON.parse(localStorage.getItem(key));
+            if (now - (cached.timestamp || 0) > CACHE_TTL_MS) {
+              localStorage.removeItem(key);
+            }
+          }
+        }
+        // Thử lại sau khi clear
+        localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), data }));
+      } catch {
+        // ignore
+      }
+    }
   }
 }
 

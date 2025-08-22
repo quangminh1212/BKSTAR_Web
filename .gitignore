@@ -33,3 +33,22 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Project specific
+*.log
+.cache/
+.temp/
+.backup/
+
+# Generated files during runtime
+public/snapshot/
+dist/
+.vite/
+visual-diff/
+node_modules/
+
+# Environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
