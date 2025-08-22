@@ -1,4 +1,11 @@
 /* Reset and Base Styles */
+:root {
+  --brand-navy: #0f314c;
+  --brand-blue: #046bd2;
+  --brand-orange: #fe9003;
+  --brand-slate: #1e293b;
+  --brand-bg: #ffffff;
+}
 * {
   margin: 0;
   padding: 0;
@@ -19,7 +26,7 @@ body {
     sans-serif;
   line-height: 1.6;
   color: #334155;
-  background-color: #ffffff;
+  background-color: var(--brand-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -43,7 +50,7 @@ body {
 
 /* HOT Ticker */
 .hot-ticker {
-  background: #0f314c;
+  background: var(--brand-navy);
   color: #fff;
   font-size: 14px;
 }
@@ -98,7 +105,7 @@ body {
 }
 
 .contact-item i {
-  color: #046bd2;
+  color: var(--brand-blue);
 }
 
 .social-links {
@@ -113,7 +120,7 @@ body {
 }
 
 .social-link:hover {
-  color: #046bd2;
+  color: var(--brand-blue);
 }
 
 .header-main {
@@ -134,7 +141,7 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #046bd2;
+  background: var(--brand-blue);
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
@@ -172,14 +179,14 @@ body {
 
 .nav-link:hover {
   background: #f1f5f9;
-  color: #046bd2;
+  color: var(--brand-blue);
 }
 
 /* Active nav link (Scroll Spy) */
 .nav-link.active {
-  color: #046bd2;
+  color: var(--brand-blue);
   font-weight: 600;
-  border-bottom: 2px solid #046bd2;
+  border-bottom: 2px solid var(--brand-blue);
 }
 
 .dropdown-menu {
@@ -205,7 +212,7 @@ body {
 
 .dropdown-menu li a:hover {
   background: #f1f5f9;
-  color: #046bd2;
+  color: var(--brand-blue);
 }
 
 .nav-item:hover .dropdown-menu {
@@ -312,13 +319,13 @@ body {
 .counter {
   font-size: 48px;
   font-weight: 700;
-  color: #046bd2;
+  color: var(--brand-blue);
 }
 
 .plus {
   font-size: 24px;
   font-weight: 600;
-  color: #046bd2;
+  color: var(--brand-blue);
 }
 
 /* Testimonials Section */
@@ -353,7 +360,7 @@ body {
 .student-name {
   font-size: 18px;
   font-weight: 500;
-  color: #046bd2;
+  color: var(--brand-blue);
   margin-bottom: 5px;
 }
 
@@ -380,7 +387,7 @@ body {
 }
 
 .testimonials-controls button {
-  background: #046bd2;
+  background: var(--brand-blue);
   border: none;
   width: 50px;
   height: 50px;
@@ -429,7 +436,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: #046bd2;
+  background: var(--brand-blue);
   color: white;
   padding: 15px 30px;
   border-radius: 8px;
@@ -507,7 +514,7 @@ body {
   text-decoration: none;
 }
 .news-card h3 a:hover {
-  color: #046bd2;
+  color: var(--brand-blue);
 }
 .news-card time {
   display: block;
@@ -636,7 +643,7 @@ body {
 }
 
 .read-more {
-  color: #046bd2;
+  color: var(--brand-blue);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -694,7 +701,7 @@ body {
 }
 
 .service-card:hover h3 {
-  color: #046bd2;
+  color: var(--brand-blue);
 }
 
 /* Contact Section */
@@ -746,13 +753,13 @@ body {
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #046bd2;
+  border-color: var(--brand-blue);
 }
 
 .contact-form button {
   display: block;
   width: 100%;
-  background: #046bd2;
+  background: var(--brand-blue);
   color: white;
   padding: 15px;
   border: none;
@@ -798,7 +805,7 @@ body {
 
 .address-item i,
 .footer .contact-item i {
-  color: #046bd2;
+  color: var(--brand-blue);
   margin-top: 2px;
   flex-shrink: 0;
 }
