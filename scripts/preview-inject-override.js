@@ -172,11 +172,23 @@ hr,.divider{border-color:var(--border)!important}
 .theme-soft .slider-controls button:hover{background:var(--brand-700)!important;opacity:1}
 /* header polish */
 .theme-soft .header-top{background:var(--brand)!important;border-bottom:1px solid rgba(255,255,255,.06)}
-.theme-soft .header-top .container{padding-top:6px;padding-bottom:6px}
+.theme-soft .header-top .container{padding-top:4px;padding-bottom:4px}
+/* contact chips */
 .theme-soft :where(.header-top .contact-item, header .contact-item){
-  background:#fff;border:1px solid var(--border-soft);color:var(--brand);border-radius:14px;padding:6px 10px;box-shadow:0 2px 8px rgba(2,6,23,.06)}
+  display:inline-flex;align-items:center;gap:8px;height:32px;padding:6px 10px;
+  background:rgba(255,255,255,.95);color:var(--brand);border:1px solid var(--border-soft);
+  border-radius:10px;box-shadow:0 1px 6px var(--border-soft);font-weight:500}
+/* icon inside chip */
+.theme-soft :where(.header-top .contact-item i,.header-top .contact-item svg){
+  color:var(--accent);opacity:.9;font-size:14px}
 html[data-theme="dark"] .theme-soft :where(.header-top .contact-item, header .contact-item){
   background:var(--card);color:#e5e7eb;border-color:var(--border)}
+/* social buttons top-right */
+.theme-soft :where(.header-top .social-links a,.header-top .social-link,.header .social-link){
+  width:32px;height:32px;display:inline-flex;align-items:center;justify-content:center;
+  background:#fff;border:1px solid var(--border-soft);border-radius:9999px;box-shadow:0 1px 6px var(--border-soft);color:var(--brand)}
+.theme-soft :where(.header-top .social-links a:hover,.header-top .social-link:hover,.header .social-link:hover){
+  background:var(--brand);color:#fff;border-color:transparent}
 .theme-soft :where(.header-main){background:var(--card)!important;box-shadow:0 2px 10px var(--border-soft)}
 /* dark scrollbars */
 html[data-theme="dark"] ::-webkit-scrollbar{width:12px;height:12px}
