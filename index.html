@@ -1,32 +1,443 @@
 <!doctype html>
 <html lang="vi">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BKSTAR</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BKSTAR - Đồng hành cùng hành trình du học</title>
+    <meta
+      name="description"
+      content="BKSTAR - Trung tâm tư vấn du học hàng đầu Việt Nam. Đồng hành cùng học viên chinh phục các trường đại học danh tiếng thế giới."
+    />
     <meta name="theme-color" content="#046bd2" />
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/x-icon" href="/images/cropped-Frame-1000009794-32x32.png" />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <meta http-equiv="refresh" content="0; url=snapshot/index-snapshot.html" />
-    <link rel="canonical" href="snapshot/index-snapshot.html" />
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/sw.js').catch(function (err) {
-            console.warn('SW registration failed', err);
-          });
-        });
-      }
-      window.location.replace('snapshot/index-snapshot.html');
-    </script>
-    <noscript>
-      <meta http-equiv="refresh" content="0;url=/snapshot/index-snapshot.html" />
-    </noscript>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="src/styles.css" />
   </head>
-  <body></body>
+  <body>
+    <!-- HOT Ticker -->
+    <div class="hot-ticker" id="hotTicker">
+      <div class="container">
+        <span class="hot-label">🔥 HOT</span>
+        <div class="ticker-content">
+          <div class="ticker-track">
+            <a href="#competitions">WORLD COMPETITION 2025</a>
+            <a href="#competitions">AI JAM - 2025</a>
+            <a href="#competitions">Bright Expo 2024</a>
+            <a href="#competitions">ICAN 2025</a>
+            <a href="#competitions">INNOVERSE 2025</a>
+            <a href="#competitions">Intarg 2025</a>
+            <a href="#competitions">1 IDEAL 1 WORLD COMPETITION</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+      <div class="header-top">
+        <div class="container">
+          <div class="contact-info">
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <span>+84 986 716 666</span>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>bkstar.stem@gmail.com</span>
+            </div>
+          </div>
+          <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-main">
+        <div class="container">
+          <div class="logo">
+            <img src="images/logo.svg" alt="BKSTAR Logo" />
+          </div>
+
+          <nav class="nav-menu" id="navMenu">
+            <ul>
+              <li><a href="#home" class="nav-link">Trang chủ</a></li>
+              <li><a href="#about" class="nav-link">Giới thiệu</a></li>
+              <li><a href="#services" class="nav-link">Dịch vụ</a></li>
+              <li><a href="#competitions" class="nav-link">Cuộc thi quốc tế</a></li>
+              <li><a href="#blog" class="nav-link">Tài nguyên</a></li>
+              <li><a href="#achievements" class="nav-link">Thành tích</a></li>
+              <li><a href="#contact" class="nav-link">Liên hệ</a></li>
+            </ul>
+          </nav>
+
+          <button class="nav-toggle" id="navToggle">
+            <i class="fas fa-bars"></i>
+            <span>Menu</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <div class="hero-slider">
+        <div class="slide active">
+          <img src="images/slide1.webp" alt="BKSTAR Competition" loading="eager" />
+          <div class="slide-content">
+            <h1>Chinh phục các cuộc thi quốc tế</h1>
+            <p>Đồng hành cùng học viên tạo nên những thành tích ấn tượng</p>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="images/slide2.webp" alt="BKSTAR Achievement" />
+          <div class="slide-content">
+            <h1>Thành tích học bổng ấn tượng</h1>
+            <p>Hàng trăm học viên nhận học bổng từ các trường danh tiếng</p>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="images/slide3.webp" alt="BKSTAR Education" />
+          <div class="slide-content">
+            <h1>Giáo dục chất lượng cao</h1>
+            <p>Phương pháp giảng dạy hiện đại, cá nhân hóa cho từng học viên</p>
+          </div>
+        </div>
+        <div class="slide">
+          <img src="images/slide4.webp" alt="BKSTAR Success" />
+          <div class="slide-content">
+            <h1>Hành trình du học thành công</h1>
+            <p>Tư vấn toàn diện từ định hướng đến nhập học</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slider-controls">
+        <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+        <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+      </div>
+
+      <div class="hero-indicators">
+        <span class="indicator active"></span>
+        <span class="indicator"></span>
+        <span class="indicator"></span>
+        <span class="indicator"></span>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">
+              <span class="counter" data-target="1000">0</span>
+              <span class="plus">+</span>
+            </div>
+            <div class="stat-label">Học viên thành công</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">
+              <span class="counter" data-target="50">0</span>
+              <span class="plus">+</span>
+            </div>
+            <div class="stat-label">Cuộc thi quốc tế</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">
+              <span class="counter" data-target="95">0</span>
+              <span class="plus">%</span>
+            </div>
+            <div class="stat-label">Tỷ lệ đậu học bổng</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">
+              <span class="counter" data-target="10">0</span>
+              <span class="plus">+</span>
+            </div>
+            <div class="stat-label">Năm kinh nghiệm</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-content">
+          <div class="about-text">
+            <h2>Về BKSTAR</h2>
+            <p>
+              BKSTAR là trung tâm giáo dục hàng đầu chuyên về tư vấn du học và đào tạo tham gia các
+              cuộc thi quốc tế. Chúng tôi tự hào đã đồng hành cùng hàng ngàn học viên chinh phục ước
+              mơ du học tại các trường đại học danh tiếng thế giới.
+            </p>
+            <p>
+              Với đội ngũ giảng viên giàu kinh nghiệm và phương pháp giảng dạy hiện đại, BKSTAR cam
+              kết mang đến cho học viên những kiến thức và kỹ năng cần thiết để thành công trong
+              hành trình học tập quốc tế.
+            </p>
+            <a href="#contact" class="btn-primary">
+              <i class="fas fa-arrow-right"></i>
+              Liên hệ tư vấn
+            </a>
+          </div>
+          <div class="about-media">
+            <div class="video-container">
+              <iframe
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="BKSTAR Introduction"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                loading="lazy"
+              >
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+      <div class="container">
+        <h2>Dịch vụ của chúng tôi</h2>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3>Tư vấn du học toàn diện</h3>
+            <p>Định hướng, lựa chọn trường và chuyên ngành phù hợp với năng lực và sở thích</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <h3>Đào tạo thi quốc tế</h3>
+            <p>Chuẩn bị và tham gia các cuộc thi khoa học công nghệ quốc tế uy tín</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-file-alt"></i>
+            </div>
+            <h3>Hỗ trợ hồ sơ & visa</h3>
+            <p>Tư vấn và hỗ trợ hoàn thiện hồ sơ xin học bổng và visa du học</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-dollar-sign"></i>
+            </div>
+            <h3>Săn học bổng</h3>
+            <p>Tư vấn và hướng dẫn xin học bổng từ các tổ chức và trường đại học</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Đào tạo kỹ năng</h3>
+            <p>Phát triển kỹ năng mềm, tư duy sáng tạo và khả năng làm việc nhóm</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <h3>Đồng hành suốt hành trình</h3>
+            <p>Hỗ trợ từ khâu chuẩn bị đến khi nhập học tại trường mong muốn</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Competitions Section -->
+    <section class="competitions" id="competitions">
+      <div class="container">
+        <h2>Cuộc thi quốc tế</h2>
+        <p class="section-subtitle">
+          Tham gia các cuộc thi uy tín để nâng cao profile và cơ hội nhận học bổng
+        </p>
+
+        <div class="competitions-grid" id="competitions-grid">
+          <!-- Dynamic content will be loaded here -->
+          <div class="no-posts" id="competitions-empty" style="display: none">
+            <p>Đang cập nhật thông tin các cuộc thi mới...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+      <div class="container">
+        <h2>Blog</h2>
+        <p class="section-subtitle">
+          Đón đọc blog du học – Bí quyết, kinh nghiệm, sẵn sàng chinh phục hành trình học tập thế
+          giới!
+        </p>
+
+        <div class="blog-grid" id="blog-grid">
+          <!-- Dynamic content will be loaded here -->
+          <div class="no-posts" id="blog-empty" style="display: none">
+            <p>Đang cập nhật bài viết mới...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="achievements" id="achievements">
+      <div class="container">
+        <h2>Thành tích học viên</h2>
+        <p class="section-subtitle">
+          Tự hào đã đồng hành cùng hàng ngàn học viên đạt được những thành tích ấn tượng trong các
+          kỳ thi quốc tế, mở ra cánh cửa du học tại các trường danh tiếng trên toàn thế giới.
+        </p>
+
+        <div class="achievements-grid" id="achievements-grid">
+          <!-- Dynamic content will be loaded here -->
+          <div class="no-posts" id="achievements-empty" style="display: none">
+            <p>Đang cập nhật thành tích mới...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+      <div class="container">
+        <h2>Cảm nhận học viên</h2>
+        <div class="testimonials-slider" id="testimonialsSlider">
+          <!-- Dynamic testimonials will be loaded here -->
+        </div>
+        <div class="testimonials-controls">
+          <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+          <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <h2>Liên hệ với chúng tôi</h2>
+        <p class="section-subtitle">
+          Để lại thông tin để nhận tư vấn chi tiết về các chương trình du học
+        </p>
+
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Họ và tên *</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Số điện thoại *</label>
+              <input type="tel" id="phone" name="phone" required />
+            </div>
+            <div class="form-group">
+              <label for="service">Dịch vụ quan tâm</label>
+              <select id="service" name="service">
+                <option value="">Chọn dịch vụ</option>
+                <option value="consultation">Tư vấn du học</option>
+                <option value="competition">Đào tạo thi quốc tế</option>
+                <option value="scholarship">Tư vấn học bổng</option>
+                <option value="visa">Hỗ trợ visa</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="note">Ghi chú</label>
+            <textarea
+              id="note"
+              name="note"
+              rows="4"
+              placeholder="Để lại lời nhắn của bạn..."
+            ></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Gửi thông tin</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-info">
+            <div class="footer-section">
+              <h3>BKSTAR</h3>
+              <div class="address-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Tòa nhà BKSTAR, 123 Đường ABC, Quận 1, TP.HCM</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>+84 986 716 666</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>bkstar.stem@gmail.com</span>
+              </div>
+            </div>
+
+            <div class="footer-section">
+              <h3>Dịch vụ</h3>
+              <ul>
+                <li><a href="#services">Tư vấn du học</a></li>
+                <li><a href="#services">Đào tạo thi quốc tế</a></li>
+                <li><a href="#services">Săn học bổng</a></li>
+                <li><a href="#services">Hỗ trợ visa</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <p>&copy; 2024 BKSTAR. Tất cả quyền được bảo lưu.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Floating Contact -->
+    <div class="floating-contact">
+      <a href="#home" class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+        <span>Top</span>
+      </a>
+      <div class="floating-buttons">
+        <a href="https://m.me/bkstar" class="floating-btn messenger" target="_blank">
+          <i class="fab fa-facebook-messenger"></i>
+        </a>
+        <a href="tel:+84986716666" class="floating-btn phone">
+          <i class="fas fa-phone"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="src/script.js"></script>
+  </body>
 </html>
