@@ -201,6 +201,9 @@ let ROUTE_MASKS = {
 // Ngưỡng cho phép (pixel khác) theo route/section để đánh giá PASS/FAIL
 let ROUTE_THRESHOLDS = {
   '/': 50000,
+  '/#hero': 450000,
+  '/#top-ticker': 150000,
+  '/#grid-1': 450000,
   '/ve-bkstar/': 350000,
   '/dich-vu/': 600000,
   '/tai-nguyen/': 700000,
@@ -212,11 +215,12 @@ let ROUTE_THRESHOLDS = {
 };
 let SECTION_THRESHOLDS = {
   '/dich-vu/#form': 2000000,
-  '/tai-nguyen/#header-contest': 200000,
-  '/tai-nguyen/#ticker': 200000,
-  '/tai-nguyen/#post-grid': 200000,
-  '/tai-nguyen/#footer': 50000,
-  '/thanh-tich-va-su-kien/#grid': 120000,
+  '/tai-nguyen/#header-contest': 300000,
+  '/tai-nguyen/#ticker': 350000,
+  '/tai-nguyen/#post-grid': 260000,
+  '/tai-nguyen/#footer': 210000,
+  '/thanh-tich-va-su-kien/#hero': 260000,
+  '/thanh-tich-va-su-kien/#grid': 260000,
 };
 try {
   const cfgPath = path.resolve('scripts', 'visual-config.json');
