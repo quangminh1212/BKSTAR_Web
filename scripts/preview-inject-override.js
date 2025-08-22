@@ -147,6 +147,15 @@ hr,.divider{border-color:var(--border)!important}
 /* soften common blocks when opted-in to avoid layout side-effects */
 .theme-soft :where(section,article,.card,.widget,.elementor-widget,.elementor-container,.elementor-section,.site-main>*){
   background-color:var(--card);border-color:var(--border);border-radius:12px}
+/* standard content width */
+.theme-soft :where(.elementor-section .elementor-container,.site-main,.container){
+  max-width:1200px;margin-left:auto;margin-right:auto;padding-left:16px;padding-right:16px}
+/* images and typography safety */
+.theme-soft img{max-width:100%;height:auto;display:block}
+.theme-soft :where(h1,h2,h3){color:var(--text)}
+.theme-soft :where(p,li){color:var(--muted)}
+/* spacing normalize */
+.theme-soft main{line-height:1.65}
 /* dark scrollbars */
 html[data-theme="dark"] ::-webkit-scrollbar{width:12px;height:12px}
 html[data-theme="dark"] ::-webkit-scrollbar-thumb{background:#334155;border-radius:10px}
