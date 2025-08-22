@@ -3,6 +3,7 @@ import path from 'node:path';
 
 const SNAP_DIR = path.resolve('public', 'snapshot');
 const CSS_NAME = '_preview-override.css';
+const JS_NAME = '_preview-override.js';
 
 function ensureDir(dir) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -15,25 +16,29 @@ function listHtmlFiles(dir) {
     .map((d) => path.join(dir, d.name));
 }
 
-function injectLink(html, preloadHrefs = [], external = false) {
-  if (html.includes(CSS_NAME)) return html;
-  const preloadTags = preloadHrefs
-    .map((href) =>
-      external
-        ? `    <link rel="preload" as="font" type="font/woff2" href="${href}" crossorigin>`
-        : `    <link rel="preload" as="font" type="font/woff2" href="${href}">`
-    )
-    .join('\n');
-  const preconnect = external
-    ? `    <link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n`
-    : '';
-  const linkTag = `\n    <!-- preview-only font preload/override -->\n${preconnect}${preloadTags ? preloadTags + '\n' : ''}    <link rel="stylesheet" href="${CSS_NAME}">\n`;
-  const idx = html.toLowerCase().lastIndexOf('</head>');
-  if (idx >= 0) {
-    return html.slice(0, idx) + linkTag + html.slice(idx);
+function injectAssets(html, preloadHrefs = [], external = false) {
+  let out = html;
+  if (!out.includes(CSS_NAME)) {
+    const preloadTags = preloadHrefs
+      .map((href) =>
+        external
+          ? `    <link rel="preload" as="font" type="font/woff2" href="${href}" crossorigin>`
+          : `    <link rel="preload" as="font" type="font/woff2" href="${href}">`
+      )
+      .join('\n');
+    const preconnect = external
+      ? `    <link rel="preconnect" href="https://fonts.googleapis.com">\n    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n`
+      : '';
+    const linkTag = `\n    <!-- preview-only font preload/override -->\n${preconnect}${preloadTags ? preloadTags + '\n' : ''}    <link rel="stylesheet" href="${CSS_NAME}">\n`;
+    const headIdx = out.toLowerCase().lastIndexOf('</head>');
+    out = headIdx >= 0 ? out.slice(0, headIdx) + linkTag + out.slice(headIdx) : linkTag + out;
   }
-  // Fallback: append at beginning
-  return linkTag + html;
+  if (!out.includes(JS_NAME)) {
+    const scriptTag = `\n    <script defer src="${JS_NAME}"></script>\n`;
+    const bodyIdx = out.toLowerCase().lastIndexOf('</body>');
+    out = bodyIdx >= 0 ? out.slice(0, bodyIdx) + scriptTag + out.slice(bodyIdx) : out + scriptTag;
+  }
+  return out;
 }
 
 async function buildCssSelfHost() {
@@ -86,8 +91,9 @@ async function buildCssSelfHost() {
   }
   const body = `html, body, body * {font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;}
 body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}`;
+  const theme = buildThemeCss();
   return {
-    css: `/* Preview-only (self-host) */\n${faces.join('\n')}\n${body}\n`,
+    css: `/* Preview-only (self-host) */\n${faces.join('\n')}\n${body}\n${theme}\n`,
     preloads,
     external: false,
   };
@@ -125,8 +131,32 @@ async function buildCssCdn() {
   } catch {
     // ignore preload build failure; fallback still works via @import
   }
-  const css = `/* Preview-only typography override: do NOT use in CI */\n@import url('${api}');\n\nhtml, body, body * {\n  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,\n    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;\n}\n\nbody {\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n`;
+  const theme = buildThemeCss();
+  const css = `/* Preview-only typography override: do NOT use in CI */\n@import url('${api}');\n\nhtml, body, body * {\n  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,\n    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !important;\n}\n\nbody {\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\n${theme}\n`;
   return { css, preloads, external: true };
+}
+
+function buildThemeCss() {
+  return `/* Global light/dark theme and soft UI refinements */
+:root{--bg:#ffffff;--text:#0f172a;--muted:#475569;--card:#ffffff;--border:#e5e7eb;--link:#046bd2;--link-hover:#0351a3;--elev:0 8px 24px rgba(0,0,0,.06)}
+html[data-theme="dark"]{--bg:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--card:#0f172a;--border:#1f2937;--link:#60a5fa;--link-hover:#93c5fd}
+html,body{background:var(--bg)!important;color:var(--text)!important}
+a{color:var(--link)!important}
+a:hover{color:var(--link-hover)!important}
+hr,.divider{border-color:var(--border)!important}
+/* soften common blocks */
+section,article,.card,.widget,.elementor-widget,.elementor-container,.elementor-section,.site-main>*{
+  background-color:var(--card)!important;border-color:var(--border)!important;border-radius:12px!important}
+/* dark scrollbars */
+html[data-theme="dark"] ::-webkit-scrollbar{width:12px;height:12px}
+html[data-theme="dark"] ::-webkit-scrollbar-thumb{background:#334155;border-radius:10px}
+/* toggle button */
+#__dm_toggle{position:fixed;z-index:99999;top:16px;right:16px;width:40px;height:40px;border-radius:999px;background:var(--card);color:var(--text);border:1px solid var(--border);box-shadow:var(--elev);cursor:pointer;display:flex;align-items:center;justify-content:center}
+#__dm_toggle:focus{outline:2px solid var(--link);outline-offset:2px}
+/* if placed inside header, anchor it within header top-right */
+header, .elementor-location-header, .site-header{position:relative}
+header #__dm_toggle, .elementor-location-header #__dm_toggle, .site-header #__dm_toggle{position:absolute;top:10px;right:16px}
+`;
 }
 
 async function main() {
@@ -135,7 +165,7 @@ async function main() {
     process.exit(1);
   }
 
-  // Write/overwrite CSS file
+  // Write/overwrite CSS + JS files (override + dark mode toggle)
   ensureDir(SNAP_DIR);
   const selfHost = process.env.SELF_HOST_INTER === '1';
   let result;
@@ -146,12 +176,20 @@ async function main() {
     result = await buildCssCdn();
   }
   fs.writeFileSync(path.join(SNAP_DIR, CSS_NAME), result.css, 'utf8');
+  // Write JS toggle script
+  const js = `(()=>{const KEY='theme';function pref(){try{const s=localStorage.getItem(KEY);if(s==='light'||s==='dark')return s;}catch(e){}return window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}
+function apply(t){document.documentElement.setAttribute('data-theme',t)}
+function setBtn(t){const b=document.getElementById('__dm_toggle');if(!b)return;b.setAttribute('aria-pressed',String(t==='dark'));b.textContent=t==='dark'?'☀️':'🌙'}
+function toggle(){const cur=document.documentElement.getAttribute('data-theme')||pref();const nxt=cur==='dark'?'light':'dark';apply(nxt);setBtn(nxt);try{localStorage.setItem(KEY,nxt)}catch(e){}}
+function init(){const t=(()=>{try{return localStorage.getItem(KEY)||pref()}catch(e){return pref()}})();apply(t);const btn=document.createElement('button');btn.id='__dm_toggle';btn.type='button';btn.title='Toggle theme';btn.setAttribute('aria-label','Toggle theme');btn.setAttribute('aria-pressed',String(t==='dark'));btn.textContent=t==='dark'?'☀️':'🌙';btn.addEventListener('click',toggle);document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='j'){toggle()}});const header=document.querySelector('header, .elementor-location-header, .site-header');(header||document.body||document.documentElement).appendChild(btn)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();})();`;
+  fs.writeFileSync(path.join(SNAP_DIR, JS_NAME), js, 'utf8');
 
   const files = listHtmlFiles(SNAP_DIR);
   let changed = 0;
   for (const f of files) {
     const html = fs.readFileSync(f, 'utf8');
-    const out = injectLink(html, result.preloads || [], result.external);
+    const out = injectAssets(html, result.preloads || [], result.external);
     if (out !== html) {
       fs.writeFileSync(f, out, 'utf8');
       changed += 1;
