@@ -173,11 +173,15 @@ hr,.divider{border-color:var(--border)!important}
 /* header polish */
 .theme-soft .header-top{background:var(--brand)!important;border-bottom:1px solid rgba(255,255,255,.06)}
 .theme-soft .header-top .container{padding-top:4px;padding-bottom:4px}
+/* tighten spacing between contact items */
+.theme-soft .header-top .contact-info{gap:12px}
 /* contact chips */
 .theme-soft :where(.header-top .contact-item, header .contact-item){
-  display:inline-flex;align-items:center;gap:8px;height:32px;padding:6px 10px;
-  background:rgba(255,255,255,.95);color:var(--brand);border:1px solid var(--border-soft);
-  border-radius:10px;box-shadow:0 1px 6px var(--border-soft);font-weight:500}
+  display:inline-flex;align-items:center;gap:8px;height:28px;padding:4px 10px;
+  background:rgba(255,255,255,.96);color:var(--brand);border:1px solid var(--border-soft);
+  border-radius:12px;box-shadow:0 1px 4px var(--border-soft);font-weight:500;font-size:13px;line-height:1;white-space:nowrap}
+/* remove hard line-breaks inside contact chips (e.g., <br>) */
+.theme-soft .header-top .contact-item br{display:none!important}
 /* icon inside chip */
 .theme-soft :where(.header-top .contact-item i,.header-top .contact-item svg){
   color:var(--accent);opacity:.9;font-size:14px}
