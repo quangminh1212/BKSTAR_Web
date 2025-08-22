@@ -51,10 +51,10 @@ REM Install Playwright Chromium quietly (optional)
 echo [4/5] (Optional) Installing Playwright Chromium...
 call npm run playwright:install >nul 2>nul
 
-REM Preview on strict port 5173
-echo [5/5] Starting preview at http://127.0.0.1:5173/snapshot/index-snapshot.html
+REM Dev server on strict port 5173 (serves /public)
+echo [5/5] Starting dev server at http://127.0.0.1:5173/snapshot/index-snapshot.html
 echo Press Ctrl+C in this window to stop the server.
-call npm run preview -- --strictPort --host 127.0.0.1 --port 5173
+call npm run dev -- --strictPort --host 127.0.0.1 --port 5173
 
 endlocal
 
