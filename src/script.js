@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initScrollToTop();
   initFormValidation();
   initSmoothScrolling();
+  initHeaderScrollEffect();
   loadDynamicData();
 });
 // WP REST API integration to mirror live content
@@ -382,6 +383,22 @@ function initMobileMenu() {
   });
 }
 
+// Header Scroll Effect
+function initHeaderScrollEffect() {
+  const header = document.querySelector('.header');
+  if (!header) return;
+
+  const onScroll = throttle(function () {
+    if (window.pageYOffset > 100) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  }, 100);
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
+
 // Scroll to Top (with throttled scroll handler)
 function initScrollToTop() {
   const scrollBtn = document.querySelector('.scroll-to-top');
@@ -398,7 +415,7 @@ function initScrollToTop() {
       scrollBtn.style.visibility = 'hidden';
     }
   }, 150);
-  window.addEventListener('scroll', onScroll);
+  window.addEventListener('scroll', onScroll, { passive: true });
 
   // Smooth scroll to top
   scrollBtn.addEventListener('click', function (e) {

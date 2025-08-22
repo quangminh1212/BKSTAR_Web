@@ -225,42 +225,57 @@
               <i class="fas fa-graduation-cap"></i>
             </div>
             <h3>Tư vấn du học toàn diện</h3>
-            <p>Định hướng, lựa chọn trường và chuyên ngành phù hợp với năng lực và sở thích</p>
+            <p>
+              Định hướng, lựa chọn trường và chuyên ngành phù hợp với năng lực và sở thích của từng
+              học viên
+            </p>
           </div>
           <div class="service-card">
             <div class="service-icon">
               <i class="fas fa-trophy"></i>
             </div>
             <h3>Đào tạo thi quốc tế</h3>
-            <p>Chuẩn bị và tham gia các cuộc thi khoa học công nghệ quốc tế uy tín</p>
+            <p>
+              Chuẩn bị và tham gia các cuộc thi khoa học công nghệ quốc tế uy tín, nâng cao profile
+              học thuật
+            </p>
           </div>
           <div class="service-card">
             <div class="service-icon">
               <i class="fas fa-file-alt"></i>
             </div>
             <h3>Hỗ trợ hồ sơ & visa</h3>
-            <p>Tư vấn và hỗ trợ hoàn thiện hồ sơ xin học bổng và visa du học</p>
+            <p>
+              Tư vấn và hỗ trợ hoàn thiện hồ sơ xin học bổng và visa du học một cách chuyên nghiệp
+            </p>
           </div>
           <div class="service-card">
             <div class="service-icon">
               <i class="fas fa-dollar-sign"></i>
             </div>
             <h3>Săn học bổng</h3>
-            <p>Tư vấn và hướng dẫn xin học bổng từ các tổ chức và trường đại học</p>
+            <p>
+              Tư vấn và hướng dẫn xin học bổng từ các tổ chức và trường đại học hàng đầu thế giới
+            </p>
           </div>
           <div class="service-card">
             <div class="service-icon">
               <i class="fas fa-users"></i>
             </div>
             <h3>Đào tạo kỹ năng</h3>
-            <p>Phát triển kỹ năng mềm, tư duy sáng tạo và khả năng làm việc nhóm</p>
+            <p>
+              Phát triển kỹ năng mềm, tư duy sáng tạo, leadership và khả năng làm việc nhóm hiệu quả
+            </p>
           </div>
           <div class="service-card">
             <div class="service-icon">
               <i class="fas fa-handshake"></i>
             </div>
             <h3>Đồng hành suốt hành trình</h3>
-            <p>Hỗ trợ từ khâu chuẩn bị đến khi nhập học tại trường mong muốn</p>
+            <p>
+              Hỗ trợ toàn diện từ khâu chuẩn bị, định hướng đến khi nhập học thành công tại trường
+              mong muốn
+            </p>
           </div>
         </div>
       </div>
@@ -344,38 +359,33 @@
         <form class="contact-form" id="contactForm">
           <div class="form-row">
             <div class="form-group">
+              <input type="text" id="name" name="name" placeholder=" " required />
               <label for="name">Họ và tên *</label>
-              <input type="text" id="name" name="name" required />
             </div>
             <div class="form-group">
+              <input type="email" id="email" name="email" placeholder=" " required />
               <label for="email">Email *</label>
-              <input type="email" id="email" name="email" required />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
+              <input type="tel" id="phone" name="phone" placeholder=" " required />
               <label for="phone">Số điện thoại *</label>
-              <input type="tel" id="phone" name="phone" required />
             </div>
             <div class="form-group">
-              <label for="service">Dịch vụ quan tâm</label>
-              <select id="service" name="service">
+              <select id="service" name="service" value="">
                 <option value="">Chọn dịch vụ</option>
                 <option value="consultation">Tư vấn du học</option>
                 <option value="competition">Đào tạo thi quốc tế</option>
                 <option value="scholarship">Tư vấn học bổng</option>
                 <option value="visa">Hỗ trợ visa</option>
               </select>
+              <label for="service">Dịch vụ quan tâm</label>
             </div>
           </div>
           <div class="form-group">
+            <textarea id="note" name="note" rows="4" placeholder=" "></textarea>
             <label for="note">Ghi chú</label>
-            <textarea
-              id="note"
-              name="note"
-              rows="4"
-              placeholder="Để lại lời nhắn của bạn..."
-            ></textarea>
           </div>
           <button type="submit" class="btn-primary">Gửi thông tin</button>
         </form>
