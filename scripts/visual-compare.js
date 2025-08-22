@@ -207,6 +207,7 @@ let ROUTE_THRESHOLDS = {
   '/thanh-tich-va-su-kien/': 50000,
   '/bao-chi/': 400000,
   '/tuyen-dung/': 500000,
+  '/tuyen-dung-3/': 700000,
   '/faq/': 400000,
 };
 let SECTION_THRESHOLDS = {
@@ -269,6 +270,19 @@ function buildCanonicalMap(dir) {
 }
 
 async function screenshotPage(page, url, outPath, opts = {}) {
+  async function gotoWithRetry(targetUrl, attempts = 3) {
+    let lastErr;
+    for (let i = 0; i < attempts; i++) {
+      try {
+        await page.goto(targetUrl, { waitUntil: 'load', timeout: 90000 });
+        return;
+      } catch (e) {
+        lastErr = e;
+        await sleep(800 + i * 800);
+      }
+    }
+    throw lastErr;
+  }
   let selector = null;
   let maskSelectors = [];
   let clampSelectors = [];
@@ -282,7 +296,7 @@ async function screenshotPage(page, url, outPath, opts = {}) {
     clipHeight = typeof opts.clipHeight === 'number' ? opts.clipHeight : null;
   }
   // Chờ tới sự kiện load để ổn định tài nguyên trước khi chụp
-  await page.goto(url, { waitUntil: 'load', timeout: 60000 });
+  await gotoWithRetry(url, 3);
   // Ẩn một số widget động có thể gây sai khác nhỏ
   const maskCss = maskSelectors.length
     ? `\n/* Mask vùng động */\n${maskSelectors.map((s) => `${s} { visibility: hidden !important; }`).join('\n')}`

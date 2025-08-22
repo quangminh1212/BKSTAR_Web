@@ -9,6 +9,7 @@ public/snapshot/
 playwright-report/
 test-results/
 coverage/
+.playwright/
 .cache/
 
 # Misc generated
