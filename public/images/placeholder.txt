@@ -2,7 +2,7 @@ Thư mục này chứa các hình ảnh cho website BKSTAR clone.
 
 Cần thêm các file sau:
 
-1. logo.png - Logo BKSTAR (200x60px)
+1. logo.jpg - Logo BKSTAR (200x60px)
 2. slide1.jpg - Hình slider 1 (1200x500px)  
 3. slide2.jpg - Hình slider 2 (1200x500px)
 4. slide3.jpg - Hình slider 3 (1200x500px)

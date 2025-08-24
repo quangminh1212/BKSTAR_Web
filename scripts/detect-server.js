@@ -8,7 +8,7 @@ const execAsync = promisify(exec);
 /**
  * Detect if a port is in use
  */
-async function isPortInUse(port, host = 'localhost') {
+async function isPortInUse(port) {
   try {
     if (process.platform === 'win32') {
       const { stdout } = await execAsync(`netstat -an | findstr :${port}`);
@@ -17,7 +17,7 @@ async function isPortInUse(port, host = 'localhost') {
       const { stdout } = await execAsync(`lsof -i :${port}`);
       return stdout.trim().length > 0;
     }
-  } catch (error) {
+  } catch {
     return false;
   }
 }
@@ -43,19 +43,19 @@ async function getNetworkInterfaces() {
   const os = await import('os');
   const interfaces = os.networkInterfaces();
   const addresses = [];
-  
+
   for (const name of Object.keys(interfaces)) {
     for (const iface of interfaces[name]) {
       if (iface.family === 'IPv4' && !iface.internal) {
         addresses.push({
           name,
           address: iface.address,
-          family: iface.family
+          family: iface.family,
         });
       }
     }
   }
-  
+
   return addresses;
 }
 
@@ -66,10 +66,10 @@ async function displayServerInfo(port = 5173) {
   console.log('\n' + '='.repeat(60));
   console.log('🌐 BKSTAR_Web Development Server Information');
   console.log('='.repeat(60));
-  
+
   // Check if port is available
   const isAvailable = !(await isPortInUse(port));
-  
+
   if (isAvailable) {
     console.log(`✅ Port ${port} is available`);
   } else {
@@ -78,48 +78,48 @@ async function displayServerInfo(port = 5173) {
       const nextPort = await findAvailablePort(port + 1);
       console.log(`🔄 Next available port: ${nextPort}`);
       port = nextPort;
-    } catch (error) {
+    } catch {
       console.log('❌ Could not find available port');
       return;
     }
   }
-  
+
   console.log('\n📍 Server URLs:');
   console.log(`   Local:    http://localhost:${port}`);
   console.log(`   Local:    http://127.0.0.1:${port}`);
-  
+
   // Show network addresses
   try {
     const networkInterfaces = await getNetworkInterfaces();
     if (networkInterfaces.length > 0) {
       console.log('\n🌐 Network:');
-      networkInterfaces.forEach(iface => {
+      networkInterfaces.forEach((iface) => {
         console.log(`   Network:  http://${iface.address}:${port}`);
       });
     }
-  } catch (error) {
+  } catch {
     console.log('\n⚠️  Could not detect network interfaces');
   }
-  
+
   console.log('\n🛠️  Development Features:');
   console.log('   • Hot Module Replacement (HMR)');
   console.log('   • Fast Refresh');
   console.log('   • Source Maps');
   console.log('   • Error Overlay');
-  
+
   console.log('\n🎯 Project Information:');
   console.log('   • Framework: Vanilla JS + Vite');
   console.log('   • CSS: Modern CSS with Custom Properties');
   console.log('   • Assets: Optimized images and fonts');
-  
+
   console.log('\n⌨️  Commands:');
   console.log('   • Press r + Enter to restart server');
   console.log('   • Press u + Enter to show server URLs');
   console.log('   • Press o + Enter to open in browser');
   console.log('   • Press q + Enter or Ctrl+C to quit');
-  
+
   console.log('\n' + '='.repeat(60) + '\n');
-  
+
   return port;
 }
 
@@ -129,10 +129,10 @@ async function displayServerInfo(port = 5173) {
 async function monitorServer() {
   const targetPort = 5173;
   let lastStatus = null;
-  
+
   setInterval(async () => {
     const isRunning = await isPortInUse(targetPort);
-    
+
     if (isRunning !== lastStatus) {
       if (isRunning) {
         console.log(`\n🟢 Server detected on port ${targetPort}`);
@@ -148,25 +148,26 @@ async function monitorServer() {
 // Main execution
 async function main() {
   const command = process.argv[2] || 'info';
-  
+
   switch (command) {
     case 'info':
     case 'detect':
       await displayServerInfo();
       break;
-      
+
     case 'monitor':
       console.log('👁️  Monitoring server status...');
       console.log('Press Ctrl+C to stop monitoring\n');
       await monitorServer();
       break;
-      
-    case 'port':
+
+    case 'port': {
       const port = parseInt(process.argv[3]) || 5173;
       const available = !(await isPortInUse(port));
       console.log(available ? `✅ Port ${port} is available` : `❌ Port ${port} is in use`);
       break;
-      
+    }
+
     default:
       console.log('Usage: node scripts/detect-server.js [info|monitor|port]');
       console.log('  info    - Show server information (default)');
@@ -176,8 +177,8 @@ async function main() {
 }
 
 // Run main function directly
-main().catch(error => {
-  console.error('❌ Error:', error.message);
+main().catch((err) => {
+  console.error('❌ Error:', err.message);
   process.exit(1);
 });
 

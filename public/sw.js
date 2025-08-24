@@ -4,7 +4,7 @@ const ASSETS = [
   '/index.html',
   '/snapshot/index-snapshot.html',
   '/data.json',
-  '/images/logo.svg',
+  '/images/logo.jpg',
   '/images/slide1.webp',
   '/images/slide2.webp',
   '/images/slide3.webp',
