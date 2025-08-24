@@ -9,7 +9,8 @@
       content="BKSTAR - Trung tâm tư vấn du học hàng đầu Việt Nam. Đồng hành cùng học viên chinh phục các trường đại học danh tiếng thế giới."
     />
     <meta name="theme-color" content="#046bd2" />
-    <link rel="icon" type="image/x-icon" href="/images/cropped-Frame-1000009794-32x32.png" />
+    <link rel="icon" type="image/x-icon" href="images/cropped-Frame-1000009794-32x32.png" />
+    <link rel="manifest" href="manifest.json" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -99,7 +100,12 @@
     <section class="hero" id="home">
       <div class="hero-slider">
         <div class="slide active">
-          <img src="images/slide1.webp" alt="BKSTAR Competition" loading="eager" />
+          <img
+            src="images/slide1.webp"
+            alt="BKSTAR Competition"
+            loading="eager"
+            fetchpriority="high"
+          />
           <div class="slide-content">
             <h1>Chinh phục các cuộc thi quốc tế</h1>
             <p>Đồng hành cùng học viên tạo nên những thành tích ấn tượng</p>
@@ -448,6 +454,14 @@
     </div>
 
     <!-- JavaScript -->
-    <script type="module" src="/src/script.js"></script>
+    <script type="module" src="src/script.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          const swUrl = 'sw.js';
+          navigator.serviceWorker.register(swUrl).catch(console.warn);
+        });
+      }
+    </script>
   </body>
 </html>

@@ -1,14 +1,13 @@
 const CACHE_NAME = 'bkstar-cache-v3';
 const ASSETS = [
-  '/',
-  '/index.html',
-  '/snapshot/index-snapshot.html',
-  '/data.json',
-  '/images/logo.jpg',
-  '/images/slide1.webp',
-  '/images/slide2.webp',
-  '/images/slide3.webp',
-  '/images/slide4.webp',
+  'index.html',
+  'snapshot/index-snapshot.html',
+  'data.json',
+  'images/logo.jpg',
+  'images/slide1.webp',
+  'images/slide2.webp',
+  'images/slide3.webp',
+  'images/slide4.webp',
 ];
 
 self.addEventListener('install', (event) => {
@@ -54,7 +53,7 @@ self.addEventListener('fetch', (event) => {
           const cached = await caches.match(request);
           if (cached) return cached;
           // Fallback: generic offline JSON if available
-          const fallback = await caches.match('/data.json');
+          const fallback = await caches.match('data.json');
           if (fallback) return fallback;
           return new Response(JSON.stringify({ error: 'offline' }), {
             status: 200,

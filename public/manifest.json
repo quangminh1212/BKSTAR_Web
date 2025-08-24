@@ -1,7 +1,7 @@
 {
   "name": "BKSTAR - Tư vấn du học",
   "short_name": "BKSTAR",
-  "start_url": "/snapshot/index-snapshot.html",
+  "start_url": "snapshot/index-snapshot.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#046bd2",

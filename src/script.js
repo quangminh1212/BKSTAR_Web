@@ -627,7 +627,7 @@ async function loadDynamicData() {
     const ok = await loadWPContent();
     if (ok) return;
 
-    const res = await fetch('/data.json', { cache: 'no-store' });
+    const res = await fetch('data.json', { cache: 'no-store' });
     if (!res.ok) throw new Error('Failed to load data.json');
     const data = await res.json();
 
