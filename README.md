@@ -116,7 +116,7 @@ BKSTAR_Web/
 ├── styles.css          # Stylesheet chính
 ├── script.js           # JavaScript functionality
 ├── images/             # Thư mục chứa hình ảnh
-│   ├── logo.png        # Logo BKSTAR
+│   ├── logo.jpg        # Logo BKSTAR
 │   ├── slide1.jpg      # Hình slider 1
 │   ├── slide2.jpg      # Hình slider 2
 │   ├── slide3.jpg      # Hình slider 3
@@ -135,7 +135,7 @@ BKSTAR_Web/
 
 Thêm các file hình ảnh vào thư mục `images/`:
 
-- `logo.png`: Logo BKSTAR (khuyến nghị 200x60px)
+- `logo.jpg`: Logo BKSTAR (khuyến nghị 200x60px)
 - `slide1.jpg` đến `slide4.jpg`: Hình slider (khuyến nghị 1200x500px)
 - `student1.jpg` đến `student5.jpg`: Ảnh học viên (khuyến nghị 120x120px, hình vuông)
 
