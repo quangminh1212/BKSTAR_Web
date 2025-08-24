@@ -40,7 +40,8 @@
     "server:info": "node scripts/detect-server.js info",
     "mcp:start": "scripts\\run-mcp.bat",
     "server:monitor": "node scripts/detect-server.js monitor",
-    "server:check": "node scripts/detect-server.js port 5173"
+    "server:check": "node scripts/detect-server.js port 5173",
+    "sync:wp": "node scripts/sync-wp.js"
   },
   "lint-staged": {
     "*.js": [

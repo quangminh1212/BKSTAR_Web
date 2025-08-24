@@ -176,16 +176,29 @@ async function fetchPostsByCategory(catId, perPage = 3) {
 
 async function loadWPContent() {
   try {
+    // Ưu tiên dữ liệu đã sync về local: /posts.json
+    const localRes = await fetch('posts.json', { cache: 'no-store' });
+    if (localRes.ok) {
+      const local = await localRes.json();
+      const newsRendered = renderCards('#news-grid', local.news?.slice(0, 6) || [], 'news');
+      const newsEmpty = document.querySelector('#news-empty');
+      if (newsEmpty) newsEmpty.style.display = newsRendered ? 'none' : 'block';
+      renderCards('#competitions-grid', local.competitions?.slice(0, 6) || [], 'competitions');
+      renderCards('#blog-grid', local.blog?.slice(0, 6) || [], 'blog');
+      renderCards('#achievements-grid', local.achievements?.slice(0, 6) || [], 'achievements');
+      return true;
+    }
+
+    // Nếu chưa có posts.json, fallback WP trực tiếp
     const [competitions, blog, achievements] = await Promise.all([
-      fetchPostsByCategory(WP_CATEGORIES.competitions, 3),
-      fetchPostsByCategory(WP_CATEGORIES.blog, 3),
-      fetchPostsByCategory(WP_CATEGORIES.achievements, 3),
+      fetchPostsByCategory(WP_CATEGORIES.competitions, 6),
+      fetchPostsByCategory(WP_CATEGORIES.blog, 6),
+      fetchPostsByCategory(WP_CATEGORIES.achievements, 6),
     ]);
 
-    // News: try bao-chi (27), fallback su-kien (26)
-    let news = await fetchPostsByCategory(WP_CATEGORIES.news, 2);
+    let news = await fetchPostsByCategory(WP_CATEGORIES.news, 6);
     if (!news || news.length === 0) {
-      news = await fetchPostsByCategory(26, 2);
+      news = await fetchPostsByCategory(26, 6);
     }
 
     const newsRendered = renderCards('#news-grid', news, 'news');
@@ -197,7 +210,7 @@ async function loadWPContent() {
 
     return true;
   } catch (e) {
-    console.warn('WP content load failed, fallback to local data.json', e);
+    console.warn('Content load failed, fallback to local data.json', e);
     return false;
   }
 }
