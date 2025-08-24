@@ -204,9 +204,11 @@ function initHeroSlider() {
   if (nextBtn) nextBtn.addEventListener('click', nextSlide);
   if (prevBtn) prevBtn.addEventListener('click', prevSlide);
 
-  // Auto-play slider (pause when tab hidden)
-  let sliderInterval = setInterval(nextSlide, 5000);
+  // Auto-play slider (pause when tab hidden) + respect prefers-reduced-motion
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let sliderInterval = reduceMotion ? null : setInterval(nextSlide, 5000);
   document.addEventListener('visibilitychange', function () {
+    if (reduceMotion) return;
     if (document.hidden) {
       clearInterval(sliderInterval);
     } else {
@@ -335,9 +337,11 @@ function initTestimonialsSlider() {
   if (nextBtn) nextBtn.addEventListener('click', nextTestimonial);
   if (prevBtn) prevBtn.addEventListener('click', prevTestimonial);
 
-  // Auto-play testimonials (pause when tab hidden)
-  let testiInterval = setInterval(nextTestimonial, 4000);
+  // Auto-play testimonials (pause when tab hidden) + respect prefers-reduced-motion
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let testiInterval = reduceMotion ? null : setInterval(nextTestimonial, 4000);
   document.addEventListener('visibilitychange', function () {
+    if (reduceMotion) return;
     if (document.hidden) {
       clearInterval(testiInterval);
     } else {
@@ -690,20 +694,24 @@ function formatDate(isoDate) {
   }
 }
 
-// Parallax effect for hero section
-window.addEventListener(
-  'scroll',
-  throttle(function () {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
+// Parallax effect for hero section (disabled if user prefers reduced motion)
+const __reduceMotion =
+  window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!__reduceMotion) {
+  window.addEventListener(
+    'scroll',
+    throttle(function () {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
 
-    if (hero) {
-      const rate = scrolled * -0.5;
-      hero.style.transform = `translateY(${rate}px)`;
-    }
-  }, 50),
-  { passive: true }
-);
+      if (hero) {
+        const rate = scrolled * -0.5;
+        hero.style.transform = `translateY(${rate}px)`;
+      }
+    }, 50),
+    { passive: true }
+  );
+}
 
 // Add fade-in animation for sections
 function initScrollAnimations() {
