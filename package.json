@@ -38,6 +38,7 @@
     "prepare": "husky",
     "commitlint": "commitlint --from=HEAD~1 --to=HEAD",
     "server:info": "node scripts/detect-server.js info",
+    "mcp:start": "scripts\\run-mcp.bat",
     "server:monitor": "node scripts/detect-server.js monitor",
     "server:check": "node scripts/detect-server.js port 5173"
   },
