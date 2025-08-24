@@ -19,6 +19,8 @@ const OUT_DIR = path.resolve(__dirname, '../public');
 const POSTS_DIR = path.join(OUT_DIR, 'posts');
 const IMAGES_DIR = path.join(OUT_DIR, 'images', 'posts');
 
+const FORCE = process.argv.includes('--force') || process.env.SYNC_FORCE === '1';
+
 const CATEGORIES = {
   news: [27, 26],
   competitions: [12],
