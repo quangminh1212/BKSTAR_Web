@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initSmoothScrolling();
   initHeaderScrollEffect();
   loadDynamicData();
+  initThemeToggle();
 });
 // WP REST API integration to mirror live content
 const WP_BASE = 'https://bkstar.com.vn/wp-json/wp/v2';
@@ -19,6 +20,31 @@ const WP_CATEGORIES = {
   blog: 1, // 'blog-tai-nguyen'
   achievements: 4, // 'thanh-tich-hoc-vien'
 };
+
+// Theme toggle (light/dark) with system preference and persistence
+function initThemeToggle() {
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  if (!btn) return;
+
+  const prefersDark =
+    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const stored = localStorage.getItem('theme'); // 'light' | 'dark' | null
+  const current = stored || (prefersDark ? 'dark' : 'light');
+  setTheme(current);
+
+  btn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    localStorage.setItem('theme', next);
+  });
+
+  function setTheme(mode) {
+    if (mode === 'dark') root.setAttribute('data-theme', 'dark');
+    else root.removeAttribute('data-theme');
+    btn.textContent = mode === 'dark' ? 'Light' : 'Dark';
+  }
+}
 
 // Cấu hình cache và tiện ích
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 phút
@@ -718,6 +744,7 @@ function initScrollAnimations() {
   const sections = document.querySelectorAll('section');
   const options = {
     threshold: 0.1,
+
     rootMargin: '0px 0px -50px 0px',
   };
 
