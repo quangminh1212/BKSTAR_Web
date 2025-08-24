@@ -6,12 +6,9 @@ echo ==============================================
 echo   BKSTAR_Web - Development Environment
 echo ==============================================
 echo.
-echo Choose your development mode:
-echo [1] Quick Dev (Fast startup - recommended)
-echo [2] Full Build + Preview (Complete build with snapshot)
+echo Preparing development environment...
 echo.
-set /p "mode=Enter your choice (1 or 2, default: 1): "
-if "%mode%"=="" set mode=1
+set "mode=1"
 
 echo.
 echo ==============================================
@@ -30,26 +27,20 @@ REM Show Node version
 for /f "tokens=*" %%i in ('node --version') do set NODE_VERSION=%%i
 echo [INFO] Node.js version: %NODE_VERSION%
 
-REM Check if node_modules exists
-if not exist "node_modules" (
-  echo [1/3] Installing dependencies...
-  call npm install --include=dev || (
-    echo [WARN] npm install failed, trying again with npm ci...
-    call npm ci --no-audit --no-fund || (
-      echo [ERROR] Failed to install dependencies.
-      echo.
-      pause
-      exit /b 1
-    )
+REM Always install/update dependencies
+echo [1/2] Installing dependencies...
+call npm install --include=dev || (
+  echo [WARN] npm install failed, trying again with npm ci...
+  call npm ci --no-audit --no-fund || (
+    echo [ERROR] Failed to install dependencies.
+    echo.
+    pause
+    exit /b 1
   )
-  echo [INFO] Dependencies installed successfully!
-) else (
-  echo [1/3] Dependencies already installed, skipping...
 )
+echo [INFO] Dependencies are up to date!
 
-REM Execute based on mode selection
-if "%mode%"=="2" goto FULL_BUILD
-if "%mode%"=="1" goto QUICK_DEV
+REM Always start quick dev mode
 goto QUICK_DEV
 
 :QUICK_DEV
@@ -72,21 +63,9 @@ echo [INFO] URL will be displayed below...
 echo [INFO] Press Ctrl+C to stop the server
 echo.
 
-REM Ask about auto-opening browser
-set /p "open_browser=Open browser automatically? (y/n, default: y): "
-if "%open_browser%"=="" set open_browser=y
-
-echo [3/3] Launching development server...
+echo Launching development server...
 echo.
-
-REM Start dev server with auto-open option
-if /i "%open_browser%"=="y" (
-  echo [INFO] Browser will open automatically...
-  call npm run dev -- --open
-) else (
-  echo [INFO] Manual browser access required...
-  call npm run dev
-)
+call npm run dev -- --open
 
 goto END
 
