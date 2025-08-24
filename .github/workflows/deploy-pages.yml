@@ -30,8 +30,8 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Build (GitHub Pages base)
-        run: npm run build:gh
+      - name: Build (GitHub Pages base auto from repo)
+        run: npx cross-env BASE="/${{ github.event.repository.name }}/" vite build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
