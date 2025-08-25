@@ -19,6 +19,7 @@ const OUT_DIR = path.resolve(__dirname, '../public');
 const POSTS_DIR = path.join(OUT_DIR, 'posts');
 const IMAGES_DIR = path.join(OUT_DIR, 'images', 'posts');
 const FILES_DIR = path.join(OUT_DIR, 'files', 'posts');
+const TRASH_ROOT = path.join(OUT_DIR, '.trash');
 
 const FORCE = process.argv.includes('--force') || process.env.SYNC_FORCE === '1';
 
@@ -289,6 +290,7 @@ async function main() {
   await fs.mkdir(OUT_DIR, { recursive: true });
   await fs.mkdir(POSTS_DIR, { recursive: true });
   await fs.mkdir(IMAGES_DIR, { recursive: true });
+  await fs.mkdir(FILES_DIR, { recursive: true });
 
   const result = {};
   for (const [key, ids] of Object.entries(CATEGORIES)) {
@@ -319,8 +321,84 @@ async function main() {
     } catch {}
   }
 
+  // Mirror cleanup: move stale to .trash or delete if FORCE
+  await cleanupMirror(result);
+
   log(`\nWrote manifest: ${manifestPath}`);
   log('Done.');
+}
+
+async function safeMoveToTrash(absPath, ts) {
+  try {
+    const rel = path.relative(OUT_DIR, absPath);
+    if (rel.startsWith('..')) return; // safety
+    const dest = path.join(TRASH_ROOT, ts, rel);
+    await fs.mkdir(path.dirname(dest), { recursive: true });
+    await fs.rename(absPath, dest);
+  } catch (e) {
+    // fallback: delete
+    await fs.rm(absPath, { recursive: true, force: true });
+  }
+}
+
+async function cleanupMirror(result) {
+  const ts = new Date().toISOString().replace(/[:.]/g, '-');
+  await fs.mkdir(TRASH_ROOT, { recursive: true });
+
+  // Expected slugs by category and all slugs
+  const expectedByCat = {};
+  const allSlugs = new Set();
+  for (const [key, arr] of Object.entries(result)) {
+    const set = new Set((arr || []).map((i) => i.slug));
+    expectedByCat[key] = set;
+    for (const s of set) allSlugs.add(s);
+  }
+
+  // 1) Clean posts html not in manifest
+  for (const [catKey] of Object.entries(CATEGORIES)) {
+    const dir = path.join(POSTS_DIR, catKey);
+    try {
+      const files = await fs.readdir(dir);
+      for (const f of files) {
+        if (!f.endsWith('.html')) continue;
+        const slug = f.replace(/\.html$/, '');
+        if (!expectedByCat[catKey]?.has(slug)) {
+          const abs = path.join(dir, f);
+          if (FORCE) await fs.rm(abs, { force: true });
+          else await safeMoveToTrash(abs, ts);
+        }
+      }
+    } catch {}
+  }
+
+  // 2) Clean images per slug not used
+  try {
+    const dirs = await fs.readdir(IMAGES_DIR, { withFileTypes: true }).catch(() => []);
+    for (const ent of dirs) {
+      if (!ent.isDirectory()) continue;
+      const slug = ent.name;
+      if (!allSlugs.has(slug)) {
+        const abs = path.join(IMAGES_DIR, slug);
+        if (FORCE) await fs.rm(abs, { recursive: true, force: true });
+        else await safeMoveToTrash(abs, ts);
+      }
+    }
+  } catch {}
+
+  // 3) Clean attachment files per slug not used
+  try {
+    const fileRoot = path.join(OUT_DIR, 'files', 'posts');
+    const dirs = await fs.readdir(fileRoot, { withFileTypes: true }).catch(() => []);
+    for (const ent of dirs) {
+      if (!ent.isDirectory()) continue;
+      const slug = ent.name;
+      if (!allSlugs.has(slug)) {
+        const abs = path.join(fileRoot, slug);
+        if (FORCE) await fs.rm(abs, { recursive: true, force: true });
+        else await safeMoveToTrash(abs, ts);
+      }
+    }
+  } catch {}
 }
 
 main().catch((e) => {
