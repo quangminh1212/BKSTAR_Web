@@ -222,8 +222,8 @@ async function processCategory(catKey, catIds) {
         const localRel = path.join('images', 'posts', slug, `${filename}${ext}`);
         await downloadTo(url, path.join(OUT_DIR, localRel));
         localMap.set(url, '/' + localRel.replace(/\\/g, '/'));
-      } catch (e) {
-        log(`[warn] inline img failed ${slug}: ${e.message}`);
+      } catch {
+        log(`[warn] inline img failed ${slug}`);
       }
     }
 
@@ -235,8 +235,8 @@ async function processCategory(catKey, catIds) {
         const localRel = path.join('files', 'posts', slug, filename);
         await downloadTo(url, path.join(OUT_DIR, localRel));
         localMap.set(url, '/' + localRel.replace(/\\/g, '/'));
-      } catch (e) {
-        log(`[warn] file download failed ${slug}: ${e.message}`);
+      } catch {
+        log(`[warn] file download failed ${slug}`);
       }
     }
 
@@ -312,7 +312,9 @@ async function main() {
         });
         await fs.writeFile(abs, html, 'utf8');
       }
-    } catch {}
+    } catch {
+      // ignore missing folder or read errors
+    }
   }
 
   // Mirror cleanup: move stale to .trash or delete if FORCE
@@ -329,7 +331,7 @@ async function safeMoveToTrash(absPath, ts) {
     const dest = path.join(TRASH_ROOT, ts, rel);
     await fs.mkdir(path.dirname(dest), { recursive: true });
     await fs.rename(absPath, dest);
-  } catch (e) {
+  } catch {
     // fallback: delete
     await fs.rm(absPath, { recursive: true, force: true });
   }
@@ -362,7 +364,9 @@ async function cleanupMirror(result) {
           else await safeMoveToTrash(abs, ts);
         }
       }
-    } catch {}
+    } catch {
+      // ignore read errors for posts dir
+    }
   }
 
   // 2) Clean images per slug not used
@@ -377,7 +381,9 @@ async function cleanupMirror(result) {
         else await safeMoveToTrash(abs, ts);
       }
     }
-  } catch {}
+  } catch {
+    // ignore read errors for images dir
+  }
 
   // 3) Clean attachment files per slug not used
   try {
@@ -392,7 +398,9 @@ async function cleanupMirror(result) {
         else await safeMoveToTrash(abs, ts);
       }
     }
-  } catch {}
+  } catch {
+    // ignore read errors for files dir
+  }
 }
 
 main().catch((e) => {
