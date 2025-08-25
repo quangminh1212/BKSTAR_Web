@@ -28,6 +28,9 @@ const CATEGORIES = {
   achievements: [4],
 };
 
+// Bản đồ ánh xạ link bài viết live -> link local
+const LIVE_TO_LOCAL = new Map();
+
 function log(msg) {
   process.stdout.write(msg + '\n');
 }
@@ -83,6 +86,20 @@ async function downloadTo(url, filepath) {
   const buf = Buffer.from(await res.arrayBuffer());
   await fs.mkdir(path.dirname(filepath), { recursive: true });
   await fs.writeFile(filepath, buf);
+}
+
+function sanitizeLiveUrl(href) {
+  try {
+    const u = new URL(href, 'https://bkstar.com.vn');
+    if (u.hostname && !/bkstar\.com\.vn$/i.test(u.hostname)) return null;
+    // remove trailing slash
+    u.hash = '';
+    let s = u.toString();
+    s = s.replace(/#.*$/, '').replace(/\/$/, '');
+    return s;
+  } catch {
+    return null;
+  }
 }
 
 function replaceImgSrcs(html, replacer) {
@@ -209,6 +226,12 @@ async function processCategory(catKey, catIds) {
     await fs.mkdir(path.dirname(postHtmlAbs), { recursive: true });
     await fs.writeFile(postHtmlAbs, postTemplate({ title, date, content }), 'utf8');
 
+    // Lưu ánh xạ từ link live -> link local (dùng để thay thế trong excerpt/content nếu có)
+    const liveLink = sanitizeLiveUrl(p.link);
+    if (liveLink) {
+      LIVE_TO_LOCAL.set(liveLink, '/' + postHtmlRel);
+    }
+
     manifestItems.push({
       title,
       date,
@@ -238,6 +261,28 @@ async function main() {
 
   const manifestPath = path.join(OUT_DIR, 'posts.json');
   await fs.writeFile(manifestPath, JSON.stringify(result, null, 2), 'utf8');
+
+  // Duyệt tất cả file HTML đã tạo để thay thế mọi anchor/link sang local nếu trỏ về bkstar.com.vn
+  for (const [catKey] of Object.entries(CATEGORIES)) {
+    const dir = path.join(POSTS_DIR, catKey);
+    try {
+      const files = await fs.readdir(dir);
+      for (const f of files) {
+        if (!f.endsWith('.html')) continue;
+        const abs = path.join(dir, f);
+        let html = await fs.readFile(abs, 'utf8');
+        // Thay thế <a href="https://bkstar.com.vn/..."> -> href="/posts/..."
+        html = html.replace(/<a\b[^>]*href=["']([^"']+)["'][^>]*>/gi, (m, href) => {
+          const live = sanitizeLiveUrl(href);
+          const local = live ? LIVE_TO_LOCAL.get(live) : null;
+          if (local) return m.replace(href, local);
+          return m;
+        });
+        await fs.writeFile(abs, html, 'utf8');
+      }
+    } catch {}
+  }
+
   log(`\nWrote manifest: ${manifestPath}`);
   log('Done.');
 }
