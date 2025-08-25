@@ -63,6 +63,13 @@ echo [INFO] URL will be displayed below...
 echo [INFO] Press Ctrl+C to stop the server
 echo.
 
+
+REM Auto sync latest content (non-blocking)
+echo [SYNC] Syncing latest content to local...
+call npm run sync:wp || (
+  echo [WARN] Content sync failed. Continuing with existing local content...
+)
+
 echo Launching development server...
 echo.
 call npm run dev -- --open
