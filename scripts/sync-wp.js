@@ -192,13 +192,26 @@ async function processCategory(catKey, catIds) {
       }
     }
 
-    // content & inline images
+    // content & inline images + attachments
     let content = p.content?.rendered || '';
     const imgUrls = new Set();
+    const fileUrls = new Set();
+
+    // Collect image and file links from content
     content.replace(/<img\b[^>]*src=["']([^"']+)["'][^>]*>/gi, (_, src) => {
       try {
         const u = new URL(src, 'https://bkstar.com.vn');
         if (/\/wp-content\//.test(u.pathname)) imgUrls.add(u.href);
+      } catch {
+        // Ignore invalid URLs
+      }
+      return _;
+    });
+
+    content.replace(/<a\b[^>]*href=["']([^"']+\.(?:pdf|docx?|xlsx?|zip|rar|pptx?))["'][^>]*>/gi, (_, href) => {
+      try {
+        const u = new URL(href, 'https://bkstar.com.vn');
+        if (/\/wp-content\//.test(u.pathname)) fileUrls.add(u.href);
       } catch {
         // Ignore invalid URLs
       }
@@ -218,7 +231,29 @@ async function processCategory(catKey, catIds) {
       }
     }
 
-    content = replaceImgSrcs(content, (src) => localMap.get(src) || src);
+    // Download attachments to public/files/posts/<slug>/
+    for (const url of fileUrls) {
+      try {
+        const u = new URL(url);
+        const filename = path.basename(u.pathname);
+        const localRel = path.join('files', 'posts', slug, filename);
+        await downloadTo(url, path.join(OUT_DIR, localRel));
+        localMap.set(url, '/' + localRel.replace(/\\/g, '/'));
+      } catch (e) {
+        log(`[warn] file download failed ${slug}: ${e.message}`);
+      }
+    }
+
+    // Replace image and file links in content
+    content = content
+      .replace(/<img\b[^>]*src=["']([^"']+)["'][^>]*>/gi, (m, src) => {
+        const local = localMap.get(src);
+        return local ? m.replace(src, local) : m;
+      })
+      .replace(/<a\b[^>]*href=["']([^"']+\.(?:pdf|docx?|xlsx?|zip|rar|pptx?))["'][^>]*>/gi, (m, href) => {
+        const local = localMap.get(href);
+        return local ? m.replace(href, local) : m;
+      });
 
     // write post html
     const postHtmlRel = path.join('posts', catKey, `${slug}.html`).replace(/\\/g, '/');
