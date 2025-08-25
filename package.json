@@ -41,8 +41,9 @@
     "mcp:start": "scripts\\run-mcp.bat",
     "server:monitor": "node scripts/detect-server.js monitor",
     "server:check": "node scripts/detect-server.js port 5173",
-    "sync:wp": "node scripts/sync-wp.js && node scripts/optimize-images.js",
-    "sync:wp:force": "cross-env SYNC_FORCE=1 node scripts/sync-wp.js && node scripts/optimize-images.js"
+    "sync:wp": "node scripts/sync-wp.js && node scripts/optimize-images.js && node scripts/clean-trash.js",
+    "sync:wp:force": "cross-env SYNC_FORCE=1 node scripts/sync-wp.js && node scripts/optimize-images.js && node scripts/clean-trash.js",
+    "clean:trash": "node scripts/clean-trash.js"
   },
   "lint-staged": {
     "*.js": [
