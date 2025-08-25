@@ -18,6 +18,7 @@ const WP_BASE = 'https://bkstar.com.vn/wp-json/wp/v2';
 const OUT_DIR = path.resolve(__dirname, '../public');
 const POSTS_DIR = path.join(OUT_DIR, 'posts');
 const IMAGES_DIR = path.join(OUT_DIR, 'images', 'posts');
+const FILES_DIR = path.join(OUT_DIR, 'files', 'posts');
 
 const FORCE = process.argv.includes('--force') || process.env.SYNC_FORCE === '1';
 
