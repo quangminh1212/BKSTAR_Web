@@ -84,7 +84,9 @@ async function restoreFrom(tsName, overwrite) {
   // Try removing empty ts folder
   try {
     await fsp.rm(srcRoot, { recursive: true, force: true });
-  } catch {}
+  } catch {
+    // ignore errors when removing trash timestamp folder
+  }
   log(`restored ${restored} files from ${tsName}${overwrite ? ' (overwritten)' : ''}`);
 }
 

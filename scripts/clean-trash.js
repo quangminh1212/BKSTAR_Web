@@ -40,7 +40,7 @@ async function main() {
         await rmrf(p);
         removed++;
       }
-    } catch (e) {
+    } catch {
       // if error reading stat, attempt remove
       await rmrf(p);
       removed++;

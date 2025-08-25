@@ -104,12 +104,6 @@ function sanitizeLiveUrl(href) {
   }
 }
 
-function replaceImgSrcs(html, replacer) {
-  return (html || '').replace(/<img\b[^>]*src=["']([^"']+)["'][^>]*>/gi, (m, src) => {
-    const local = replacer(src);
-    return m.replace(src, local || src);
-  });
-}
 
 function postTemplate({ title, date, content, relCss = '/src/styles.css' }) {
   return `<!doctype html>
@@ -188,8 +182,8 @@ async function processCategory(catKey, catIds) {
         const ext = ensureExtFromUrl(p.jetpack_featured_media_url);
         localCover = path.join('images', 'posts', slug, `cover${ext}`);
         await downloadTo(p.jetpack_featured_media_url, path.join(OUT_DIR, localCover));
-      } catch (e) {
-        log(`[warn] cover failed ${slug}: ${e.message}`);
+      } catch {
+        log(`[warn] cover failed ${slug}`);
         localCover = '';
       }
     }
